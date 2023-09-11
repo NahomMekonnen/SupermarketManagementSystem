@@ -35,7 +35,7 @@ public class Login extends JFrame{
         {
             try {
 
-                backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/lenny.png"));
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -83,6 +83,8 @@ public class Login extends JFrame{
 
         String str[]={"Admin","User"};
         userType=new JComboBox(str);
+        userType.setBackground(Color.grey);
+
         userID=new JLabel("User ID");
         userID.setForeground(Color.white);
         idTextField=new JTextField();
@@ -125,13 +127,13 @@ public class Login extends JFrame{
 
 
         p2.setLayout(null);
-       choose.setBounds(70,30,200,100);
-       userType.setBounds(160,60,200,40);
+       choose.setBounds(70,40,200,100);
+       userType.setBounds(160,70,200,40);
        userID.setBounds(70,110,200,100);
        idTextField.setBounds(160,140,200,40);
 
        password.setBounds(70,180,200,100);
-       passwordField.setBounds(160,220,200,40);
+       passwordField.setBounds(160,210,200,40);
 
 
        login.setBounds(100,280,100,40);
