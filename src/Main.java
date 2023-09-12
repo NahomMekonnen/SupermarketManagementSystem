@@ -14,6 +14,8 @@ public class Main {
         database.instantiate();
         Inventory inventory=new Inventory();
         inventory.setVisible(true);
+        Supplier supplier = new Supplier("Supplier Name", "123-456-7890", "Beverage Type");
+        GUI gui = new GUI(supplier);
 //        Admin ad=new Admin();
 //        ad.setVisible(true);
 ///        Admin n=new Admin();
