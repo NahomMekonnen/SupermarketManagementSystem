@@ -83,7 +83,7 @@ public class Login extends JFrame{
 
         String str[]={"Admin","User"};
         userType=new JComboBox(str);
-        userType.setBackground(Color.grey);
+        userType.setBackground(Color.gray);
 
         userID=new JLabel("User ID");
         userID.setForeground(Color.white);
