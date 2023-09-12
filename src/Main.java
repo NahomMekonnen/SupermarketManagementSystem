@@ -11,7 +11,7 @@ public class Main {
 //        database.instantiate();
 //        Admin ad=new Admin();
 //        ad.setVisible(true);
-//        Admin n=new Admin();
+///        Admin n=new Admin();
 //        n.setVisible(true);
 
 
