@@ -108,6 +108,17 @@ public class Login extends JFrame{
                 login.setBackground(new Color(40,40,40));
             }
         });
+        login.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource()==login)
+                {
+                    dispose();
+                    Admin n=new Admin();
+                    n.setVisible(true);
+                }
+            }
+        });
         clear=new JButton("Clear");
 
         clear.setBackground(new Color(40,40,40));
