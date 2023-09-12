@@ -8,34 +8,26 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
-
 import database.Database;
-
 public class Inventory extends JFrame{
-
-
     Connection connection;
-
     InventoryActions inventoryActions;
-
     JPanel p1,p2;
     JLabel l1,l2;
-    JTextField tf;
+    JTextField tf,tf2;
     JTextArea TArea;
     JComboBox Cb;
-    JTable T,T2;
+    JTable T;
     JButton search;
-
     JScrollPane scroll;
     String[] options= {"ID","Name"};
-
-
 
     public Inventory(){
         Container Inv = getContentPane();
@@ -46,12 +38,15 @@ public class Inventory extends JFrame{
         setLocationRelativeTo(null);
         connection = Database.connection;
         tf=new JTextField(100);
-        tf.setBounds(400,200,300,50);
+        tf2=new JTextField(100);
+
+        tf.setBounds(400,0,300,50);
+        tf2.setBounds(400,400,300,50);
         int count =inventoryActions.Count();
         System.out.println(count);
         Product[] products= inventoryActions.Retrieve(count);
 
-        Cb= new JComboBox(options);
+        Cb= new JComboBox();
         l1 = new JLabel("Search item using: ");
         search= new JButton("search");
 
@@ -72,49 +67,52 @@ public class Inventory extends JFrame{
         T= new JTable(model);
         T.setRowSorter(sorter);
         scroll=new JScrollPane(T);
+        Cb.addItem("ID");
+        Cb.addItem("Name");
 
         tf.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                search(tf.getText());
+                    search(tf.getText());
             }
+
             @Override
             public void removeUpdate(DocumentEvent e) {
-                search(tf.getText());
+                    search(tf.getText());
             }
+
             @Override
             public void changedUpdate(DocumentEvent e) {
-                search(tf.getText());
+                    search(tf.getText());
             }
-            public void search(String str) {
-                if (str.length() == 0) {
-                    sorter.setRowFilter(null);
-                } else {
-                    sorter.setRowFilter(RowFilter.regexFilter(str));
+            private void search(String str){
+                String selected=(String)Cb.getSelectedItem();
+                if(selected.equals("ID")){
+                    if (str.length() == 0) {
+                        sorter.setRowFilter(null);
+                    } else {
+                        RowFilter rowFilter= RowFilter.regexFilter(tf.getText(),0);
+                        sorter.setRowFilter(rowFilter);
+                    }
+                }else if(selected.equals("Name")){
+                    if (str.length() == 0) {
+                        sorter.setRowFilter(null);
+                    } else {
+                        RowFilter rowFilter= RowFilter.regexFilter(tf.getText(),1);
+                        sorter.setRowFilter(rowFilter);
+                    }
                 }
             }
-
-
         });
+
 
         scroll.setBounds(450,65,500,150);
         scroll.setBackground(Color.WHITE);
-
         search.setBounds(0,0,100,100);
-
+        Cb.setBounds(1,2,100,100);
+        Inv.add(Cb);
         Inv.add(tf);
-        //Inv.add(search);
-
+        Inv.add(tf2);
         Inv.add(scroll);
-
-
     }
-
-
-
-
-
-
-
-
 }
