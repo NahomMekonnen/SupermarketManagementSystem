@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Index: src/Supplier.java
 IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
@@ -91,3 +92,96 @@ diff --git a/src/Supplier.java b/src/Supplier.java
 +    }
 +}
 \ No newline at end of file
+=======
+Index: src/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import database.Database;\r\nimport employee.Employee;\r\nimport inventory.Inventory;\r\n\r\nimport javax.swing.*;\r\n\r\npublic class Main {\r\n\r\n\r\n    public static void main(String[] args) {\r\n//     Login l=new Login();\r\n//     l.setVisible(true);\r\n\r\n        Database database =new  Database(\"localhost\",\"SuperMarket\",\"sa\",\"Nohom420\");\r\n        database.instantiate();\r\n        Inventory inventory=new Inventory();\r\n        inventory.setVisible(true);\r\n        Supplier supplier = new Supplier(\"Supplier Name\", \"123-456-7890\", \"Beverage Type\");\r\n        GUI gui = new GUI(supplier);\r\n//        Admin ad=new Admin();\r\n//        ad.setVisible(true);\r\n///        Admin n=new Admin();\r\n//        n.setVisible(true);\r\n        Employee e=new Employee();\r\n        e.setVisible(true);\r\n\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Main.java b/src/Main.java
+--- a/src/Main.java	(revision 4adbbeef3f0967311a94fa2c6633ebf852680f4a)
++++ b/src/Main.java	(date 1694547697877)
+@@ -11,18 +11,18 @@
+ //     Login l=new Login();
+ //     l.setVisible(true);
+ 
+-        Database database =new  Database("localhost","SuperMarket","sa","Nohom420");
++        Database database =new  Database("localhost","SuperMarket","sa","Nani2239");
+         database.instantiate();
+         Inventory inventory=new Inventory();
+         inventory.setVisible(true);
+-        Supplier supplier = new Supplier("Supplier Name", "123-456-7890", "Beverage Type");
+-        GUI gui = new GUI(supplier);
++//        Supplier supplier = new Supplier("Supplier Name", "123-456-7890", "Beverage Type");
++//        GUI gui = new GUI(supplier);
+ //        Admin ad=new Admin();
+ //        ad.setVisible(true);
+ ///        Admin n=new Admin();
+ //        n.setVisible(true);
+-        Employee e=new Employee();
+-        e.setVisible(true);
++//        Employee e=new Employee();
++//        e.setVisible(true);
+ 
+ 
+     }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"d72dfc20-d9fd-433d-8297-8215fe9c5c62\" name=\"Changes\" comment=\"gui2 commit\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/employee/EmployeeActions.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_11_2023_2_33_PM__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_11_2023_2_33_PM__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_12_2023_2_04_AM__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_12_2023_2_04_AM__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_12_2023_2_45_AM__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_12_2023_2_45_AM__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Admin.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Admin.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Employee.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/employee/Employee.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Main.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/inventory/Inventory.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/inventory/Inventory.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/inventory/InventoryActions.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/inventory/InventoryActions.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"PUSH_TAGS\">\r\n      <GitPushTagMode>\r\n        <option name=\"argument\" value=\"--tags\" />\r\n        <option name=\"title\" value=\"All\" />\r\n      </GitPushTagMode>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2VFRDXAfurToGERraEyCh7hpd24\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,\r\n    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/mekon/IdeaProjects/supermarket&quot;,\r\n    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Nahom Mekonnen/IdeaProjects/SuperMarketManagementSystem/src/Main.java&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;\r\n  }\r\n}</component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"d72dfc20-d9fd-433d-8297-8215fe9c5c62\" name=\"Changes\" comment=\"\" />\r\n      <created>1694429725009</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1694429725009</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"First Commit\">\r\n      <created>1694429925749</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694429925749</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Third Commit\">\r\n      <created>1694431359986</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694431359986</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Third Commit\">\r\n      <created>1694431632314</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694431632314</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Third Commit\">\r\n      <created>1694431708337</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694431708337</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Third Commit\">\r\n      <created>1694431859721</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694431859721</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Third Commit\">\r\n      <created>1694432185170</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694432185170</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Third Commit\">\r\n      <created>1694456574225</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694456574225</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Third Commit\">\r\n      <created>1694458071694</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694458071694</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"gui commit\">\r\n      <created>1694502527439</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694502527439</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"gui2 commit\">\r\n      <created>1694502632773</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694502632773</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"gui2 commit\">\r\n      <created>1694506147571</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694506147571</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"12\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <MESSAGE value=\"First Commit\" />\r\n    <MESSAGE value=\"Third Commit\" />\r\n    <MESSAGE value=\"gui commit\" />\r\n    <MESSAGE value=\"gui2 commit\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"gui2 commit\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <breakpoint enabled=\"true\" type=\"java-exception\">\r\n          <properties class=\"com.microsoft.sqlserver.jdbc.SQLServerException\" package=\"com.microsoft.sqlserver.jdbc\" />\r\n          <option name=\"timeStamp\" value=\"2\" />\r\n        </breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 4adbbeef3f0967311a94fa2c6633ebf852680f4a)
++++ b/.idea/workspace.xml	(date 1694547812917)
+@@ -5,16 +5,8 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="d72dfc20-d9fd-433d-8297-8215fe9c5c62" name="Changes" comment="gui2 commit">
+-      <change afterPath="$PROJECT_DIR$/src/employee/EmployeeActions.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_11_2023_2_33_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_11_2023_2_33_PM__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_12_2023_2_04_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_12_2023_2_04_AM__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_12_2023_2_45_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_12_2023_2_45_AM__Changes_.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Admin.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/employee/Employee.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/inventory/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/Inventory.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/inventory/InventoryActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/InventoryActions.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -149,7 +141,28 @@
+       <option name="project" value="LOCAL" />
+       <updated>1694506147571</updated>
+     </task>
+-    <option name="localTasksCounter" value="12" />
++    <task id="LOCAL-00012" summary="gui2 commit">
++      <created>1694547383643</created>
++      <option name="number" value="00012" />
++      <option name="presentableId" value="LOCAL-00012" />
++      <option name="project" value="LOCAL" />
++      <updated>1694547383643</updated>
++    </task>
++    <task id="LOCAL-00013" summary="gui2 commit">
++      <created>1694547391394</created>
++      <option name="number" value="00013" />
++      <option name="presentableId" value="LOCAL-00013" />
++      <option name="project" value="LOCAL" />
++      <updated>1694547391394</updated>
++    </task>
++    <task id="LOCAL-00014" summary="gui2 commit">
++      <created>1694547491807</created>
++      <option name="number" value="00014" />
++      <option name="presentableId" value="LOCAL-00014" />
++      <option name="project" value="LOCAL" />
++      <updated>1694547491807</updated>
++    </task>
++    <option name="localTasksCounter" value="15" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+>>>>>>> origin/master

@@ -1,4 +1,5 @@
 package employee;
+import admin.Admin;
 import inventory.InventoryActions;
 import product.Product;
 
@@ -13,6 +14,8 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -32,9 +35,10 @@ public class Employee extends JFrame{
 
     JPanel p1,p2;
     JLabel l1,l2;
-    JTextField textField,textField2;
+    JTextField textField;
     JComboBox Cb;
     JTable T;
+    JButton back,add,remove;
 
 
     JScrollPane scroll;
@@ -98,25 +102,23 @@ public class Employee extends JFrame{
         connection = Database.connection;
         textField=new JTextField(100);
         textField.setBounds(310,25,300,30);
-        textField2=new JTextField(100);
-        textField2.setBounds(310,65,300,30);
+
 
         int count =employeeActions.Count();
         System.out.println(count);
         Employee[] employees= employeeActions.Retrieve(count);
 
-        Cb= new JComboBox(options);
-        l1 = new JLabel("Search employee using name: ");
-        l1.setBounds(50,-10,200,100);
+        Cb= new JComboBox();
+        Cb.addItem("ID");
+        Cb.addItem("Name");
+        Cb.setBounds(200,25,100,30);
+        l1 = new JLabel("Search item using: ");
+        l1.setBounds(50,-10,50,800);
         l1.setForeground(Color.WHITE);
         l1.setFont(new Font("Arial", Font.BOLD, 16));
 
-        l2=new JLabel("Search employee using Id: ");
-        l2.setBounds(50,30,200,100);
-        l2.setForeground(Color.WHITE);
-        l2.setFont(new Font("Arial", Font.BOLD, 16));
 
-        String[] cNames = new String[]{"ID", "employee_firstName", "employee_lastName", "employee_phone_number", "employee_address"};
+        String[] cNames = new String[]{"ID", "First Name", "Last Name", "phone number", "adress"};
 
         String [][] Values = new String[count][cNames.length];
         for(int i=0;i<count; i++){
@@ -148,38 +150,122 @@ public class Employee extends JFrame{
                 search(textField.getText());
             }
             public void search(String str) {
-                if (str.length() == 0) {
-                    sorter.setRowFilter(null);
-                } else {
-                    RowFilter rowFilter= RowFilter.regexFilter(textField.getText(),1);
-                    sorter.setRowFilter(RowFilter.regexFilter(str));
+                String selected=(String)Cb.getSelectedItem();
+                if(selected.equals("ID")){
+                    if (str.length() == 0) {
+                        sorter.setRowFilter(null);
+                    } else {
+                        RowFilter rowFilter= RowFilter.regexFilter(textField.getText(),0);
+                        sorter.setRowFilter(rowFilter);
+                    }
+                }else if(selected.equals("Name")){
+                    if (str.length() == 0) {
+                        sorter.setRowFilter(null);
+                    } else {
+                        RowFilter rowFilter= RowFilter.regexFilter(textField.getText(),1);
+                        sorter.setRowFilter(rowFilter);
+                    }
                 }
             }
 
 
         });
-        textField2.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                search(textField2.getText());
+
+        back=new JButton("Back");
+        back.setBackground(new Color(40,40,40));
+        back.setForeground(Color.WHITE);
+
+        back.setFocusPainted(false);
+        back.setFont(new Font("Arial", Font.BOLD, 16));
+
+        back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                back.setBackground(new Color(60,60,60));
             }
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                search(textField2.getText());
-            }
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                search(textField2.getText());
-            }
-            public void search(String str) {
-                if (str.length() == 0) {
-                    sorter.setRowFilter(null);
-                } else {
-                    RowFilter rowFilter= RowFilter.regexFilter(textField2.getText(),0);
-                    sorter.setRowFilter(rowFilter);
-                }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                back.setBackground(new Color(40,40,40));
             }
         });
+
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource()==back)
+                {
+                    dispose();
+                    Admin n=new Admin();
+                    n.setVisible(true);
+                }
+
+            }
+        });
+        back.setBounds(10,10,80,20);
+
+
+        add=new JButton("Add");
+        add.setBackground(new Color(40,40,40));
+        add.setForeground(Color.WHITE);
+
+        add.setFocusPainted(false);
+        add.setFont(new Font("Arial", Font.BOLD, 16));
+
+        add.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                add.setBackground(new Color(60,60,60));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                add.setBackground(new Color(40,40,40));
+            }
+        });
+
+        add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource()==add)
+                {
+                    dispose();
+                    Admin n=new Admin();
+                    n.setVisible(true);
+                }
+
+            }
+        });
+        add.setBounds(250,390,100,50);
+        //scroll.setBounds(50,15,700,350);
+
+        remove=new JButton("Remove");
+        remove.setBackground(new Color(40,40,40));
+        remove.setForeground(Color.WHITE);
+
+        remove.setFocusPainted(false);
+        remove.setFont(new Font("Arial", Font.BOLD, 16));
+
+        remove.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                remove.setBackground(new Color(60,60,60));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                remove.setBackground(new Color(40,40,40));
+            }
+        });
+
+        remove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource()==remove)
+                {
+                    dispose();
+                    Admin n=new Admin();
+                    n.setVisible(true);
+                }
+
+            }
+        });
+        remove.setBounds(450,390,100,50);
+
         p1=new JPanel(null){
             private BufferedImage backgroundImage;
 
@@ -202,7 +288,7 @@ public class Employee extends JFrame{
             }
         };
 
-        p2=new JPanel(){
+        p2=new JPanel(null){
             private BufferedImage backgroundImage;
 
             {
@@ -232,18 +318,19 @@ public class Employee extends JFrame{
 
 
 
-        scroll.setBounds(450,65,500,150);
+        scroll.setBounds(50,15,700,350);
         scroll.setBackground(Color.WHITE);
 
 
 
 
 
-        p1.add(l1);
+        p1.add(back);
+        p1.add(Cb);
         p1.add(textField);
-        p1.add(l2);
-        p1.add(textField2);
         p2.add(scroll);
+        p2.add(add);
+        p2.add(remove);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         emp.add(p1);
         emp.add(p2);
