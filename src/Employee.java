@@ -1,46 +1,16 @@
-public class Employee {
+import java.awt.*;
+import javax.swing.*;
 
-    private String name;
-    private String phone;
-    private double salary;
+public class Employee extends JFrame {
 
 
-    public Employee(String name, String phone, double salary) {
-        this.name = name;
-        this.phone = phone;
-        this.salary = salary;
+    public Employee() {
+        Container Emp=getContentPane();
+        setSize(1000,600);
+        setLayout(null);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-    public String getPhone() {
-        return phone;
-    }
-
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-
-    public double getSalary() {
-        return salary;
-    }
-
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
-
-    public String toString() {
-        return "Name: " + name + ", Phone: " + phone + ", Salary: $" +salary;
-    } // returns a string representation of an employee object
 }
