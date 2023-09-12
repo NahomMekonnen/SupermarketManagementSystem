@@ -11,11 +11,8 @@ public class Product extends JFrame{
     private Date date;
 
 
-    Product()
+    public Product()
     {
-
-
-
     }
     public Product(int id, String Name, double money, int amount, int category_id, Date date){
         product_name=Name;
