@@ -1,6 +1,8 @@
 
-
+package admin;
+import employee.Employee;
 import inventory.Inventory;
+import login.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,7 +22,7 @@ public class Admin extends JFrame {
 
 
 
-    Admin(){
+   public  Admin(){
 
         Container home=getContentPane();
         setSize(650,400);
@@ -129,6 +131,17 @@ public class Admin extends JFrame {
                 b2.setBackground(new Color(40,40,40));
             }
         });
+        b2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource()==b2)
+                {
+                    dispose();
+                    Employee employee=new Employee();
+                    employee.setVisible(true);
+                }
+            }
+        });
 
         b3=new JButton("Sales");
         b3.setBackground(new Color(40,40,40));
@@ -225,6 +238,7 @@ public class Admin extends JFrame {
                     Login n=new Login();
                     n.setVisible(true);
                 }
+
             }
         });
 
