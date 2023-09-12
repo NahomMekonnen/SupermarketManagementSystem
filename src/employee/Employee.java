@@ -1,4 +1,5 @@
-package inventory;
+package employee;
+import inventory.InventoryActions;
 import product.Product;
 
 import javax.imageio.ImageIO;
@@ -16,33 +17,79 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
+import java.util.Date;
 
 
 import database.Database;
 
-public class Inventory extends JFrame{
 
 
+
+public class Employee extends JFrame{
     Connection connection;
 
-    InventoryActions inventoryActions;
+    EmployeeActions employeeActions;
 
     JPanel p1,p2;
     JLabel l1,l2;
     JTextField textField,textField2;
-    JTextArea TArea;
     JComboBox Cb;
     JTable T;
 
 
     JScrollPane scroll;
     String[] options= {"ID","Name"};
+    private String firstName,lastName,adress,phoneNumber;
+
+    private int employee_Id;
 
 
 
-    public Inventory(){
-        Container Inv = getContentPane();
-        inventoryActions = new InventoryActions();
+    public int getEmployee_Id() {
+        return employee_Id;
+    }
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setEmployee_Id(int employee_Id) {
+        this.employee_Id = employee_Id;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+
+    public Employee()
+    {
+        Container emp = getContentPane();
+         employeeActions= new EmployeeActions();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(800,600);
         setLayout(null);
@@ -54,31 +101,31 @@ public class Inventory extends JFrame{
         textField2=new JTextField(100);
         textField2.setBounds(310,65,300,30);
 
-        int count =inventoryActions.Count();
+        int count =employeeActions.Count();
         System.out.println(count);
-        Product[] products= inventoryActions.Retrieve(count);
+        Employee[] employees= employeeActions.Retrieve(count);
 
         Cb= new JComboBox(options);
-        l1 = new JLabel("Search item using name: ");
+        l1 = new JLabel("Search employee using name: ");
         l1.setBounds(50,-10,200,100);
         l1.setForeground(Color.WHITE);
         l1.setFont(new Font("Arial", Font.BOLD, 16));
 
-        l2=new JLabel("Search item using Id: ");
+        l2=new JLabel("Search employee using Id: ");
         l2.setBounds(50,30,200,100);
         l2.setForeground(Color.WHITE);
         l2.setFont(new Font("Arial", Font.BOLD, 16));
 
-        String[] cNames = new String[]{"ID", "Name", "Price", "Quantity", "Exp-Date", "Category-ID"};
+        String[] cNames = new String[]{"ID", "employee_firstName", "employee_lastName", "employee_phone_number", "employee_address"};
 
         String [][] Values = new String[count][cNames.length];
         for(int i=0;i<count; i++){
-            Values[i][0]= String.valueOf(products[i].getProduct_id());
-            Values[i][1]= products[i].getProduct_name();
-            Values[i][2]= String.valueOf(products[i].getPrice());
-            Values[i][3]= String.valueOf(products[i].getAmount());
-            Values[i][4]= String.valueOf(products[i].getDate());
-            Values[i][5]= String.valueOf(products[i].getCategory_id());
+            Values[i][0]= String.valueOf(employees[i].getEmployee_Id());
+            Values[i][1]= String.valueOf(employees[i].getFirstName());
+            Values[i][2]= String.valueOf(employees[i].getLastName());
+            Values[i][3]= String.valueOf(employees[i].getPhoneNumber());
+            Values[i][4]= String.valueOf(employees[i].getAdress());
+
         }
 
         TableModel model= new DefaultTableModel(Values,cNames);
@@ -198,11 +245,16 @@ public class Inventory extends JFrame{
         p1.add(textField2);
         p2.add(scroll);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        Inv.add(p1);
-        Inv.add(p2);
+        emp.add(p1);
+        emp.add(p2);
 
-
-
+    }
+    public Employee(int id, String firstName, String lastName,String phoneNumber,String adress) {
+        this.firstName = firstName;
+        this.employee_Id = id;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.adress = adress;
     }
 
 
@@ -213,3 +265,4 @@ public class Inventory extends JFrame{
 
 
 }
+
