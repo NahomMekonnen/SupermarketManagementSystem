@@ -166,15 +166,6 @@ public class Login extends JFrame{
         setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
         c.add(p1);
         c.add(p2);
-
-
-
-
-
-
-
-
-
     }
 
 }
