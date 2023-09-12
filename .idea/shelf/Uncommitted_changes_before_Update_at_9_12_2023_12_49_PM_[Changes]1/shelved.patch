@@ -1,0 +1,40 @@
+Index: src/Login.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import  java.awt.*;\r\nimport javax.imageio.ImageIO;\r\nimport javax.swing.*;\r\nimport java.awt.event.*;\r\nimport java.awt.image.BufferedImage;\r\nimport java.io.File;\r\nimport java.io.IOException;\r\n\r\npublic class Login extends JFrame{\r\n    JLabel choose;\r\n    JLabel userID;\r\n    JLabel password;\r\n    JTextField idTextField;\r\n    JComboBox userType;\r\n    JPasswordField passwordField;\r\n\r\n    JButton login;\r\n    JButton clear;\r\n    JPanel p1;\r\n    JPanel p2;\r\n\r\n\r\n\r\n    Login()\r\n    {\r\n        Container c=getContentPane();\r\n        setSize(650,400);\r\n        setDefaultCloseOperation(EXIT_ON_CLOSE);\r\n        setTitle(\"LENNY SUPERMARKET\");\r\n        setLocationRelativeTo(null);\r\n\r\n        p1=new JPanel(){\r\n        private BufferedImage backgroundImage;\r\n\r\n        {\r\n            try {\r\n\r\n                backgroundImage = ImageIO.read(new File(\"C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/lenny.png\"));\r\n\r\n            } catch (IOException e) {\r\n                e.printStackTrace();\r\n            }\r\n        }\r\n\r\n        protected void paintComponent(Graphics g) {\r\n            super.paintComponent(g);\r\n\r\n            if (backgroundImage != null) {\r\n                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);\r\n            }\r\n        }\r\n    };\r\n\r\n        p2=new JPanel(){\r\n            private BufferedImage backgroundImage;\r\n\r\n            {\r\n                try {\r\n\r\n                    backgroundImage = ImageIO.read(new File(\"C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg\"));\r\n\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n            }\r\n\r\n            protected void paintComponent(Graphics g) {\r\n                super.paintComponent(g);\r\n\r\n                if (backgroundImage != null) {\r\n                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);\r\n                }\r\n            }\r\n        };\r\n\r\n        p2.setPreferredSize(new Dimension(200,400));\r\n\r\n\r\n\r\n        choose=new JLabel(\"User Type\");\r\n        choose.setForeground(Color.white);\r\n\r\n\r\n        String str[]={\"Admin\",\"User\"};\r\n        userType=new JComboBox(str);\r\n        userType.setBackground(Color.grey);\r\n\r\n        userID=new JLabel(\"User ID\");\r\n        userID.setForeground(Color.white);\r\n        idTextField=new JTextField();\r\n        password=new JLabel(\"password\");\r\n        password.setForeground(Color.white);\r\n\r\n        passwordField=new JPasswordField();\r\n        login=new JButton(\"Login\");\r\n\r\n        login.setBackground(new Color(40,40,40));\r\n        login.setForeground(Color.WHITE);\r\n        login.setFocusPainted(false);\r\n        login.setFont(new Font(\"Arial\", Font.BOLD, 16));\r\n\r\n        login.addMouseListener(new java.awt.event.MouseAdapter() {\r\n            public void mouseEntered(java.awt.event.MouseEvent evt) {\r\n                login.setBackground(new Color(60,60,60));\r\n            }\r\n\r\n            public void mouseExited(java.awt.event.MouseEvent evt) {\r\n                login.setBackground(new Color(40,40,40));\r\n            }\r\n        });\r\n        clear=new JButton(\"Clear\");\r\n\r\n        clear.setBackground(new Color(40,40,40));\r\n        clear.setForeground(Color.WHITE);\r\n        clear.setFocusPainted(false);\r\n        clear.setFont(new Font(\"Arial\", Font.BOLD, 16));\r\n\r\n        clear.addMouseListener(new java.awt.event.MouseAdapter() {\r\n            public void mouseEntered(java.awt.event.MouseEvent evt) {\r\n                clear.setBackground(new Color(60,60,60));\r\n            }\r\n\r\n            public void mouseExited(java.awt.event.MouseEvent evt) {\r\n                clear.setBackground(new Color(40,40,40));\r\n            }\r\n        });\r\n\r\n\r\n        p2.setLayout(null);\r\n       choose.setBounds(70,40,200,100);\r\n       userType.setBounds(160,70,200,40);\r\n       userID.setBounds(70,110,200,100);\r\n       idTextField.setBounds(160,140,200,40);\r\n\r\n       password.setBounds(70,180,200,100);\r\n       passwordField.setBounds(160,210,200,40);\r\n\r\n\r\n       login.setBounds(100,280,100,40);\r\n       clear.setBounds(250,280,100,40);\r\n\r\n\r\n\r\n\r\n        p2.add(choose);\r\n        p2.add(userType);\r\n        p2.add(userID);\r\n        p2.add(idTextField);\r\n        p2.add(password);\r\n        p2.add(passwordField);\r\n        p2.add(login);\r\n        p2.add(clear);\r\n\r\n\r\n        setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));\r\n        c.add(p1);\r\n        c.add(p2);\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Login.java b/src/Login.java
+--- a/src/Login.java	
++++ b/src/Login.java	
+@@ -155,15 +155,6 @@
+         setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+         c.add(p1);
+         c.add(p2);
+-
+-
+-
+-
+-
+-
+-
+-
+-
+     }
+ 
+ }
+Index: src/Supermarket.java
+===================================================================
+diff --git a/src/Supermarket.java b/src/Supermarket.java
+deleted file mode 100644
+--- a/src/Supermarket.java	
++++ /dev/null	
+@@ -1,6 +0,0 @@
+-public interface Supermarket{
+-    public  String getId();
+-    public  void setId(String id);
+-    public  String getName();
+-    public  void setName(String Name);
+-}
+\ No newline at end of file

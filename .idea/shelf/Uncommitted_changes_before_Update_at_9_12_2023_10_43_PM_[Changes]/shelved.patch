@@ -1,0 +1,93 @@
+Index: src/Supplier.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import javax.swing.*;\r\nimport java.awt.*;\r\n\r\npublic class Supplier {\r\n    String name;\r\n    String phone;\r\n    String beverage;\r\n\r\n    public Supplier(String name, String phone, String beverage) {\r\n        this.name = name;\r\n        this.phone = phone;\r\n        this.beverage = beverage;\r\n    }\r\n\r\n    public String getName() {\r\n        return name;\r\n    }\r\n\r\n    public String getPhone() {\r\n        return phone;\r\n    }\r\n\r\n    public String getBeverage() {\r\n        return beverage;\r\n    }\r\n    //the getters and setters can be replaced with the sql queries\r\n}\r\n\r\n class GUI extends JFrame {\r\n    private JPanel panel;\r\n    public GUI(Supplier supplier) {\r\n        panel = new JPanel(new GridLayout(3,2));\r\n        panel.add(new JLabel(\"Name:\"));\r\n        panel.add(new JLabel(supplier.getName()));\r\n        panel.add(new JLabel(\"Phone:\"));\r\n        panel.add(new JLabel(supplier.getPhone()));\r\n        panel.add(new JLabel(\"Beverage:\"));\r\n        panel.add(new JLabel(supplier.getBeverage()));\r\n        add(panel);\r\n        setTitle(\"Supplier Information\");\r\n        setSize(300,150);\r\n        setLocationRelativeTo(null);\r\n        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\r\n        setVisible(true);\r\n    }}
+===================================================================
+diff --git a/src/Supplier.java b/src/Supplier.java
+--- a/src/Supplier.java	
++++ b/src/Supplier.java	
+@@ -1,15 +1,23 @@
+-import javax.swing.*;
++import javax.swing.JFrame;
++import javax.swing.JPanel;
++import javax.swing.JScrollPane;
++import javax.swing.JTable;
++import javax.swing.table.DefaultTableModel;
+ import java.awt.*;
+ 
+ public class Supplier {
+-    String name;
+-    String phone;
+-    String beverage;
++    private String name;
++    private String phone;
++    private String beverageType;
+ 
+-    public Supplier(String name, String phone, String beverage) {
++    public Supplier(String name, String phone, String beverageType) {
+         this.name = name;
+         this.phone = phone;
+-        this.beverage = beverage;
++        this.beverageType = beverageType;
++    }
++
++    public Supplier() {
++
+     }
+ 
+     public String getName() {
+@@ -20,26 +28,31 @@
+         return phone;
+     }
+ 
+-    public String getBeverage() {
+-        return beverage;
++    public String getBeverageType() {
++        return beverageType;
+     }
+-    //the getters and setters can be replaced with the sql queries
+-}
++
++    public void addComponentsToPane(Container pane) {
++        JPanel panel = new JPanel();
++        panel.setSize(300, 300);
++
++        String[] columnNames = {"Name", "Phone", "Beverage Type"};
++        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
++
++        Supplier[] suppliers = new Supplier[3];
++        suppliers[0] = new Supplier("Nahom fr", "69-420", "Guns");
++        suppliers[1] = new Supplier("Nani!", "69-420-69", "cows");
++        suppliers[2] = new Supplier("Zaza", "420-69", "zaza");
++
++        for (Supplier supplier : suppliers) {
++            Object[] rowData = {supplier.getName(), supplier.getPhone(), supplier.getBeverageType()};
++            model.addRow(rowData);
++        }
+ 
+- class GUI extends JFrame {
+-    private JPanel panel;
+-    public GUI(Supplier supplier) {
+-        panel = new JPanel(new GridLayout(3,2));
+-        panel.add(new JLabel("Name:"));
+-        panel.add(new JLabel(supplier.getName()));
+-        panel.add(new JLabel("Phone:"));
+-        panel.add(new JLabel(supplier.getPhone()));
+-        panel.add(new JLabel("Beverage:"));
+-        panel.add(new JLabel(supplier.getBeverage()));
+-        add(panel);
+-        setTitle("Supplier Information");
+-        setSize(300,150);
+-        setLocationRelativeTo(null);
+-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+-        setVisible(true);
+-    }}
+\ No newline at end of file
++        JTable table = new JTable(model);
++        JScrollPane scrollPane = new JScrollPane(table);
++        panel.add(scrollPane);
++
++        pane.add(panel);
++    }
++}
+\ No newline at end of file
