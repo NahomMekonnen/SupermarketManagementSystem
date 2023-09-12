@@ -30,7 +30,7 @@ public class Inventory extends JFrame{
 
     JComboBox Cb;
     JTable T;
-    JButton back;
+    JButton back,add,remove;
     JScrollPane scroll;
     String[] options= {"ID","Name"};
     JPanel p1,p2;
@@ -150,6 +150,72 @@ public class Inventory extends JFrame{
             }
         });
         back.setBounds(10,10,80,20);
+
+        add=new JButton("Add");
+        add.setBackground(new Color(40,40,40));
+        add.setForeground(Color.WHITE);
+
+        add.setFocusPainted(false);
+        add.setFont(new Font("Arial", Font.BOLD, 16));
+
+        add.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                add.setBackground(new Color(60,60,60));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                add.setBackground(new Color(40,40,40));
+            }
+        });
+
+        add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource()==add)
+                {
+                    dispose();
+                    Admin n=new Admin();
+                    n.setVisible(true);
+                }
+
+            }
+        });
+        add.setBounds(250,390,100,50);
+        //scroll.setBounds(50,15,700,350);
+
+        remove=new JButton("Remove");
+        remove.setBackground(new Color(40,40,40));
+        remove.setForeground(Color.WHITE);
+
+        remove.setFocusPainted(false);
+        remove.setFont(new Font("Arial", Font.BOLD, 16));
+
+        remove.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                remove.setBackground(new Color(60,60,60));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                remove.setBackground(new Color(40,40,40));
+            }
+        });
+
+        remove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource()==remove)
+                {
+                    dispose();
+                    Admin n=new Admin();
+                    n.setVisible(true);
+                }
+
+            }
+        });
+        remove.setBounds(450,390,100,50);
+
+
+
         p1=new JPanel(null){
             private BufferedImage backgroundImage;
 
@@ -172,7 +238,7 @@ public class Inventory extends JFrame{
             }
         };
 
-        p2=new JPanel(){
+        p2=new JPanel(null){
             private BufferedImage backgroundImage;
 
             {
@@ -193,13 +259,14 @@ public class Inventory extends JFrame{
                 }
             }
         };
+
         p2.setPreferredSize(new Dimension(600,400));
 
         p1.setPreferredSize(new Dimension(600,50));
 
 
 
-        scroll.setBounds(450,65,500,150);
+        scroll.setBounds(50,15,700,350);
         scroll.setBackground(Color.WHITE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -208,6 +275,8 @@ public class Inventory extends JFrame{
         p1.add(Cb);
         p1.add(textField);
         p2.add(scroll);
+        p2.add(add);
+        p2.add(remove);
         Inv.add(p1);
         Inv.add(p2);
     }
