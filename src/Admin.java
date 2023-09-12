@@ -1,4 +1,6 @@
-//import inventory.Inventory;
+
+
+import inventory.Inventory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,7 +16,7 @@ public class Admin extends JFrame {
 
 
     JPanel p1,p2;
-    JButton b1,b2,b3,b4,b5;
+    JButton b1,b2,b3,b4,b5,back;
 
 
 
@@ -25,6 +27,7 @@ public class Admin extends JFrame {
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setTitle("LENNY SUPERMARKET");
 
 
 
@@ -81,7 +84,7 @@ public class Admin extends JFrame {
 
 
         p1.setLayout(null);
-        b1=new JButton("inventory");
+        b1=new JButton("Inventory");
         b1.setBackground(new Color(40,40,40));
         b1.setForeground(Color.WHITE);
 
@@ -98,6 +101,17 @@ public class Admin extends JFrame {
             }
         });
 
+        b1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource()==b1)
+                {
+                    dispose();
+                    Inventory inventory=new Inventory();
+                    inventory.setVisible(true);
+                }
+            }
+        });
 
         b2=new JButton("Employees");
         b2.setBackground(new Color(40,40,40));
@@ -168,6 +182,51 @@ public class Admin extends JFrame {
             }
         });
 
+        b4=new JButton("Profits");
+        b4.setBackground(new Color(40,40,40));
+        b4.setForeground(Color.WHITE);
+
+        b4.setFocusPainted(false);
+        b4.setFont(new Font("Arial", Font.BOLD, 16));
+
+        b4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                b4.setBackground(new Color(60,60,60));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                b4.setBackground(new Color(40,40,40));
+            }
+        });
+
+        back=new JButton("Back");
+        back.setBackground(new Color(40,40,40));
+        back.setForeground(Color.WHITE);
+
+        back.setFocusPainted(false);
+        back.setFont(new Font("Arial", Font.BOLD, 16));
+
+        back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                back.setBackground(new Color(60,60,60));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                back.setBackground(new Color(40,40,40));
+            }
+        });
+
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource()==back)
+                {
+                    dispose();
+                    Login n=new Login();
+                    n.setVisible(true);
+                }
+            }
+        });
 
 
         b1.setBounds(20,50,150,60);
@@ -175,20 +234,11 @@ public class Admin extends JFrame {
         b3.setBounds(240,50,150,60);
         b4.setBounds(240,170,150,60);
         b5.setBounds(130,270,150,60);
+        back.setBounds(10,10,80,20);
 
-//        b1.setBorderPainted(false);
-//        b2.setBorderPainted(false);
-//        b3.setBorderPainted(false);
-//        b4.setBorderPainted(false);
-//        b5.setBorderPainted(false);
 
-//        b1.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                    dispose();
-//                    Inventory inventory=new Inventory();
-//                    inventory.setVisible(true);
-//            }
-//        });
+
+        p1.add(back);
         p2.add(b1);
         p2.add(b2);
         p2.add(b3);
