@@ -1,8 +1,12 @@
 package inventory;
 import product.Product;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 
 import java.awt.event.ActionEvent;
@@ -63,24 +67,34 @@ public class Inventory extends JFrame{
             Values[i][5]= String.valueOf(products[i].getCategory_id());
         }
 
-        T= new JTable(Values,cNames);
+        TableModel model= new DefaultTableModel(Values,cNames);
+        TableRowSorter sorter=new TableRowSorter(model);
+        T= new JTable(model);
+        T.setRowSorter(sorter);
         scroll=new JScrollPane(T);
-        search.addActionListener(new ActionListener() {
-            String[][] Value=new String[1][cNames.length];
 
+        tf.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                Product product=inventoryActions.Search(tf.getText());
-                System.out.println(product.getProduct_name());
-                Value[0][0]= String.valueOf(product.getProduct_id());
-                Value[0][1]= product.getProduct_name();
-                Value[0][2]= String.valueOf(product.getPrice());
-                Value[0][3]= String.valueOf(product.getAmount());
-                Value[0][4]= String.valueOf(product.getDate());
-                Value[0][5]= String.valueOf(product.getCategory_id());
-                T2= new JTable(Value,cNames);
-
+            public void insertUpdate(DocumentEvent e) {
+                search(tf.getText());
             }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                search(tf.getText());
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                search(tf.getText());
+            }
+            public void search(String str) {
+                if (str.length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter(str));
+                }
+            }
+
+
         });
 
         scroll.setBounds(450,65,500,150);
@@ -89,12 +103,14 @@ public class Inventory extends JFrame{
         search.setBounds(0,0,100,100);
 
         Inv.add(tf);
-        Inv.add(search);
+        //Inv.add(search);
 
         Inv.add(scroll);
 
 
     }
+
+
 
 
 
