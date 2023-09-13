@@ -34,7 +34,7 @@ public class Inventory extends JFrame{
     JScrollPane scroll;
     String[] options= {"ID","Name"};
     JPanel p1,p2;
-    JDialog newItem;
+    JDialog newItem,removeItem;
 
 
 
@@ -277,9 +277,69 @@ public class Inventory extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource()==remove)
                 {
-                    dispose();
-                    Admin n=new Admin();
-                    n.setVisible(true);
+                    removeItem = new JDialog();
+
+                    removeItem.setTitle("Remove Item");
+                    removeItem.setLayout(null);
+
+                    JLabel name=new JLabel("Item name");
+                    name.setBounds(25,10,200,30);
+                    JLabel expiredate=new JLabel("Item Expiredate");
+                    expiredate.setBounds(25,50,200,30);
+                    JLabel category=new JLabel("Item Category Id");
+                    category.setBounds(25,90,200,30);
+
+                    JButton done=new JButton("Done");
+
+
+                    done.setBackground(new Color(40,40,40));
+                    done.setForeground(Color.WHITE);
+                    done.setFocusPainted(false);
+                    done.setFont(new Font("Arial", Font.BOLD, 16));
+
+                    done.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseEntered(java.awt.event.MouseEvent evt) {
+                            done.setBackground(new Color(60,60,60));
+                        }
+
+                        public void mouseExited(java.awt.event.MouseEvent evt) {
+                            done.setBackground(new Color(40,40,40));
+                        }
+                    });
+                    done.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            if(e.getSource()==done)
+                            {
+                                dispose();
+                                Admin n=new Admin();
+                                n.setVisible(true);
+                            }
+                        }
+                    });
+                    done.setBounds(300,260,100,30);
+
+
+                    JTextField jTextField_name=new JTextField(20);
+                    jTextField_name.setBounds(225,10,300,30);
+                    JTextField jTextField_expiredate=new JTextField(20);
+                    jTextField_expiredate.setBounds(225,50,300,30);
+                    JTextField jTextField_categoryId=new JTextField(20);
+                    jTextField_categoryId.setBounds(225,90,300,30);
+
+                    removeItem.add(name);
+                    removeItem.add(jTextField_name);
+                    removeItem.add(expiredate);
+                    removeItem.add(jTextField_expiredate);
+                    removeItem.add(category);
+                    removeItem.add(jTextField_categoryId);
+                    removeItem.add(done);
+                    removeItem.setSize(600, 400);
+
+
+
+                    removeItem.setLocationRelativeTo(null);
+                    removeItem.setVisible(true);
+
                 }
 
             }

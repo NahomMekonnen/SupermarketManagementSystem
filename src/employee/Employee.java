@@ -39,7 +39,7 @@ public class Employee extends JFrame{
     JComboBox Cb;
     JTable T;
     JButton back,add,remove;
-    JDialog newEmployee;
+    JDialog newEmployee,removeEmployee;
 
 
     JScrollPane scroll;
@@ -321,9 +321,70 @@ public class Employee extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource()==remove)
                 {
-                    dispose();
-                    Admin n=new Admin();
-                    n.setVisible(true);
+                    removeEmployee = new JDialog();
+
+                    removeEmployee.setTitle("Remove Employee");
+                    removeEmployee.setLayout(null);
+                    JLabel fn=new JLabel("Employee First Name");
+                    fn.setBounds(25,10,200,30);
+                    JLabel ln=new JLabel("Employee Last Name");
+                    ln.setBounds(25,50,200,30);
+                    JLabel id=new JLabel("Employee ID");
+                    id.setBounds(25,90,200,30);
+
+                    JButton done=new JButton("Done");
+
+
+                    done.setBackground(new Color(40,40,40));
+                    done.setForeground(Color.WHITE);
+                    done.setFocusPainted(false);
+                    done.setFont(new Font("Arial", Font.BOLD, 16));
+
+                    done.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseEntered(java.awt.event.MouseEvent evt) {
+                            done.setBackground(new Color(60,60,60));
+                        }
+
+                        public void mouseExited(java.awt.event.MouseEvent evt) {
+                            done.setBackground(new Color(40,40,40));
+                        }
+                    });
+                    done.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            if(e.getSource()==done)
+                            {
+                                dispose();
+                                Admin n=new Admin();
+                                n.setVisible(true);
+                            }
+                        }
+                    });
+                    done.setBounds(300,260,100,30);
+
+
+                    JTextField jTextField_fn=new JTextField(20);
+                    jTextField_fn.setBounds(225,10,300,30);
+                    JTextField jTextField_ln=new JTextField(20);
+                    jTextField_ln.setBounds(225,50,300,30);
+                    JTextField jTextField_id=new JTextField(20);
+                    jTextField_id.setBounds(225,90,300,30);
+
+
+                    removeEmployee.add(fn);
+                    removeEmployee.add(jTextField_fn);
+                    removeEmployee.add(ln);
+                    removeEmployee.add(jTextField_ln);
+                    removeEmployee.add(id);
+                    removeEmployee.add(jTextField_id);
+
+                    removeEmployee.add(done);
+                    removeEmployee.setSize(600, 400);
+
+
+
+                    removeEmployee.setLocationRelativeTo(null);
+                    removeEmployee.setVisible(true);
+
                 }
 
             }
