@@ -3,6 +3,7 @@ package supplier;
 import admin.Admin;
 import database.Database;
 
+import employee.Employee;
 import product.Product;
 
 import javax.imageio.ImageIO;
@@ -33,6 +34,13 @@ public class Supplier extends JFrame{
         itemSupplied=items;
         address=Address;
     }
+    Supplier(String fName,String lName,String phone,String items,String Address){
+        firstName=fName;
+        lastName=lName;
+        phoneNumber=phone;
+        itemSupplied=items;
+        address=Address;
+    }
     Connection connection;
     SupplierActions supplierActions;
     JPanel p1,p2;
@@ -41,7 +49,7 @@ public class Supplier extends JFrame{
 
     JComboBox Cb;
     JTable T;
-    JButton newSupplier,supplyProducts,removeSupplier,back;
+    JButton newSupplier,supplyProducts,removeSupplier,back,done;
     JScrollPane scroll;
     JDialog newSupply,newItem,removeSupply;
     String[] options= {"ID","Name"};
@@ -183,6 +191,8 @@ public class Supplier extends JFrame{
 
                     newSupply.setTitle("Add Suplier");
                     newSupply.setLayout(null);
+
+
                     JLabel fn=new JLabel("Supplier First Name");
                     fn.setBounds(25,10,200,30);
                     JLabel ln=new JLabel("Supplier Last Name");
@@ -195,7 +205,151 @@ public class Supplier extends JFrame{
                     ad.setBounds(25,170,200,30);
 
 
-                    JButton done=new JButton("Done");
+
+
+                    JTextField jTextField_fn=new JTextField(20);
+                    jTextField_fn.setBounds(225,10,300,30);
+                    JTextField jTextField_ln=new JTextField(20);
+                    jTextField_ln.setBounds(225,50,300,30);
+                    JTextField jTextField_pn=new JTextField(20);
+                    jTextField_pn.setBounds(225,90,300,30);
+                    JTextField jTextField_is=new JTextField(20);
+                    jTextField_is.setBounds(225,130,300,30);
+                    JTextField jTextField_ad=new JTextField(20);
+                    jTextField_ad.setBounds(225,170,300,30);
+
+
+
+
+                    jTextField_fn.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_fn.getText().isEmpty()){
+                                jTextField_fn.setBackground(Color.lightGray);
+                            }else{
+                                jTextField_fn.setBackground(Color.white);
+                            }
+                        }
+                    });
+                    jTextField_ln.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_ln.getText().isEmpty()){
+                                jTextField_ln.setBackground(Color.lightGray);
+                            }else {
+                                jTextField_ln.setBackground(Color.white);
+                            }
+                        }
+                    });
+
+                    jTextField_pn.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_pn.getText().isEmpty()){
+                                jTextField_pn.setBackground(Color.lightGray);
+                            }else{
+                                jTextField_pn.setBackground(Color.WHITE);
+                            }
+                        }
+                    });
+
+                    jTextField_ad.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_ad.getText().isEmpty()){
+                                jTextField_ad.setBackground(Color.lightGray);
+                            }else{
+                                jTextField_ad.setBackground(Color.white);
+                            }
+                        }
+                    });
+
+
+
+                    jTextField_is.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_is.getText().isEmpty()){
+                                jTextField_is.setBackground(Color.lightGray);
+                            }else{
+                                jTextField_is.setBackground(Color.white);
+                            }
+                        }
+                    });
+
+
+                    done=new JButton("Done");
+
 
 
                     done.setBackground(new Color(40,40,40));
@@ -217,6 +371,11 @@ public class Supplier extends JFrame{
                             if(e.getSource()==done)
                             {
                                 dispose();
+                                if(jTextField_fn.getText().isEmpty()==false&&jTextField_ln.getText().isEmpty()==false&&jTextField_pn.getText().isEmpty()==false&&jTextField_ad.getText().isEmpty()==false&&jTextField_is.getText().isEmpty()==false){
+                                    Supplier addSupplier=new Supplier(jTextField_fn.getText(),jTextField_ln.getText(),jTextField_pn.getText(),jTextField_is.getText(),jTextField_ad.getText());
+                                    supplierActions.Add(addSupplier);
+                                    newSupply.dispose();
+                                }
                                 Admin n=new Admin();
                                 n.setVisible(true);
                             }
@@ -225,16 +384,7 @@ public class Supplier extends JFrame{
                     done.setBounds(300,260,100,30);
 
 
-                    JTextField jTextField_fn=new JTextField(20);
-                    jTextField_fn.setBounds(225,10,300,30);
-                    JTextField jTextField_ln=new JTextField(20);
-                    jTextField_ln.setBounds(225,50,300,30);
-                    JTextField jTextField_pn=new JTextField(20);
-                    jTextField_pn.setBounds(225,90,300,30);
-                    JTextField jTextField_is=new JTextField(20);
-                    jTextField_is.setBounds(225,130,300,30);
-                    JTextField jTextField_ad=new JTextField(20);
-                    jTextField_ad.setBounds(225,170,300,30);
+
 
                     newSupply.add(fn);
                     newSupply.add(jTextField_fn);
@@ -404,6 +554,90 @@ public class Supplier extends JFrame{
                     id.setBounds(25,90,200,30);
                     JButton done=new JButton("Done");
 
+                    JTextField jTextField_fn=new JTextField(20);
+                    jTextField_fn.setBounds(225,10,300,30);
+                    JTextField jTextField_ln=new JTextField(20);
+                    jTextField_ln.setBounds(225,50,300,30);
+                    JTextField jTextField_ID=new JTextField(20);
+                    jTextField_ID.setBounds(225,90,300,30);
+
+                    jTextField_fn.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_fn.getText().isEmpty()){
+                                jTextField_fn.setBackground(Color.lightGray);
+                            }else{
+                                jTextField_fn.setBackground(Color.white);
+                            }
+                        }
+                    });
+                    jTextField_ln.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_ln.getText().isEmpty()){
+                                jTextField_ln.setBackground(Color.lightGray);
+                            }else {
+                                jTextField_ln.setBackground(Color.white);
+                            }
+                        }
+                    });
+
+                    jTextField_ID.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_ID.getText().isEmpty()){
+                                jTextField_ID.setBackground(Color.lightGray);
+                            }else {
+                                jTextField_ID.setBackground(Color.white);
+                            }
+                        }
+                    });
+
+
+
+
 
                     done.setBackground(new Color(40,40,40));
                     done.setForeground(Color.WHITE);
@@ -423,20 +657,21 @@ public class Supplier extends JFrame{
                         public void actionPerformed(ActionEvent e) {
                             if(e.getSource()==done)
                             {
-                               removeSupply.dispose();
 
+                                for (int i=0;i<count;i++){
+                                    if(Integer.parseInt(jTextField_ID.getText())==suppliers[i].getSupplier_id()&&jTextField_fn.getText().equals(suppliers[i].firstName)) {
+                                        supplierActions.Remove(suppliers[i]);
+                                        removeSupply.dispose();
+                                    }
+                                }
+                                Admin n=new Admin();
+                                n.setVisible(true);
                             }
                         }
                     });
                     done.setBounds(300,260,100,30);
 
 
-                    JTextField jTextField_fn=new JTextField(20);
-                    jTextField_fn.setBounds(225,10,300,30);
-                    JTextField jTextField_ln=new JTextField(20);
-                    jTextField_ln.setBounds(225,50,300,30);
-                    JTextField jTextField_ID=new JTextField(20);
-                    jTextField_ID.setBounds(225,90,300,30);
 
 
                     removeSupply.add(fn);
@@ -465,7 +700,7 @@ public class Supplier extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -487,7 +722,7 @@ public class Supplier extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();

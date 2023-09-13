@@ -38,12 +38,13 @@ public class Inventory extends JFrame{
 
 
     public Inventory(){
-        Container Inv = getContentPane();
+        Container inv = getContentPane();
         inventoryActions = new InventoryActions();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(800,600);
         setLayout(null);
         setLocationRelativeTo(null);
+        setResizable(false);
         setTitle("Inventory");
         connection = Database.connection;
         textField=new JTextField(100);
@@ -242,7 +243,7 @@ public class Inventory extends JFrame{
 
             }
         });
-        remove.setBounds(450,390,100,50);
+        remove.setBounds(350,390,100,50);
 
 
 
@@ -252,7 +253,7 @@ public class Inventory extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -274,7 +275,7 @@ public class Inventory extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -306,7 +307,7 @@ public class Inventory extends JFrame{
         p1.add(textField);
         p2.add(scroll);
         p2.add(remove);
-        Inv.add(p1);
-        Inv.add(p2);
+        inv.add(p1);
+        inv.add(p2);
     }
 }

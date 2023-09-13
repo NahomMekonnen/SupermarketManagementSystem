@@ -13,21 +13,11 @@ public class SalesActions {
     public SalesActions(int salesID, Date salesDate, int salesQuantity, Double totalMoney) {
     }
 
+
     public SalesActions() {
 
     }
 
-    public int getSalesID() {
-        return salesID;
-    }
-
-    public int getSalesQuantity() {
-        return salesQuantity;
-    }
-
-    public Date getSalesDate() {
-        return salesDate;
-    }
 
     public Double getTotalMoney() {
         return totalMoney;
@@ -36,7 +26,7 @@ public class SalesActions {
     int Count() {
         try {
             Statement stmt = Database.connection.createStatement();
-            String query = "SELECT COUNT(sales_id) FROM sales";
+            String query = "SELECT COUNT(sale_id) FROM sales";
             ResultSet resultSet = stmt.executeQuery(query);
             while (resultSet.next()){
                 return resultSet.getInt(1);
@@ -49,13 +39,18 @@ public class SalesActions {
         }
     }
 
-    SalesActions[] Retrieve(int count) {
+    Sales[] Retrieve(int count) {
         int x=0;
-        SalesActions[] salesArray = new SalesActions[count];
+        Sales[] salesArray = new Sales[count];
         try {
             Statement stmt = Database.connection.createStatement();
             String query = "Select * From sales";
             ResultSet resultSet = stmt.executeQuery(query);
+
+            System.out.println("Attempt");
+
+            System.out.println("result " + resultSet);
+
 
             while (resultSet.next()) {
                 salesID = resultSet.getInt(1);
@@ -63,7 +58,8 @@ public class SalesActions {
                 salesQuantity = resultSet.getInt(3);
                 totalMoney = resultSet.getDouble(4);
 
-                SalesActions newSales = new SalesActions(salesID, salesDate, salesQuantity, totalMoney);
+                System.out.println(salesID + " " + salesDate + " " + salesQuantity + " " + totalMoney);
+                Sales newSales = new Sales(salesID, salesDate, salesQuantity, totalMoney);
                 salesArray[x] = newSales;
                 x++;
             }
@@ -76,8 +72,8 @@ public class SalesActions {
     double calculateTotalSales() {
         double totalSales = 0;
         int count = Count();
-        SalesActions[] salesArray = Retrieve(count);
-        for (SalesActions sale : salesArray) {
+        Sales[] salesArray = Retrieve(count);
+        for (Sales sale : salesArray) {
             totalSales += sale.getTotalMoney();
         }
         return totalSales;

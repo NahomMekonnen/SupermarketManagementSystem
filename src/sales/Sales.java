@@ -64,6 +64,7 @@ public class Sales extends JFrame {
         setLayout(null);
         setLocationRelativeTo(null);
         setTitle("LENNY SUPERMARKET");
+        setResizable(false);
 
         connection=Database.connection;
 
@@ -177,7 +178,7 @@ public class Sales extends JFrame {
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -199,7 +200,7 @@ public class Sales extends JFrame {
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -10,16 +10,15 @@ public class SupplierActions {
     int id;
     String firstName,lastName,phoneNumber,itemSupplied,address;
 
-    void Add(Supplier supplier) throws SQLException {
+ public   void Add(Supplier supplier)  {
         try {
 
-            PreparedStatement statement= Database.connection.prepareStatement("Insert into suppliers(?,?,?,?,?,?)");
-            statement.setInt(1,supplier.getSupplier_id());
-            statement.setString(2,supplier.getFirstName());
-            statement.setString(3,supplier.getLastName());
-            statement.setString(4,supplier.getPhoneNumber());
-            statement.setString(5,supplier.getItemSupplied());
-            statement.setString(6,supplier.getAddress());
+            PreparedStatement statement= Database.connection.prepareStatement("Insert into suppliers Values(?,?,?,?,?)");
+            statement.setString(1,supplier.getFirstName());
+            statement.setString(2,supplier.getLastName());
+            statement.setString(3,supplier.getPhoneNumber());
+            statement.setString(4,supplier.getItemSupplied());
+            statement.setString(5,supplier.getAddress());
             System.out.println("Added");
             statement.executeUpdate();
 
@@ -28,7 +27,20 @@ public class SupplierActions {
         }
 
     }
-    void Supply(Product product){
+    public void Remove(Supplier supplier)
+    {
+        try{
+            PreparedStatement statement=Database.connection.prepareStatement("DELETE FROM suppliers WHERE supplier_id= "+ supplier.getSupplier_id()+"AND supplier_firstName= '"+ supplier.getFirstName()+"'");
+            System.out.println("Removed");
+            statement.executeUpdate();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+    public void Supply(Product product){
         try {
 
             PreparedStatement statement= Database.connection.prepareStatement("Insert into products(?,?,?,?,?,?)");

@@ -231,6 +231,7 @@ public class Cashier extends JFrame{
         setSize(800,600);
         setLayout(null);
         setLocationRelativeTo(null);
+        setResizable(false);
 
         connection= Database.connection;
 

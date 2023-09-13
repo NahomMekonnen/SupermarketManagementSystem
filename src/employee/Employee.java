@@ -1,6 +1,6 @@
 package employee;
 import admin.Admin;
-
+import inventory.InventoryActions;
 import product.Product;
 
 import javax.imageio.ImageIO;
@@ -98,6 +98,7 @@ public class Employee extends JFrame{
         setSize(800,600);
         setLayout(null);
         setLocationRelativeTo(null);
+        setResizable(false);
         setTitle("Employee");
         connection = Database.connection;
         textField=new JTextField(100);
@@ -378,9 +379,11 @@ public class Employee extends JFrame{
                                 if(jTextField_fn.getText().isEmpty()==false&&jTextField_ln.getText().isEmpty()==false&&jTextField_pn.getText().isEmpty()==false&&jTextField_ad.getText().isEmpty()==false){
                                     Employee addEmployee=new Employee(jTextField_fn.getText(),jTextField_ln.getText(),jTextField_pn.getText(),jTextField_ad.getText());
                                     employeeActions.Add(addEmployee);
+                                    newEmployee.dispose();
                                 }
                                 Admin n=new Admin();
                                 n.setVisible(true);
+
                             }
                         }
                     });
@@ -550,6 +553,7 @@ public class Employee extends JFrame{
                                 for (int i=0;i<count;i++){
                                     if(Integer.parseInt(jTextField_id.getText())==employees[i].getEmployee_Id()&&jTextField_fn.getText().equals(employees[i].firstName)) {
                                         employeeActions.Remove(employees[i]);
+                                        removeEmployee.dispose();
                                     }
                                 }
 
@@ -587,7 +591,7 @@ public class Employee extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -609,7 +613,7 @@ public class Employee extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -1,4 +1,4 @@
-package Profit;
+package profit;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +14,7 @@ public class Profit extends JFrame {
         setSize(400,200);
         setLayout(null);
         setLocationRelativeTo(null);
+        setResizable(false);
 
         double profit = profitActions.calculateProfit();
         profitLabel = new JLabel("Total Profit: " + profit);
