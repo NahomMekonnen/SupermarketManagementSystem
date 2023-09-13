@@ -1,4 +1,4 @@
-package Sales;
+package sales;
 
 import database.Database;
 import java.sql.Date;
@@ -11,6 +11,10 @@ public class SalesActions {
     private Double totalMoney;
 
     public SalesActions(int salesID, Date salesDate, int salesQuantity, Double totalMoney) {
+    }
+
+    public SalesActions() {
+
     }
 
     public int getSalesID() {
