@@ -24,9 +24,11 @@ public class Main {
 //        ad.setVisible(true);
 ///        Admin n=new Admin();
 //        n.setVisible(true);
-        Employee e=new Employee();
-        e.setVisible(true);
+//        Employee e=new Employee();
+//        e.setVisible(true);
 
+        Cashier c=new Cashier();
+        c.setVisible(true);
 
     }
 }
