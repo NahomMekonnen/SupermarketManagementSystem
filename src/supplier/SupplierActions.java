@@ -10,10 +10,10 @@ public class SupplierActions {
     int id;
     String firstName,lastName,phoneNumber,itemSupplied,address;
 
-    void Add(Supplier supplier) throws SQLException {
+    void Add(Supplier supplier) {
         try {
 
-            PreparedStatement statement= Database.connection.prepareStatement("Insert into suppliers(?,?,?,?,?,?)");
+            PreparedStatement statement= Database.connection.prepareStatement("INSERT INTO suppliers VALUES (?,?,?,?,?,?)");
             statement.setInt(1,supplier.getSupplier_id());
             statement.setString(2,supplier.getFirstName());
             statement.setString(3,supplier.getLastName());

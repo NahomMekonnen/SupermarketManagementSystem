@@ -550,6 +550,7 @@ public class Employee extends JFrame{
                                 for (int i=0;i<count;i++){
                                     if(Integer.parseInt(jTextField_id.getText())==employees[i].getEmployee_Id()&&jTextField_fn.getText().equals(employees[i].firstName)) {
                                         employeeActions.Remove(employees[i]);
+                                        dispose();
                                     }
                                 }
 

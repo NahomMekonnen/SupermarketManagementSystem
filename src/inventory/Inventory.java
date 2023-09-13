@@ -1,5 +1,4 @@
 package inventory;
-import employee.EmployeeActions;
 import product.Product;
 import admin.*;
 
@@ -7,7 +6,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -182,7 +180,7 @@ public class Inventory extends JFrame{
 
                     JLabel name=new JLabel("Item name");
                     name.setBounds(25,10,200,30);
-                    JLabel expiredate=new JLabel("Item Expiredate");
+                    JLabel expiredate=new JLabel("Item Exp_Date");
                     expiredate.setBounds(25,50,200,30);
                     JLabel category=new JLabel("Item Category Id");
                     category.setBounds(25,90,200,30);
@@ -194,6 +192,89 @@ public class Inventory extends JFrame{
                     done.setForeground(Color.WHITE);
                     done.setFocusPainted(false);
                     done.setFont(new Font("Arial", Font.BOLD, 16));
+
+
+                    JTextField jTextField_name=new JTextField(20);
+                    jTextField_name.setBounds(225,10,300,30);
+                    JTextField jTextField_expireDate =new JTextField(20);
+                    jTextField_expireDate.setBounds(225,50,300,30);
+                    JTextField jTextField_categoryId=new JTextField(20);
+                    jTextField_categoryId.setBounds(225,90,300,30);
+
+                    jTextField_name.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_name.getText().isEmpty()){
+                                jTextField_name.setBackground(Color.lightGray);
+                            }else{
+                                jTextField_name.setBackground(Color.WHITE);
+                            }
+                        }
+                    });
+
+
+                    jTextField_categoryId.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_categoryId.getText().isEmpty()){
+                                jTextField_categoryId.setBackground(Color.lightGray);
+                            }else{
+                                jTextField_categoryId.setBackground(Color.WHITE);
+                            }
+                        }
+                    });
+                    jTextField_expireDate.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_expireDate.getText().isEmpty()){
+                                jTextField_expireDate.setBackground(Color.lightGray);
+                            }else{
+                                jTextField_expireDate.setBackground(Color.WHITE);
+                            }
+                        }
+                    });
 
                     done.addMouseListener(new java.awt.event.MouseAdapter() {
                         public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -209,6 +290,12 @@ public class Inventory extends JFrame{
                             if(e.getSource()==done)
                             {
                                 dispose();
+                                for (int i=0;i<count;i++){
+                                    if((jTextField_name.getText().equals(products[i].getProduct_name()) && Integer.parseInt(jTextField_categoryId.getText()) == products[i].getCategory_id())){
+                                        inventoryActions.Remove(products[i]);
+                                        dispose();
+                                    }
+                                }
                                 Admin n=new Admin();
                                 n.setVisible(true);
                             }
@@ -217,17 +304,10 @@ public class Inventory extends JFrame{
                     done.setBounds(300,260,100,30);
 
 
-                    JTextField jTextField_name=new JTextField(20);
-                    jTextField_name.setBounds(225,10,300,30);
-                    JTextField jTextField_expiredate=new JTextField(20);
-                    jTextField_expiredate.setBounds(225,50,300,30);
-                    JTextField jTextField_categoryId=new JTextField(20);
-                    jTextField_categoryId.setBounds(225,90,300,30);
-
                     removeItem.add(name);
                     removeItem.add(jTextField_name);
                     removeItem.add(expiredate);
-                    removeItem.add(jTextField_expiredate);
+                    removeItem.add(jTextField_expireDate);
                     removeItem.add(category);
                     removeItem.add(jTextField_categoryId);
                     removeItem.add(done);

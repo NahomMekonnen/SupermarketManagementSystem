@@ -1,6 +1,7 @@
 package inventory;
 
 import database.Database;
+import employee.Employee;
 import product.Product;
 
 import javax.swing.plaf.nimbus.State;
@@ -18,7 +19,7 @@ public class InventoryActions {
     Date date;
     Double money;
 
-    int Count() {
+    public int Count() {
         try {
             Statement stmt = Database.connection.createStatement();
             String query = "SELECT COUNT(product_id) FROM Products";
@@ -32,6 +33,17 @@ public class InventoryActions {
         } catch (Exception e) {
             System.out.println(e);
             return 0;
+        }
+    }
+
+    public void Remove(Product product)  {
+        try {
+            PreparedStatement statement=Database.connection.prepareStatement("DELETE FROM Products WHERE product_id = "+ product.getProduct_id() +" AND product_name = '" + product.getProduct_name() +"'");
+            System.out.println("Removed");
+            statement.executeUpdate();
+
+        } catch (Exception e){
+            System.out.println(e);
         }
     }
 

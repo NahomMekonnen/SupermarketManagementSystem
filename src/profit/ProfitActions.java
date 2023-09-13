@@ -1,4 +1,4 @@
-package Profit;
+package profit;
 
 import database.Database;
 import java.sql.ResultSet;

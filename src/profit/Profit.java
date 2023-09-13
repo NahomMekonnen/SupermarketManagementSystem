@@ -1,4 +1,4 @@
-package Profit;
+package profit;
 
 import javax.swing.*;
 import java.awt.*;
