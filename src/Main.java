@@ -16,7 +16,7 @@ public class Main {
      Login l=new Login();
      l.setVisible(true);
 
-        Database database =new  Database("localhost","SuperMarket","sa","Nani2239");
+        Database database =new  Database("localhost","SuperMarket","sa","Nohom420");
         database.instantiate();
 //        Inventory inventory=new Inventory();
 //        inventory.setVisible(true);

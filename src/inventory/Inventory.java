@@ -20,7 +20,7 @@ import java.sql.*;
 
 import database.Database;
 public class Inventory extends JFrame{
-    Connection connection;
+
     InventoryActions inventoryActions;
 
     JLabel l1,l2;
@@ -44,7 +44,7 @@ public class Inventory extends JFrame{
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Inventory");
-        connection = Database.connection;
+
         textField=new JTextField(100);
         textField.setBounds(310,25,300,30);
 

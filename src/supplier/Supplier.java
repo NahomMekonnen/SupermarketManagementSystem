@@ -3,14 +3,12 @@ package supplier;
 import admin.Admin;
 import database.Database;
 
-import employee.Employee;
 import product.Product;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -21,27 +19,28 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 
 public class Supplier extends JFrame{
-    private int supplier_id;
-    private String firstName,lastName,phoneNumber,itemSupplied,address;
+    private int supplier_id,category_id;
+    private String firstName,lastName,phoneNumber,address;
 
-    Supplier(int id,String fName,String lName,String phone,String items,String Address){
+    Supplier(int id,String fName,String lName,String phone,int category,String Address){
         supplier_id=id;
         firstName=fName;
         lastName=lName;
         phoneNumber=phone;
-        itemSupplied=items;
+        category_id=category;
         address=Address;
     }
-    Supplier(String fName,String lName,String phone,String items,String Address){
+    Supplier(String fName,String lName,String phone,int category,String Address){
         firstName=fName;
         lastName=lName;
         phoneNumber=phone;
-        itemSupplied=items;
+        category_id=category;
         address=Address;
     }
-    Connection connection;
+
     SupplierActions supplierActions;
     JPanel p1,p2;
     JLabel l1,l2;
@@ -61,7 +60,7 @@ public class Supplier extends JFrame{
         setLayout(null);
         setLocationRelativeTo(null);
         setTitle("Supplier");
-        connection = Database.connection;
+
         textField=new JTextField(100);
         textField.setBounds(310,25,300,30);
 
@@ -79,7 +78,7 @@ public class Supplier extends JFrame{
         l1.setFont(new Font("Arial", Font.BOLD, 16));
 
 
-        String[] cNames = new String[]{"ID", "FirstName", "LastName", "Phone_No", "Item_Supplied", "Address"};
+        String[] cNames = new String[]{"ID", "FirstName", "LastName", "Phone_No", "Category_ID", "Address"};
 
         String [][] Values = new String[count][cNames.length];
         for(int i=0;i<count; i++){
@@ -87,7 +86,7 @@ public class Supplier extends JFrame{
             Values[i][1]= suppliers[i].getFirstName();
             Values[i][2]= suppliers[i].getLastName();
             Values[i][3]= suppliers[i].getPhoneNumber();
-            Values[i][4]= suppliers[i].getItemSupplied();
+            Values[i][4]= String.valueOf(suppliers[i].getCategory_id());
             Values[i][5]= suppliers[i].getAddress();
         }
 
@@ -189,7 +188,7 @@ public class Supplier extends JFrame{
                 if(e.getSource()==newSupplier) {
                     newSupply = new JDialog();
 
-                    newSupply.setTitle("Add Suplier");
+                    newSupply.setTitle("Add Supplier");
                     newSupply.setLayout(null);
 
 
@@ -199,7 +198,7 @@ public class Supplier extends JFrame{
                     ln.setBounds(25,50,200,30);
                     JLabel pn=new JLabel("Supplier Phone Number");
                     pn.setBounds(25,90,200,30);
-                    JLabel is=new JLabel("Supplier Item Supplied");
+                    JLabel is=new JLabel("Item Category ID");
                     is.setBounds(25,130,200,30);
                     JLabel ad=new JLabel("Supplier Address ");
                     ad.setBounds(25,170,200,30);
@@ -372,7 +371,7 @@ public class Supplier extends JFrame{
                             {
                                 dispose();
                                 if(jTextField_fn.getText().isEmpty()==false&&jTextField_ln.getText().isEmpty()==false&&jTextField_pn.getText().isEmpty()==false&&jTextField_ad.getText().isEmpty()==false&&jTextField_is.getText().isEmpty()==false){
-                                    Supplier addSupplier=new Supplier(jTextField_fn.getText(),jTextField_ln.getText(),jTextField_pn.getText(),jTextField_is.getText(),jTextField_ad.getText());
+                                    Supplier addSupplier=new Supplier(jTextField_fn.getText(),jTextField_ln.getText(),jTextField_pn.getText(),Integer.valueOf(jTextField_is.getText()),jTextField_ad.getText());
                                     supplierActions.Add(addSupplier);
                                     newSupply.dispose();
                                 }
@@ -453,6 +452,172 @@ public class Supplier extends JFrame{
                     JButton done=new JButton("Done");
 
 
+
+
+
+                    JTextField jTextField_name=new JTextField(20);
+                    jTextField_name.setBounds(225,10,300,30);
+                    JTextField jTextField_price=new JTextField(20);
+                    jTextField_price.setBounds(225,50,300,30);
+                    JTextField jTextField_quantity=new JTextField(20);
+                    jTextField_quantity.setBounds(225,90,300,30);
+                    JTextField jTextField_expiredate=new JTextField(20);
+                    jTextField_expiredate.setBounds(225,130,300,30);
+                    JTextField jTextField_categoryId=new JTextField(20);
+                    jTextField_categoryId.setBounds(225,170,300,30);
+                    JTextField jTextField_id=new JTextField();
+                    jTextField_id.setBounds(225,210,300,30);
+
+                    jTextField_name.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_name.getText().isEmpty()){
+                                jTextField_name.setBackground(Color.lightGray);
+                            }else{
+                                jTextField_name.setBackground(Color.white);
+                            }
+                        }
+                    });
+
+                    jTextField_price.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_price.getText().isEmpty()){
+                                jTextField_price.setBackground(Color.lightGray);
+                            }else{
+                                jTextField_price.setBackground(Color.white);
+                            }
+                        }
+                    });
+
+                    jTextField_expiredate.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_expiredate.getText().isEmpty()){
+                                jTextField_expiredate.setBackground(Color.lightGray);
+                            }else{
+                                jTextField_expiredate.setBackground(Color.white);
+                            }
+                        }
+                    });
+
+                    jTextField_quantity.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_quantity.getText().isEmpty()){
+                                jTextField_quantity.setBackground(Color.lightGray);
+                            }else{
+                                jTextField_quantity.setBackground(Color.white);
+                            }
+                        }
+                    });
+
+                    jTextField_categoryId.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_categoryId.getText().isEmpty()){
+                                jTextField_categoryId.setBackground(Color.lightGray);
+                            }else{
+                                jTextField_categoryId.setBackground(Color.white);
+                            }
+                        }
+                    });
+
+                    jTextField_id.getDocument().addDocumentListener(new DocumentListener() {
+                        @Override
+                        public void insertUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void removeUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        @Override
+                        public void changedUpdate(DocumentEvent e) {
+                            highLight();
+                        }
+
+                        public void highLight(){
+                            if(jTextField_id.getText().isEmpty()){
+                                jTextField_id.setBackground(Color.lightGray);
+                            }else{
+                                jTextField_id.setBackground(Color.white);
+                            }
+                        }
+                    });
+
                     done.setBackground(new Color(40,40,40));
                     done.setForeground(Color.WHITE);
                     done.setFocusPainted(false);
@@ -471,25 +636,20 @@ public class Supplier extends JFrame{
                         public void actionPerformed(ActionEvent e) {
                             if(e.getSource()==done)
                             {
+                                if(jTextField_name.getText().isEmpty()==false&&jTextField_id.getText().isEmpty()==false &&jTextField_price.getText().isEmpty()==false && jTextField_quantity.getText().isEmpty()==false && jTextField_expiredate.getText().isEmpty()==false&&jTextField_categoryId.getText().isEmpty()==false){
+                                    for (int i=0;i<count;i++){
+                                        if(Integer.parseInt(jTextField_id.getText())==suppliers[i].getSupplier_id()&&Integer.valueOf(jTextField_categoryId.getText())==suppliers[i].getCategory_id()){
+                                            Product supplyProduct=new Product(jTextField_name.getText(),Double.parseDouble(jTextField_price.getText()),Integer.parseInt(jTextField_quantity.getText()),Integer.parseInt(jTextField_categoryId.getText()), Date.valueOf(jTextField_expiredate.getText()));
+                                            supplierActions.Supply(supplyProduct);
+
+                                        }
+                                    }
+                                }
                                 newItem.dispose();
                             }
                         }
                     });
                     done.setBounds(300,260,100,30);
-
-
-                    JTextField jTextField_name=new JTextField(20);
-                    jTextField_name.setBounds(225,10,300,30);
-                    JTextField jTextField_price=new JTextField(20);
-                    jTextField_price.setBounds(225,50,300,30);
-                    JTextField jTextField_quantity=new JTextField(20);
-                    jTextField_quantity.setBounds(225,90,300,30);
-                    JTextField jTextField_expiredate=new JTextField(20);
-                    jTextField_expiredate.setBounds(225,130,300,30);
-                    JTextField jTextField_categoryId=new JTextField(20);
-                    jTextField_categoryId.setBounds(225,170,300,30);
-                    JTextField jTextField_id=new JTextField();
-                    jTextField_id.setBounds(225,210,300,30);
 
                     newItem.add(name);
                     newItem.add(jTextField_name);
@@ -770,8 +930,8 @@ public class Supplier extends JFrame{
     }
     public String getPhoneNumber(){
         return phoneNumber;
-    }  public String getItemSupplied(){
-        return itemSupplied;
+    }  public int getCategory_id(){
+        return category_id;
     }
     public String getAddress(){
         return address;
@@ -796,9 +956,9 @@ public class Supplier extends JFrame{
     {
         phoneNumber=phone;
     }
-    public void setItemSupplied(String item)
+    public void setCategory_id(int category)
     {
-        itemSupplied=item;
+        category_id=category;
     }
     public void setAddress(String Address)
     {

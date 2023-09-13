@@ -22,6 +22,13 @@ public class Product extends JFrame{
         this.category_id=category_id;
         this.date=date;
     }
+    public Product( String Name, double money, int amount, int category_id, Date date){
+        product_name=Name;
+        price=money;
+        this.amount=amount;
+        this.category_id=category_id;
+        this.date=date;
+    }
 
     public int getProduct_id() {
         return product_id;

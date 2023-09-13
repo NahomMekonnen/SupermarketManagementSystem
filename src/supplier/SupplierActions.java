@@ -7,17 +7,17 @@ import product.Product;
 import java.sql.*;
 
 public class SupplierActions {
-    int id;
-    String firstName,lastName,phoneNumber,itemSupplied,address;
+    int id,category;
+    String firstName,lastName,phoneNumber,address;
 
  public   void Add(Supplier supplier)  {
         try {
 
-            PreparedStatement statement= Database.connection.prepareStatement("Insert into suppliers C(?,?,?,?,?)");
+            PreparedStatement statement= Database.connection.prepareStatement("INSERT INTO suppliers VALUES(?,?,?,?,?)");
             statement.setString(1,supplier.getFirstName());
             statement.setString(2,supplier.getLastName());
             statement.setString(3,supplier.getPhoneNumber());
-            statement.setString(4,supplier.getItemSupplied());
+            statement.setInt(4,supplier.getCategory_id());
             statement.setString(5,supplier.getAddress());
             System.out.println("Added");
             statement.executeUpdate();
@@ -43,13 +43,12 @@ public class SupplierActions {
     public void Supply(Product product){
         try {
 
-            PreparedStatement statement= Database.connection.prepareStatement("INSERT INTO products VALUES(?,?,?,?,?,?)");
-            statement.setInt(1,product.getProduct_id());
-            statement.setString(2,product.getProduct_name());
-            statement.setDouble(3,product.getPrice());
-            statement.setInt(4,product.getAmount());
-            statement.setDate(5, (Date) product.getDate());
-            statement.setInt(6,product.getCategory_id());
+            PreparedStatement statement= Database.connection.prepareStatement("INSERT INTO products VALUES(?,?,?,?,?)");
+            statement.setString(1,product.getProduct_name());
+            statement.setDouble(2,product.getPrice());
+            statement.setInt(3,product.getAmount());
+            statement.setDate(4, (Date) product.getDate());
+            statement.setInt(5,product.getCategory_id());
             System.out.println("Added");
             statement.executeUpdate();
 
@@ -98,11 +97,11 @@ public class SupplierActions {
                 firstName = resultSet.getString(2);
                 lastName = resultSet.getString(3);
                 phoneNumber = resultSet.getString(4);
-                itemSupplied = resultSet.getString(5);
+                category = resultSet.getInt(5);
                 address = resultSet.getString(6);
-                System.out.println(id + " " + firstName + " " + lastName + " " + phoneNumber + " " +  address + " " + itemSupplied);
+                System.out.println(id + " " + firstName + " " + lastName + " " + phoneNumber + " " +  address + " " + category);
 
-                Supplier newSupply = new Supplier(id,firstName,lastName,phoneNumber,itemSupplied,address);
+                Supplier newSupply = new Supplier(id,firstName,lastName,phoneNumber,category,address);
                 suppliers[x]=newSupply;
                 x++;
             }

@@ -19,7 +19,7 @@ import java.sql.Connection;
 import java.sql.Date;
 
 public class Sales extends JFrame {
-    Connection connection;
+
     SalesActions salesActions;
 
     JPanel p1, p2;
@@ -66,7 +66,6 @@ public class Sales extends JFrame {
         setTitle("LENNY SUPERMARKET");
         setResizable(false);
 
-        connection=Database.connection;
 
         textField= new JTextField(100);
         textField.setBounds(310,25,300,30);

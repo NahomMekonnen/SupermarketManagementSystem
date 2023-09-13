@@ -29,7 +29,6 @@ import database.Database;
 
 
 public class Employee extends JFrame{
-    Connection connection;
 
     EmployeeActions employeeActions;
 
@@ -100,7 +99,7 @@ public class Employee extends JFrame{
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Employee");
-        connection = Database.connection;
+
         textField=new JTextField(100);
         textField.setBounds(310,25,300,30);
 

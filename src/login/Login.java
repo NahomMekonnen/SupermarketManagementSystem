@@ -5,15 +5,20 @@ import admin.Admin;
 import  java.awt.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.plaf.nimbus.State;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.*;
+
 import cashier.*;
 import  admin.*;
+import database.Database;
 import  sales.*;
 
 public class Login extends JFrame{
+    Connection connection;
     JLabel choose;
     JLabel userID;
     JLabel password;
@@ -37,13 +42,17 @@ public class Login extends JFrame{
         setLocationRelativeTo(null);
         setResizable(false);
 
+
+        connection= Database.connection;
+
+
         p1=new JPanel(){
         private BufferedImage backgroundImage;
 
         {
             try {
 
-                backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/lenny.png"));
+                backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/lenny.png"));
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -65,7 +74,7 @@ public class Login extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -122,12 +131,60 @@ public class Login extends JFrame{
                 if(e.getSource()==login&& userType.getSelectedItem()=="Admin")
                 {
                     dispose();
-                    Admin n=new Admin();
-                    n.setVisible(true);
+                    if(idTextField.getText().isEmpty()==false&&passwordField.getText().isEmpty()==false){
+                        String username = null, password = null;
+                        try {
+                            Statement statement = Database.connection.createStatement();
+                            String query = "SELECT username,password FROM loginInfo WHERE id=1 ";
+                            ResultSet resultSet = statement.executeQuery(query);
+                            while (resultSet.next()){
+                                username=resultSet.getString(1);
+                                password=resultSet.getString(2);
+                            }
+                            
+                            if(username.equals(idTextField.getText())&&password.equals(passwordField.getText())){
+                                Admin n = new Admin();
+                                n.setVisible(true);
+                            }else{
+
+                                Login n=new Login();
+                                n.setVisible(true);
+                            }
+                        } catch (Exception exception) {
+                            System.out.println(exception);
+                        }
+
+                        
+                    }
+
                 } else if (e.getSource()==login&& userType.getSelectedItem()=="User") {
                     dispose();
-                    cashier.Cashier c=new cashier.Cashier();
-                    c.setVisible(true);
+                    if(idTextField.getText().isEmpty()==false&&passwordField.getText().isEmpty()==false){
+                        String username = null, password = null;
+                        try {
+                            Statement statement = Database.connection.createStatement();
+                            String query = "SELECT username,password FROM loginInfo WHERE id=2 ";
+                            ResultSet resultSet = statement.executeQuery(query);
+                            while (resultSet.next()){
+                                username=resultSet.getString(1);
+                                password=resultSet.getString(2);
+                            }
+
+                            if(username.equals(idTextField.getText())&&password.equals(passwordField.getText())){
+                                cashier.Cashier c=new cashier.Cashier();
+                                c.setVisible(true);
+
+                            }else{
+
+                                Login n=new Login();
+                                n.setVisible(true);
+                            }
+                        } catch (Exception exception) {
+                            System.out.println(exception);
+                        }
+
+
+                    }
 
                 }
             }
