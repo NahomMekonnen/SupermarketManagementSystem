@@ -44,7 +44,7 @@ public class Supplier extends JFrame{
     JButton newSupplier,supplyProducts,removeSupplier,back;
     JScrollPane scroll;
     JDialog newSupply,prodSupply,removeSupply;
-    String[] options= {"ID","Name"};
+
     public Supplier(){
         Container Sup = getContentPane();
         supplierActions = new SupplierActions();
@@ -52,10 +52,9 @@ public class Supplier extends JFrame{
         setSize(800,600);
         setLayout(null);
         setLocationRelativeTo(null);
+        setTitle("Supplier");
         connection = Database.connection;
         textField=new JTextField(100);
-
-
         textField.setBounds(310,25,300,30);
 
         int count = supplierActions.Count();
@@ -192,7 +191,7 @@ public class Supplier extends JFrame{
                     pn.setBounds(25,90,200,30);
                     JLabel is=new JLabel("Supplier Item Supplied");
                     is.setBounds(25,130,200,30);
-                    JLabel ad=new JLabel("Supplier Adress ");
+                    JLabel ad=new JLabel("Supplier Address ");
                     ad.setBounds(25,170,200,30);
                     JButton done=new JButton("Done");
 
@@ -390,7 +389,7 @@ public class Supplier extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -412,7 +411,7 @@ public class Supplier extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();

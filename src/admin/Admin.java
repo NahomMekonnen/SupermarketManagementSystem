@@ -29,7 +29,7 @@ public class Admin extends JFrame {
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle("LENNY SUPERMARKET");
+        setTitle("Manager");
 
 
 
@@ -40,7 +40,7 @@ public class Admin extends JFrame {
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/Welcome.png"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/Welcome.png"));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -63,7 +63,7 @@ public class Admin extends JFrame {
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();

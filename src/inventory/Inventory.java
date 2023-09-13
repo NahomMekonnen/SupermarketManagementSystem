@@ -32,7 +32,6 @@ public class Inventory extends JFrame{
     JTable T;
     JButton back,add,remove;
     JScrollPane scroll;
-    String[] options= {"ID","Name"};
     JPanel p1,p2;
     JDialog newItem,removeItem;
 
@@ -45,7 +44,7 @@ public class Inventory extends JFrame{
         setSize(800,600);
         setLayout(null);
         setLocationRelativeTo(null);
-        setTitle("LENNY SUPERMARKET");
+        setTitle("Inventory");
         connection = Database.connection;
         textField=new JTextField(100);
         textField.setBounds(310,25,300,30);
@@ -184,12 +183,27 @@ public class Inventory extends JFrame{
                     price.setBounds(25,50,200,30);
                     JLabel quantity=new JLabel("Item quantity");
                     quantity.setBounds(25,90,200,30);
-                    JLabel expiredate=new JLabel("Item Expiredate");
-                    expiredate.setBounds(25,130,200,30);
+                    JLabel expireDate=new JLabel("Item ExpireDate");
+                    expireDate.setBounds(25,130,200,30);
                     JLabel category=new JLabel("Item Category Id");
                     category.setBounds(25,170,200,30);
 
                     JButton done=new JButton("Done");
+
+
+
+
+
+                    JTextField jTextField_name=new JTextField(20);
+                    jTextField_name.setBounds(225,10,300,30);
+                    JTextField jTextField_price=new JTextField(20);
+                    jTextField_price.setBounds(225,50,300,30);
+                    JTextField jTextField_quantity=new JTextField(20);
+                    jTextField_quantity.setBounds(225,90,300,30);
+                    JTextField jTextField_expireDate=new JTextField(20);
+                    jTextField_expireDate.setBounds(225,130,300,30);
+                    JTextField jTextField_categoryId=new JTextField(20);
+                    jTextField_categoryId.setBounds(225,170,300,30);
 
 
                     done.setBackground(new Color(40,40,40));
@@ -217,19 +231,6 @@ public class Inventory extends JFrame{
                         }
                     });
                     done.setBounds(300,260,100,30);
-
-
-                    JTextField jTextField_name=new JTextField(20);
-                    jTextField_name.setBounds(225,10,300,30);
-                    JTextField jTextField_price=new JTextField(20);
-                    jTextField_price.setBounds(225,50,300,30);
-                    JTextField jTextField_quantity=new JTextField(20);
-                    jTextField_quantity.setBounds(225,90,300,30);
-                    JTextField jTextField_expiredate=new JTextField(20);
-                    jTextField_expiredate.setBounds(225,130,300,30);
-                    JTextField jTextField_categoryId=new JTextField(20);
-                    jTextField_categoryId.setBounds(225,170,300,30);
-
                     newItem.add(name);
                     newItem.add(jTextField_name);
                     newItem.add(price);
@@ -237,7 +238,7 @@ public class Inventory extends JFrame{
                     newItem.add(quantity);
                     newItem.add(jTextField_quantity);
                     newItem.add(expiredate);
-                    newItem.add(jTextField_expiredate);
+                    newItem.add(jTextField_expireDate);
                     newItem.add(category);
                     newItem.add(jTextField_categoryId);
                     newItem.add(done);
@@ -354,7 +355,7 @@ public class Inventory extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -376,7 +377,7 @@ public class Inventory extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -1,21 +1,16 @@
 package employee;
 
+import com.sun.jdi.IntegerType;
 import database.Database;
-import product.Product;
 
-import javax.swing.plaf.nimbus.State;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.plaf.synth.SynthTextAreaUI;
+import java.sql.*;
 
 
 public class EmployeeActions {
     int ID, amount, CategoryID;
 
-    String firsttName,lastName,phoneNumber,adress;
+    String firstName,lastName,phoneNumber, address;
     Date date;
     Double money;
 
@@ -35,7 +30,32 @@ public class EmployeeActions {
             return 0;
         }
     }
+    public void Remove(Employee employee)  {
+        try {
+            PreparedStatement statement=Database.connection.prepareStatement("DELETE FROM employees WHERE employee_id = "+ employee.getEmployee_Id() +" AND employee_firstName = '" + employee.getFirstName() +"'");
+            System.out.println("Removed");
+            statement.executeUpdate();
 
+        } catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public void Add(Employee employee){
+        try{
+            PreparedStatement statement= Database.connection.prepareStatement("INSERT INTO employees Values(?,?,?,?)");
+            statement.setString(1,employee.getFirstName());
+            statement.setString(2,employee.getLastName());
+            statement.setString(3,employee.getPhoneNumber());
+            statement.setString(4,employee.getAddress());
+            System.out.println("Added");
+            statement.executeUpdate();
+
+
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+    }
 
     Employee[] Retrieve(int count) {
         int x=0;
@@ -54,13 +74,13 @@ public class EmployeeActions {
 
 
                 ID = resultSet.getInt(1);
-                firsttName = resultSet.getString(2);
+                firstName = resultSet.getString(2);
                 lastName=resultSet.getString(3);
                 phoneNumber = resultSet.getString(4);
-                adress = resultSet.getString(5);
+                address = resultSet.getString(5);
 
-                System.out.println(ID + " " + firsttName + " " + lastName + " " + phoneNumber + " " + " " + adress);
-                Employee newEmployee = new Employee(ID,firsttName,lastName,phoneNumber,adress);
+                System.out.println(ID + " " + firstName + " " + lastName + " " + phoneNumber + " " + " " + address);
+                Employee newEmployee = new Employee(ID, firstName,lastName,phoneNumber, address);
                 employees[x]=newEmployee;
                 x++;
             }
