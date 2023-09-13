@@ -19,6 +19,7 @@ public class EmployeeActions {
     Date date;
     Double money;
 
+
     int Count() {
         try {
             Statement stmt = Database.connection.createStatement();

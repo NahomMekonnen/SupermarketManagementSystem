@@ -6,9 +6,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class SalesActions {
-    private int salesID, salesQuantity, count;
+    private int salesID, salesQuantity;
     private Date salesDate;
     private Double totalMoney;
+
+    public SalesActions(int salesID, Date salesDate, int salesQuantity, Double totalMoney) {
+    }
 
     public int getSalesID() {
         return salesID;
@@ -42,9 +45,9 @@ public class SalesActions {
         }
     }
 
-    Sales[] Retrieve(int count) {
+    SalesActions[] Retrieve(int count) {
         int x=0;
-        Sales[] salesArray = new Sales[count];
+        SalesActions[] salesArray = new SalesActions[count];
         try {
             Statement stmt = Database.connection.createStatement();
             String query = "Select * From sales";
@@ -56,7 +59,7 @@ public class SalesActions {
                 salesQuantity = resultSet.getInt(3);
                 totalMoney = resultSet.getDouble(4);
 
-                Sales newSales = new Sales(salesID, salesDate, salesQuantity, totalMoney);
+                SalesActions newSales = new SalesActions(salesID, salesDate, salesQuantity, totalMoney);
                 salesArray[x] = newSales;
                 x++;
             }
@@ -64,5 +67,15 @@ public class SalesActions {
             e.printStackTrace();
         }
         return salesArray;
+    }
+
+    double calculateTotalSales() {
+        double totalSales = 0;
+        int count = Count();
+        SalesActions[] salesArray = Retrieve(count);
+        for (SalesActions sale : salesArray) {
+            totalSales += sale.getTotalMoney();
+        }
+        return totalSales;
     }
 }

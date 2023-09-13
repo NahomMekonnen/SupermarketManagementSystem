@@ -6,8 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="d72dfc20-d9fd-433d-8297-8215fe9c5c62" name="Changes" comment="gui2 commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cashier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cashier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Customer/Customer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Sales/Sales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sales/Sales.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Sales/SalesActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sales/SalesActions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/admin/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/employee/EmployeeActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/employee/EmployeeActions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/login/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/login/Login.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/supplier/Supplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/supplier/Supplier.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -209,5 +215,8 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/SupermarketManagementSystem$Unnamed.ic" NAME="Unnamed Coverage Results" MODIFIED="1694504150044" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

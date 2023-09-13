@@ -1,6 +1,7 @@
 import database.Database;
 
 import javax.imageio.ImageIO;
+package Cashier;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

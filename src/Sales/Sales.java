@@ -5,20 +5,19 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.sql.Date;
 
 public class Sales extends JFrame {
     SalesActions salesActions;
     JPanel p1, p2;
-    JLabel l1, l2;
+    JLabel l1, l2, totalSalesLabel;
     JTextField tf, tf2;
     JComboBox Cb;
     JTable T;
     JButton search;
     JScrollPane scroll;
-    String[] options = {"ID", "Date"};
 
     public Sales() {
         Container salesContainer = getContentPane();
@@ -63,6 +62,10 @@ public class Sales extends JFrame {
         Cb.addItem("ID");
         Cb.addItem("Date");
 
+        double totalSales = salesActions.calculateTotalSales();
+        totalSalesLabel = new JLabel("Total Sales: " + totalSales);
+        totalSalesLabel.setBounds(400,450,300,50);
+
         tf.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -106,5 +109,6 @@ public class Sales extends JFrame {
         salesContainer.add(tf);
         salesContainer.add(tf2);
         salesContainer.add(scroll);
+        salesContainer.add(totalSalesLabel);
     }
 }
