@@ -89,17 +89,17 @@ public class Inventory extends JFrame{
         textField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                    search(textField.getText());
+                search(textField.getText());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                    search(textField.getText());
+                search(textField.getText());
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                    search(textField.getText());
+                search(textField.getText());
             }
             private void search(String str){
                 String selected=(String)Cb.getSelectedItem();

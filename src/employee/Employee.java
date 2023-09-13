@@ -43,7 +43,6 @@ public class Employee extends JFrame{
 
 
     JScrollPane scroll;
-    String[] options= {"ID","Name"};
     private String firstName,lastName,adress,phoneNumber;
 
     private int employee_Id;
@@ -94,12 +93,14 @@ public class Employee extends JFrame{
     public Employee()
     {
         Container emp = getContentPane();
-         employeeActions= new EmployeeActions();
+        employeeActions= new EmployeeActions();
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(800,600);
         setLayout(null);
         setLocationRelativeTo(null);
         setTitle("LENNY SUPERMARKET");
+
         connection = Database.connection;
         textField=new JTextField(100);
         textField.setBounds(310,25,300,30);
@@ -297,7 +298,7 @@ public class Employee extends JFrame{
             }
         });
         add.setBounds(250,390,100,50);
-        //scroll.setBounds(50,15,700,350);
+
 
         remove=new JButton("Remove");
         remove.setBackground(new Color(40,40,40));

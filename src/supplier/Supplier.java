@@ -127,6 +127,7 @@ public class Supplier extends JFrame{
             }
         });
 
+
         back=new JButton("Back");
         back.setBackground(new Color(40,40,40));
         back.setForeground(Color.WHITE);
@@ -323,7 +324,7 @@ public class Supplier extends JFrame{
                         public void actionPerformed(ActionEvent e) {
                             if(e.getSource()==done)
                             {
-                              newItem.dispose();
+                                newItem.dispose();
                             }
                         }
                     });
@@ -425,7 +426,7 @@ public class Supplier extends JFrame{
                         public void actionPerformed(ActionEvent e) {
                             if(e.getSource()==done)
                             {
-                               removeSupply.dispose();
+                                removeSupply.dispose();
 
                             }
                         }
@@ -515,7 +516,7 @@ public class Supplier extends JFrame{
         scroll.setBounds(50,15,700,350);
         scroll.setBackground(Color.WHITE);
 
-      //  p1.add(back);
+        //  p1.add(back);
         p1.add(Cb);
         p1.add(textField);
         p1.add(back);

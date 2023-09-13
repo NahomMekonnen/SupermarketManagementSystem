@@ -1,7 +1,4 @@
 package login;
-
-import admin.Admin;
-
 import  java.awt.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -9,6 +6,9 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import cashier.*;
+import  admin.*;
+import  sales.*;
 
 public class Login extends JFrame{
     JLabel choose;
@@ -25,7 +25,7 @@ public class Login extends JFrame{
 
 
 
-    public Login()
+    public  Login()
     {
         Container c=getContentPane();
         setSize(650,400);
@@ -34,26 +34,26 @@ public class Login extends JFrame{
         setLocationRelativeTo(null);
 
         p1=new JPanel(){
-        private BufferedImage backgroundImage;
+            private BufferedImage backgroundImage;
 
-        {
-            try {
+            {
+                try {
 
-                backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/lenny.png"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/lenny.png"));
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
 
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
 
-            if (backgroundImage != null) {
-                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
+                if (backgroundImage != null) {
+                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
+                }
             }
-        }
-    };
+        };
 
         p2=new JPanel(){
             private BufferedImage backgroundImage;
@@ -115,11 +115,17 @@ public class Login extends JFrame{
         login.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==login)
+                if(e.getSource()==login&& userType.getSelectedItem()=="Admin")
                 {
+
                     dispose();
                     Admin n=new Admin();
                     n.setVisible(true);
+                } else if (e.getSource()==login&& userType.getSelectedItem()=="User") {
+                    dispose();
+                    cashier.Cashier c=new cashier.Cashier();
+                    c.setVisible(true);
+
                 }
             }
         });
@@ -142,17 +148,17 @@ public class Login extends JFrame{
 
 
         p2.setLayout(null);
-       choose.setBounds(70,40,200,100);
-       userType.setBounds(160,70,200,40);
-       userID.setBounds(70,110,200,100);
-       idTextField.setBounds(160,140,200,40);
+        choose.setBounds(70,40,200,100);
+        userType.setBounds(160,70,200,40);
+        userID.setBounds(70,110,200,100);
+        idTextField.setBounds(160,140,200,40);
 
-       password.setBounds(70,180,200,100);
-       passwordField.setBounds(160,210,200,40);
+        password.setBounds(70,180,200,100);
+        passwordField.setBounds(160,210,200,40);
 
 
-       login.setBounds(100,280,100,40);
-       clear.setBounds(250,280,100,40);
+        login.setBounds(100,280,100,40);
+        clear.setBounds(250,280,100,40);
 
 
 
