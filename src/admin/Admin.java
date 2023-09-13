@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import sales.*;
+import profit.*;
 
 
 public class Admin extends JFrame {
@@ -32,6 +33,7 @@ public class Admin extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Manager");
 
+        setResizable(false);
 
 
         p1=new JPanel()
@@ -41,7 +43,7 @@ public class Admin extends JFrame {
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/Welcome.png"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/Welcome.png"));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -64,7 +66,7 @@ public class Admin extends JFrame {
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -144,7 +146,7 @@ public class Admin extends JFrame {
             }
         });
 
-        b3=new JButton("sales");
+        b3=new JButton("Sales");
         b3.setBackground(new Color(40,40,40));
         b3.setForeground(Color.WHITE);
 
@@ -167,14 +169,14 @@ public class Admin extends JFrame {
                 if(e.getSource()==b3)
                 {
                     dispose();
-                    sales.Sales s=new sales.Sales();
+                    Sales s=new Sales();
                     s.setVisible(true);
 
                 }
             }
         });
 
-        b4=new JButton("Profits");
+        b4=new JButton("Profit");
         b4.setBackground(new Color(40,40,40));
         b4.setForeground(Color.WHITE);
 
@@ -190,6 +192,21 @@ public class Admin extends JFrame {
                 b4.setBackground(new Color(40,40,40));
             }
         });
+
+        b4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource()==b4)
+                {
+                    Profit p=new Profit();
+
+                    p.setVisible(true);
+
+
+                }
+            }
+        });
+
 
         b5=new JButton("Suppliers");
         b5.setBackground(new Color(40,40,40));
@@ -216,23 +233,6 @@ public class Admin extends JFrame {
                     Supplier supplier=new Supplier();
                     supplier.setVisible(true);
                 }
-            }
-        });
-
-        b4=new JButton("Profits");
-        b4.setBackground(new Color(40,40,40));
-        b4.setForeground(Color.WHITE);
-
-        b4.setFocusPainted(false);
-        b4.setFont(new Font("Arial", Font.BOLD, 16));
-
-        b4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                b4.setBackground(new Color(60,60,60));
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                b4.setBackground(new Color(40,40,40));
             }
         });
 

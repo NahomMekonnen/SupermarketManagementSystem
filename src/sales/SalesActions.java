@@ -13,6 +13,7 @@ public class SalesActions {
     public SalesActions(int salesID, Date salesDate, int salesQuantity, Double totalMoney) {
     }
 
+
     public SalesActions() {
 
     }
@@ -57,12 +58,18 @@ public class SalesActions {
             String query = "Select * From sales";
             ResultSet resultSet = stmt.executeQuery(query);
 
+            System.out.println("Attempt");
+
+            System.out.println("result " + resultSet);
+
+
             while (resultSet.next()) {
                 salesID = resultSet.getInt(1);
                 salesDate = resultSet.getDate(2);
                 salesQuantity = resultSet.getInt(3);
                 totalMoney = resultSet.getDouble(4);
 
+                System.out.println(salesID + " " + salesDate + " " + salesQuantity + " " + totalMoney);
                 Sales newSales = new Sales(salesID, salesDate, salesQuantity, totalMoney);
                 salesArray[x] = newSales;
                 x++;

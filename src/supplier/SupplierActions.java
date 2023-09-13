@@ -10,16 +10,15 @@ public class SupplierActions {
     int id;
     String firstName,lastName,phoneNumber,itemSupplied,address;
 
-    void Add(Supplier supplier) {
+ public   void Add(Supplier supplier)  {
         try {
 
-            PreparedStatement statement= Database.connection.prepareStatement("INSERT INTO suppliers VALUES (?,?,?,?,?,?)");
-            statement.setInt(1,supplier.getSupplier_id());
-            statement.setString(2,supplier.getFirstName());
-            statement.setString(3,supplier.getLastName());
-            statement.setString(4,supplier.getPhoneNumber());
-            statement.setString(5,supplier.getItemSupplied());
-            statement.setString(6,supplier.getAddress());
+            PreparedStatement statement= Database.connection.prepareStatement("Insert into suppliers C(?,?,?,?,?)");
+            statement.setString(1,supplier.getFirstName());
+            statement.setString(2,supplier.getLastName());
+            statement.setString(3,supplier.getPhoneNumber());
+            statement.setString(4,supplier.getItemSupplied());
+            statement.setString(5,supplier.getAddress());
             System.out.println("Added");
             statement.executeUpdate();
 
@@ -28,10 +27,23 @@ public class SupplierActions {
         }
 
     }
-    void Supply(Product product){
+    public void Remove(Supplier supplier)
+    {
+        try{
+            PreparedStatement statement=Database.connection.prepareStatement("DELETE FROM suppliers WHERE supplier_id= "+ supplier.getSupplier_id()+"AND supplier_firstName= '"+ supplier.getFirstName()+"'");
+            System.out.println("Removed");
+            statement.executeUpdate();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+    public void Supply(Product product){
         try {
 
-            PreparedStatement statement= Database.connection.prepareStatement("Insert into products(?,?,?,?,?,?)");
+            PreparedStatement statement= Database.connection.prepareStatement("INSERT INTO products VALUES(?,?,?,?,?,?)");
             statement.setInt(1,product.getProduct_id());
             statement.setString(2,product.getProduct_name());
             statement.setDouble(3,product.getPrice());
