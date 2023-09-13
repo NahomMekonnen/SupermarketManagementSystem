@@ -1,6 +1,6 @@
 package employee;
 import admin.Admin;
-import inventory.InventoryActions;
+
 import product.Product;
 
 import javax.imageio.ImageIO;
@@ -53,8 +53,8 @@ public class Employee extends JFrame{
         return employee_Id;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
     public String getFirstName() {
