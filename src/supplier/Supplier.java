@@ -159,7 +159,7 @@ public class Supplier extends JFrame{
         back.setBounds(10,10,80,20);
 
 
-        newSupplier= new JButton("Add Supplier");
+        newSupplier= new JButton("Add");
         newSupplier.setBackground(new Color(40,40,40));
         newSupplier.setForeground(Color.WHITE);
 
@@ -179,23 +179,85 @@ public class Supplier extends JFrame{
         newSupplier.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==newSupplier)
-                {
-                    dispose();
-                    Admin n=new Admin();
-                    n.setVisible(true);
+                if(e.getSource()==newSupplier) {
+                    newSupply = new JDialog();
+
+                    newSupply.setTitle("Add ");
+                    newSupply.setLayout(null);
+                    JLabel fn=new JLabel("Supplier First Name");
+                    fn.setBounds(25,10,200,30);
+                    JLabel ln=new JLabel("Supplier Last Name");
+                    ln.setBounds(25,50,200,30);
+                    JLabel pn=new JLabel("Supplier Phone Number");
+                    pn.setBounds(25,90,200,30);
+                    JLabel is=new JLabel("Supplier Item Supplied");
+                    is.setBounds(25,130,200,30);
+                    JLabel ad=new JLabel("Supplier Adress ");
+                    ad.setBounds(25,170,200,30);
+                    JButton done=new JButton("Done");
+
+
+                    done.setBackground(new Color(40,40,40));
+                    done.setForeground(Color.WHITE);
+                    done.setFocusPainted(false);
+                    done.setFont(new Font("Arial", Font.BOLD, 16));
+
+                    done.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseEntered(java.awt.event.MouseEvent evt) {
+                            done.setBackground(new Color(60,60,60));
+                        }
+
+                        public void mouseExited(java.awt.event.MouseEvent evt) {
+                            done.setBackground(new Color(40,40,40));
+                        }
+                    });
+                    done.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            if(e.getSource()==done)
+                            {
+                                dispose();
+                                Admin n=new Admin();
+                                n.setVisible(true);
+                            }
+                        }
+                    });
+                    done.setBounds(300,260,100,30);
+
+
+                    JTextField jTextField_fn=new JTextField(20);
+                    jTextField_fn.setBounds(225,10,300,30);
+                    JTextField jTextField_ln=new JTextField(20);
+                    jTextField_ln.setBounds(225,50,300,30);
+                    JTextField jTextField_pn=new JTextField(20);
+                    jTextField_pn.setBounds(225,90,300,30);
+                    JTextField jTextField_is=new JTextField(20);
+                    jTextField_is.setBounds(225,130,300,30);
+                    JTextField jTextField_ad=new JTextField(20);
+                    jTextField_ad.setBounds(225,170,300,30);
+
+                    newSupply.add(fn);
+                    newSupply.add(jTextField_fn);
+                    newSupply.add(ln);
+                    newSupply.add(jTextField_ln);
+                    newSupply.add(pn);
+                    newSupply.add(jTextField_pn);
+                    newSupply.add(is);
+                    newSupply.add(jTextField_is);
+                    newSupply.add(ad);
+                    newSupply.add(jTextField_ad);
+                    newSupply.add(done);
+                    newSupply.setSize(600, 400);
+
+
+
+                    newSupply.setLocationRelativeTo(null);
+                    newSupply.setVisible(true);
+
                 }
 
             }
         });
-        newSupplier.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                newSupply= new JDialog();
-// I stopped here
-            }
-        });
-        newSupplier.setBounds(250,390,100,50);
+        newSupplier.setBounds(220,390,100,50);
 
 
         supplyProducts= new JButton("Restock");
@@ -221,14 +283,19 @@ public class Supplier extends JFrame{
                 if(e.getSource()==supplyProducts)
                 {
                     dispose();
-                    Admin n=new Admin();
-                    n.setVisible(true);
+//                    Admin n=new Admin();
+//                    n.setVisible(true);
                 }
 
             }
         });
-        supplyProducts.setBounds(350,390,100,50);
-        removeSupplier=new JButton("Remove Supplier");
+        supplyProducts.setBounds(340,390,100,50);
+
+
+
+
+
+        removeSupplier=new JButton("Remove");
         removeSupplier.setBackground(new Color(40,40,40));
         removeSupplier.setForeground(Color.WHITE);
 
@@ -251,13 +318,13 @@ public class Supplier extends JFrame{
                 if(e.getSource()==removeSupplier)
                 {
                     dispose();
-                    Admin n=new Admin();
-                    n.setVisible(true);
+//                    Admin n=new Admin();
+//                    n.setVisible(true);
                 }
 
             }
         });
-        removeSupplier.setBounds(450,390,100,50);
+        removeSupplier.setBounds(460,390,100,50);
         p1=new JPanel(null){
             private BufferedImage backgroundImage;
 
