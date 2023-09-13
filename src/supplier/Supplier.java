@@ -44,7 +44,7 @@ public class Supplier extends JFrame{
     JButton newSupplier,supplyProducts,removeSupplier,back;
     JScrollPane scroll;
     JDialog newSupply,prodSupply,removeSupply;
-
+    
     public Supplier(){
         Container Sup = getContentPane();
         supplierActions = new SupplierActions();
@@ -389,7 +389,7 @@ public class Supplier extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -411,7 +411,7 @@ public class Supplier extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -2,7 +2,6 @@ import database.Database;
 import employee.Employee;
 import inventory.Inventory;
 import supplier.Supplier;
-import login.*;
 
 import javax.swing.*;
 
@@ -17,8 +16,8 @@ public class Main {
         database.instantiate();
 //        Inventory inventory=new Inventory();
 //        inventory.setVisible(true);
-//        Supplier supplier=new Supplier();
-//        supplier.setVisible(true);
+        Supplier supplier=new Supplier();
+        supplier.setVisible(true);
 
 //        Admin ad=new Admin();
 //        ad.setVisible(true);
@@ -27,6 +26,8 @@ public class Main {
 //        Employee e=new Employee();
 //        e.setVisible(true);
 
+        Cashier c=new Cashier();
+        c.setVisible(true);
 
     }
 }

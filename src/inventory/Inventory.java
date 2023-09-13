@@ -30,7 +30,7 @@ public class Inventory extends JFrame{
 
     JComboBox Cb;
     JTable T;
-    JButton back,add,remove;
+    JButton back,remove;
     JScrollPane scroll;
     JPanel p1,p2;
     JDialog newItem,removeItem;
@@ -151,110 +151,7 @@ public class Inventory extends JFrame{
         });
         back.setBounds(10,10,80,20);
 
-        add=new JButton("Add");
-        add.setBackground(new Color(40,40,40));
-        add.setForeground(Color.WHITE);
 
-        add.setFocusPainted(false);
-        add.setFont(new Font("Arial", Font.BOLD, 16));
-
-        add.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                add.setBackground(new Color(60,60,60));
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                add.setBackground(new Color(40,40,40));
-            }
-        });
-
-        add.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==add)
-                {
-                    newItem = new JDialog();
-
-                    newItem.setTitle("Add Item");
-                    newItem.setLayout(null);
-                    JLabel name=new JLabel("Item name");
-                    name.setBounds(25,10,200,30);
-                    JLabel price=new JLabel("Item price");
-                    price.setBounds(25,50,200,30);
-                    JLabel quantity=new JLabel("Item quantity");
-                    quantity.setBounds(25,90,200,30);
-                    JLabel expireDate=new JLabel("Item ExpireDate");
-                    expireDate.setBounds(25,130,200,30);
-                    JLabel category=new JLabel("Item Category Id");
-                    category.setBounds(25,170,200,30);
-
-                    JButton done=new JButton("Done");
-
-
-
-
-
-                    JTextField jTextField_name=new JTextField(20);
-                    jTextField_name.setBounds(225,10,300,30);
-                    JTextField jTextField_price=new JTextField(20);
-                    jTextField_price.setBounds(225,50,300,30);
-                    JTextField jTextField_quantity=new JTextField(20);
-                    jTextField_quantity.setBounds(225,90,300,30);
-                    JTextField jTextField_expireDate=new JTextField(20);
-                    jTextField_expireDate.setBounds(225,130,300,30);
-                    JTextField jTextField_categoryId=new JTextField(20);
-                    jTextField_categoryId.setBounds(225,170,300,30);
-
-
-                    done.setBackground(new Color(40,40,40));
-                    done.setForeground(Color.WHITE);
-                    done.setFocusPainted(false);
-                    done.setFont(new Font("Arial", Font.BOLD, 16));
-
-                    done.addMouseListener(new java.awt.event.MouseAdapter() {
-                        public void mouseEntered(java.awt.event.MouseEvent evt) {
-                            done.setBackground(new Color(60,60,60));
-                        }
-
-                        public void mouseExited(java.awt.event.MouseEvent evt) {
-                            done.setBackground(new Color(40,40,40));
-                        }
-                    });
-                    done.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            if(e.getSource()==done)
-                            {
-                                dispose();
-                                Admin n=new Admin();
-                                n.setVisible(true);
-                            }
-                        }
-                    });
-                    done.setBounds(300,260,100,30);
-                    newItem.add(name);
-                    newItem.add(jTextField_name);
-                    newItem.add(price);
-                    newItem.add(jTextField_price);
-                    newItem.add(quantity);
-                    newItem.add(jTextField_quantity);
-                    newItem.add(expiredate);
-                    newItem.add(jTextField_expireDate);
-                    newItem.add(category);
-                    newItem.add(jTextField_categoryId);
-                    newItem.add(done);
-                    newItem.setSize(600, 400);
-
-
-
-                    newItem.setLocationRelativeTo(null);
-                    newItem.setVisible(true);
-
-                }
-
-            }
-        });
-        add.setBounds(250,390,100,50);
-        //scroll.setBounds(50,15,700,350);
 
         remove=new JButton("Remove");
         remove.setBackground(new Color(40,40,40));
@@ -355,7 +252,7 @@ public class Inventory extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -377,7 +274,7 @@ public class Inventory extends JFrame{
             {
                 try {
 
-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -408,7 +305,6 @@ public class Inventory extends JFrame{
         p1.add(Cb);
         p1.add(textField);
         p2.add(scroll);
-        p2.add(add);
         p2.add(remove);
         Inv.add(p1);
         Inv.add(p2);

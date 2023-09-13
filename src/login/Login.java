@@ -1,6 +1,8 @@
 package login;
+
+import admin.Admin;
+
 import  java.awt.*;
-import  admin.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.*;
@@ -23,7 +25,7 @@ public class Login extends JFrame{
 
 
 
-  public  Login()
+    public Login()
     {
         Container c=getContentPane();
         setSize(650,400);
