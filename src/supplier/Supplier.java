@@ -636,6 +636,7 @@ public class Supplier extends JFrame{
                         public void actionPerformed(ActionEvent e) {
                             if(e.getSource()==done)
                             {
+                                dispose();
                                 if(jTextField_name.getText().isEmpty()==false&&jTextField_id.getText().isEmpty()==false &&jTextField_price.getText().isEmpty()==false && jTextField_quantity.getText().isEmpty()==false && jTextField_expiredate.getText().isEmpty()==false&&jTextField_categoryId.getText().isEmpty()==false){
                                     for (int i=0;i<count;i++){
                                         if(Integer.parseInt(jTextField_id.getText())==suppliers[i].getSupplier_id()&&Integer.valueOf(jTextField_categoryId.getText())==suppliers[i].getCategory_id()){
@@ -646,6 +647,8 @@ public class Supplier extends JFrame{
                                     }
                                 }
                                 newItem.dispose();
+                                Admin n=new Admin();
+                                n.setVisible(true);
                             }
                         }
                     });
@@ -817,13 +820,14 @@ public class Supplier extends JFrame{
                         public void actionPerformed(ActionEvent e) {
                             if(e.getSource()==done)
                             {
+                                dispose();
 
                                 for (int i=0;i<count;i++){
                                     if(Integer.parseInt(jTextField_ID.getText())==suppliers[i].getSupplier_id()&&jTextField_fn.getText().equals(suppliers[i].firstName)) {
                                         supplierActions.Remove(suppliers[i]);
-                                        removeSupply.dispose();
+
                                     }
-                                }
+                                }removeSupply.dispose();
                                 Admin n=new Admin();
                                 n.setVisible(true);
                             }

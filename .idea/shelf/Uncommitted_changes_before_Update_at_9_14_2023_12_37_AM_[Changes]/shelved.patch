@@ -1,0 +1,644 @@
+Index: src/employee/Employee.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package employee;\r\nimport admin.Admin;\r\n\r\nimport product.Product;\r\n\r\nimport javax.imageio.ImageIO;\r\nimport javax.swing.*;\r\nimport javax.swing.event.DocumentEvent;\r\nimport javax.swing.event.DocumentListener;\r\n\r\nimport javax.swing.table.DefaultTableModel;\r\nimport javax.swing.table.TableModel;\r\nimport javax.swing.table.TableRowSorter;\r\nimport java.awt.*;\r\n\r\n\r\nimport java.awt.event.ActionEvent;\r\nimport java.awt.event.ActionListener;\r\nimport java.awt.image.BufferedImage;\r\nimport java.io.File;\r\nimport java.io.IOException;\r\nimport java.sql.*;\r\nimport java.util.Date;\r\n\r\n\r\nimport database.Database;\r\n\r\n\r\n\r\n\r\npublic class Employee extends JFrame{\r\n    Connection connection;\r\n\r\n    EmployeeActions employeeActions;\r\n\r\n    JPanel p1,p2;\r\n    JLabel l1,l2;\r\n    JTextField textField;\r\n    JComboBox Cb;\r\n    JTable T;\r\n    JButton back,add,remove;\r\n    JDialog newEmployee,removeEmployee;\r\n\r\n\r\n    JScrollPane scroll;\r\n    private String firstName,lastName, address,phoneNumber;\r\n\r\n    private int employee_Id;\r\n\r\n\r\n\r\n    public int getEmployee_Id() {\r\n        return employee_Id;\r\n    }\r\n\r\n    public String getAddress() {\r\n        return address;\r\n    }\r\n\r\n    public String getFirstName() {\r\n        return firstName;\r\n    }\r\n\r\n    public String getLastName() {\r\n        return lastName;\r\n    }\r\n\r\n    public String getPhoneNumber() {\r\n        return phoneNumber;\r\n    }\r\n\r\n    public void setEmployee_Id(int employee_Id) {\r\n        this.employee_Id = employee_Id;\r\n    }\r\n\r\n    public void setAddress(String address) {\r\n        this.address = address;\r\n    }\r\n\r\n    public void setFirstName(String firstName) {\r\n        this.firstName = firstName;\r\n    }\r\n\r\n    public void setLastName(String lastName) {\r\n        this.lastName = lastName;\r\n    }\r\n\r\n    public void setPhoneNumber(String phoneNumber) {\r\n        this.phoneNumber = phoneNumber;\r\n    }\r\n\r\n\r\n    public Employee()\r\n    {\r\n        Container emp = getContentPane();\r\n         employeeActions= new EmployeeActions();\r\n        setDefaultCloseOperation(EXIT_ON_CLOSE);\r\n        setSize(800,600);\r\n        setLayout(null);\r\n        setLocationRelativeTo(null);\r\n        setResizable(false);\r\n        setTitle(\"Employee\");\r\n        connection = Database.connection;\r\n        textField=new JTextField(100);\r\n        textField.setBounds(310,25,300,30);\r\n\r\n\r\n        int count =employeeActions.Count();\r\n        System.out.println(count);\r\n        Employee[] employees= employeeActions.Retrieve(count);\r\n\r\n        Cb= new JComboBox();\r\n        Cb.addItem(\"ID\");\r\n        Cb.addItem(\"Name\");\r\n        Cb.setBounds(200,25,100,30);\r\n        l1 = new JLabel(\"Search item using: \");\r\n        l1.setBounds(50,-10,50,800);\r\n        l1.setForeground(Color.WHITE);\r\n        l1.setFont(new Font(\"Arial\", Font.BOLD, 16));\r\n\r\n\r\n        String[] cNames = new String[]{\"ID\", \"First Name\", \"Last Name\", \"phone number\", \"address\"};\r\n\r\n        String [][] Values = new String[count][cNames.length];\r\n        for(int i=0;i<count; i++){\r\n            Values[i][0]= String.valueOf(employees[i].getEmployee_Id());\r\n            Values[i][1]= String.valueOf(employees[i].getFirstName());\r\n            Values[i][2]= String.valueOf(employees[i].getLastName());\r\n            Values[i][3]= String.valueOf(employees[i].getPhoneNumber());\r\n            Values[i][4]= String.valueOf(employees[i].getAddress());\r\n\r\n        }\r\n\r\n        TableModel model= new DefaultTableModel(Values,cNames);\r\n        TableRowSorter sorter=new TableRowSorter(model);\r\n        T= new JTable(model);\r\n        T.setRowSorter(sorter);\r\n        scroll=new JScrollPane(T);\r\n\r\n        textField.getDocument().addDocumentListener(new DocumentListener() {\r\n            @Override\r\n            public void insertUpdate(DocumentEvent e) {\r\n                search(textField.getText());\r\n            }\r\n            @Override\r\n            public void removeUpdate(DocumentEvent e) {\r\n                search(textField.getText());\r\n            }\r\n            @Override\r\n            public void changedUpdate(DocumentEvent e) {\r\n                search(textField.getText());\r\n            }\r\n            public void search(String str) {\r\n                String selected=(String)Cb.getSelectedItem();\r\n                if(selected.equals(\"ID\")){\r\n                    if (str.length() == 0) {\r\n                        sorter.setRowFilter(null);\r\n                    } else {\r\n                        RowFilter rowFilter= RowFilter.regexFilter(textField.getText(),0);\r\n                        sorter.setRowFilter(rowFilter);\r\n                    }\r\n                }else if(selected.equals(\"Name\")){\r\n                    if (str.length() == 0) {\r\n                        sorter.setRowFilter(null);\r\n                    } else {\r\n                        RowFilter rowFilter= RowFilter.regexFilter(textField.getText(),1);\r\n                        sorter.setRowFilter(rowFilter);\r\n                    }\r\n                }\r\n            }\r\n\r\n\r\n        });\r\n\r\n        back=new JButton(\"Back\");\r\n        back.setBackground(new Color(40,40,40));\r\n        back.setForeground(Color.WHITE);\r\n\r\n        back.setFocusPainted(false);\r\n        back.setFont(new Font(\"Arial\", Font.BOLD, 16));\r\n\r\n        back.addMouseListener(new java.awt.event.MouseAdapter() {\r\n            public void mouseEntered(java.awt.event.MouseEvent evt) {\r\n                back.setBackground(new Color(60,60,60));\r\n            }\r\n\r\n            public void mouseExited(java.awt.event.MouseEvent evt) {\r\n                back.setBackground(new Color(40,40,40));\r\n            }\r\n        });\r\n\r\n        back.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                if(e.getSource()==back)\r\n                {\r\n                    dispose();\r\n                    Admin n=new Admin();\r\n                    n.setVisible(true);\r\n                }\r\n\r\n            }\r\n        });\r\n        back.setBounds(10,10,80,20);\r\n\r\n\r\n        add=new JButton(\"Add\");\r\n        add.setBackground(new Color(40,40,40));\r\n        add.setForeground(Color.WHITE);\r\n\r\n        add.setFocusPainted(false);\r\n        add.setFont(new Font(\"Arial\", Font.BOLD, 16));\r\n\r\n        add.addMouseListener(new java.awt.event.MouseAdapter() {\r\n            public void mouseEntered(java.awt.event.MouseEvent evt) {\r\n                add.setBackground(new Color(60,60,60));\r\n            }\r\n\r\n            public void mouseExited(java.awt.event.MouseEvent evt) {\r\n                add.setBackground(new Color(40,40,40));\r\n            }\r\n        });\r\n\r\n        add.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                if(e.getSource()==add)\r\n                {\r\n                    newEmployee = new JDialog();\r\n\r\n                    newEmployee.setTitle(\"Add Employee\");\r\n                    newEmployee.setLayout(null);\r\n\r\n\r\n\r\n                    JLabel fn=new JLabel(\"Employee First Name\");\r\n                    fn.setBounds(25,10,200,30);\r\n                    JLabel ln=new JLabel(\"Employee Last Name\");\r\n                    ln.setBounds(25,50,200,30);\r\n                    JLabel pn=new JLabel(\"Employee Phone Number\");\r\n                    pn.setBounds(25,90,200,30);\r\n                    JLabel ad=new JLabel(\"Employee Adress \");\r\n                    ad.setBounds(25,130,200,30);\r\n                    JButton done=new JButton(\"Done\");\r\n\r\n\r\n\r\n\r\n\r\n\r\n                    JTextField jTextField_fn=new JTextField(20);\r\n                    jTextField_fn.setBounds(225,10,300,30);\r\n                    JTextField jTextField_ln=new JTextField(20);\r\n                    jTextField_ln.setBounds(225,50,300,30);\r\n                    JTextField jTextField_pn=new JTextField(20);\r\n                    jTextField_pn.setBounds(225,90,300,30);\r\n                    JTextField jTextField_ad=new JTextField(20);\r\n                    jTextField_ad.setBounds(225,130,300,30);\r\n\r\n\r\n                    jTextField_fn.getDocument().addDocumentListener(new DocumentListener() {\r\n                        @Override\r\n                        public void insertUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void removeUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void changedUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        public void highLight(){\r\n                            if(jTextField_fn.getText().isEmpty()){\r\n                                jTextField_fn.setBackground(Color.lightGray);\r\n                            }else{\r\n                                jTextField_fn.setBackground(Color.white);\r\n                            }\r\n                        }\r\n                    });\r\n                    jTextField_ln.getDocument().addDocumentListener(new DocumentListener() {\r\n                        @Override\r\n                        public void insertUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void removeUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void changedUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        public void highLight(){\r\n                            if(jTextField_ln.getText().isEmpty()){\r\n                                jTextField_ln.setBackground(Color.lightGray);\r\n                            }else {\r\n                                jTextField_ln.setBackground(Color.white);\r\n                            }\r\n                        }\r\n                    });\r\n\r\n                    jTextField_pn.getDocument().addDocumentListener(new DocumentListener() {\r\n                        @Override\r\n                        public void insertUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void removeUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void changedUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        public void highLight(){\r\n                            if(jTextField_pn.getText().isEmpty()){\r\n                                jTextField_pn.setBackground(Color.lightGray);\r\n                            }else{\r\n                                jTextField_pn.setBackground(Color.WHITE);\r\n                            }\r\n                        }\r\n                    });\r\n\r\n                    jTextField_ad.getDocument().addDocumentListener(new DocumentListener() {\r\n                        @Override\r\n                        public void insertUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void removeUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void changedUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        public void highLight(){\r\n                            if(jTextField_ad.getText().isEmpty()){\r\n                                jTextField_ad.setBackground(Color.lightGray);\r\n                            }else{\r\n                                jTextField_ad.setBackground(Color.white);\r\n                            }\r\n                        }\r\n                    });\r\n\r\n                    done.setBackground(new Color(40,40,40));\r\n                    done.setForeground(Color.WHITE);\r\n                    done.setFocusPainted(false);\r\n                    done.setFont(new Font(\"Arial\", Font.BOLD, 16));\r\n\r\n                    done.addMouseListener(new java.awt.event.MouseAdapter() {\r\n                        public void mouseEntered(java.awt.event.MouseEvent evt) {\r\n                            done.setBackground(new Color(60,60,60));\r\n                        }\r\n\r\n                        public void mouseExited(java.awt.event.MouseEvent evt) {\r\n                            done.setBackground(new Color(40,40,40));\r\n                        }\r\n                    });\r\n                    done.addActionListener(new ActionListener() {\r\n                        public void actionPerformed(ActionEvent e) {\r\n                            if(e.getSource()==done)\r\n                            {\r\n                                dispose();\r\n                                if(jTextField_fn.getText().isEmpty()==false&&jTextField_ln.getText().isEmpty()==false&&jTextField_pn.getText().isEmpty()==false&&jTextField_ad.getText().isEmpty()==false){\r\n                                    Employee addEmployee=new Employee(jTextField_fn.getText(),jTextField_ln.getText(),jTextField_pn.getText(),jTextField_ad.getText());\r\n                                    employeeActions.Add(addEmployee);\r\n                                    newEmployee.dispose();\r\n                                }\r\n                                Admin n=new Admin();\r\n                                n.setVisible(true);\r\n\r\n                            }\r\n                        }\r\n                    });\r\n                    done.setBounds(300,260,100,30);\r\n                    newEmployee.add(fn);\r\n                    newEmployee.add(jTextField_fn);\r\n                    newEmployee.add(ln);\r\n                    newEmployee.add(jTextField_ln);\r\n                    newEmployee.add(pn);\r\n                    newEmployee.add(jTextField_pn);\r\n                    newEmployee.add(ad);\r\n                    newEmployee.add(jTextField_ad);\r\n                    newEmployee.add(done);\r\n                    newEmployee.setSize(600, 400);\r\n\r\n\r\n\r\n                    newEmployee.setLocationRelativeTo(null);\r\n                    newEmployee.setVisible(true);\r\n                }\r\n\r\n            }\r\n        });\r\n        add.setBounds(250,390,100,50);\r\n\r\n\r\n        remove=new JButton(\"Remove\");\r\n        remove.setBackground(new Color(40,40,40));\r\n        remove.setForeground(Color.WHITE);\r\n\r\n        remove.setFocusPainted(false);\r\n        remove.setFont(new Font(\"Arial\", Font.BOLD, 16));\r\n\r\n        remove.addMouseListener(new java.awt.event.MouseAdapter() {\r\n            public void mouseEntered(java.awt.event.MouseEvent evt) {\r\n                remove.setBackground(new Color(60,60,60));\r\n            }\r\n\r\n            public void mouseExited(java.awt.event.MouseEvent evt) {\r\n                remove.setBackground(new Color(40,40,40));\r\n            }\r\n        });\r\n\r\n        remove.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                if(e.getSource()==remove)\r\n                {\r\n                    removeEmployee = new JDialog();\r\n\r\n                    removeEmployee.setTitle(\"Remove Employee\");\r\n                    removeEmployee.setLayout(null);\r\n                    JLabel fn=new JLabel(\"Employee First Name\");\r\n                    fn.setBounds(25,10,200,30);\r\n                    JLabel ln=new JLabel(\"Employee Last Name\");\r\n                    ln.setBounds(25,50,200,30);\r\n                    JLabel id=new JLabel(\"Employee ID\");\r\n                    id.setBounds(25,90,200,30);\r\n\r\n                    JButton done=new JButton(\"Done\");\r\n\r\n\r\n\r\n\r\n                    JTextField jTextField_fn=new JTextField(20);\r\n                    jTextField_fn.setBounds(225,10,300,30);\r\n                    JTextField jTextField_ln=new JTextField(20);\r\n                    jTextField_ln.setBounds(225,50,300,30);\r\n                    JTextField jTextField_id=new JTextField(20);\r\n                    jTextField_id.setBounds(225,90,300,30);\r\n\r\n                    jTextField_fn.getDocument().addDocumentListener(new DocumentListener() {\r\n                        @Override\r\n                        public void insertUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void removeUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void changedUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        public void highLight(){\r\n                            if(jTextField_fn.getText().isEmpty()){\r\n                                jTextField_fn.setBackground(Color.lightGray);\r\n                            }else{\r\n                                jTextField_fn.setBackground(Color.white);\r\n                            }\r\n                        }\r\n                    });\r\n                    jTextField_ln.getDocument().addDocumentListener(new DocumentListener() {\r\n                        @Override\r\n                        public void insertUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void removeUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void changedUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        public void highLight(){\r\n                            if(jTextField_ln.getText().isEmpty()){\r\n                                jTextField_ln.setBackground(Color.lightGray);\r\n                            }else {\r\n                                jTextField_ln.setBackground(Color.white);\r\n                            }\r\n                        }\r\n                    });\r\n\r\n                    jTextField_id.getDocument().addDocumentListener(new DocumentListener() {\r\n                        @Override\r\n                        public void insertUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void removeUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void changedUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        public void highLight(){\r\n                            if(jTextField_id.getText().isEmpty()){\r\n                                jTextField_id.setBackground(Color.lightGray);\r\n                            }else {\r\n                                jTextField_id.setBackground(Color.white);\r\n                            }\r\n                        }\r\n                    });\r\n\r\n\r\n\r\n                    done.setBackground(new Color(40,40,40));\r\n                    done.setForeground(Color.WHITE);\r\n                    done.setFocusPainted(false);\r\n                    done.setFont(new Font(\"Arial\", Font.BOLD, 16));\r\n\r\n                    done.addMouseListener(new java.awt.event.MouseAdapter() {\r\n                        public void mouseEntered(java.awt.event.MouseEvent evt) {\r\n                            done.setBackground(new Color(60,60,60));\r\n                        }\r\n\r\n                        public void mouseExited(java.awt.event.MouseEvent evt) {\r\n                            done.setBackground(new Color(40,40,40));\r\n                        }\r\n                    });\r\n                    done.addActionListener(new ActionListener() {\r\n                        public void actionPerformed(ActionEvent e) {\r\n                            if(e.getSource()==done)\r\n                            {\r\n                                dispose();\r\n                                for (int i=0;i<count;i++){\r\n                                    if(Integer.parseInt(jTextField_id.getText())==employees[i].getEmployee_Id()&&jTextField_fn.getText().equals(employees[i].firstName)) {\r\n                                        employeeActions.Remove(employees[i]);\r\n                                        removeEmployee.dispose();\r\n                                    }\r\n                                }\r\n\r\n                                Admin n=new Admin();\r\n                                n.setVisible(true);\r\n                            }\r\n                        }\r\n                    });\r\n                    done.setBounds(300,260,100,30);\r\n\r\n                    removeEmployee.add(fn);\r\n                    removeEmployee.add(jTextField_fn);\r\n                    removeEmployee.add(ln);\r\n                    removeEmployee.add(jTextField_ln);\r\n                    removeEmployee.add(id);\r\n                    removeEmployee.add(jTextField_id);\r\n\r\n                    removeEmployee.add(done);\r\n                    removeEmployee.setSize(600, 400);\r\n\r\n\r\n\r\n                    removeEmployee.setLocationRelativeTo(null);\r\n                    removeEmployee.setVisible(true);\r\n\r\n                }\r\n\r\n            }\r\n        });\r\n        remove.setBounds(450,390,100,50);\r\n\r\n        p1=new JPanel(null){\r\n            private BufferedImage backgroundImage;\r\n\r\n            {\r\n                try {\r\n\r\n                    backgroundImage = ImageIO.read(new File(\"C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg\"));\r\n\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n            }\r\n\r\n            protected void paintComponent(Graphics g) {\r\n                super.paintComponent(g);\r\n\r\n                if (backgroundImage != null) {\r\n                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);\r\n                }\r\n            }\r\n        };\r\n\r\n        p2=new JPanel(null){\r\n            private BufferedImage backgroundImage;\r\n\r\n            {\r\n                try {\r\n\r\n                    backgroundImage = ImageIO.read(new File(\"C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg\"));\r\n\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n            }\r\n\r\n            protected void paintComponent(Graphics g) {\r\n                super.paintComponent(g);\r\n\r\n                if (backgroundImage != null) {\r\n                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);\r\n                }\r\n            }\r\n        };\r\n\r\n        p2.setPreferredSize(new Dimension(600,400));\r\n\r\n        p1.setPreferredSize(new Dimension(600,50));\r\n\r\n\r\n\r\n\r\n\r\n        scroll.setBounds(50,15,700,350);\r\n        scroll.setBackground(Color.WHITE);\r\n\r\n\r\n\r\n\r\n\r\n        p1.add(back);\r\n        p1.add(Cb);\r\n        p1.add(textField);\r\n        p2.add(scroll);\r\n        p2.add(add);\r\n        p2.add(remove);\r\n        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));\r\n        emp.add(p1);\r\n        emp.add(p2);\r\n\r\n    }\r\n    public Employee(int id, String firstName, String lastName,String phoneNumber,String address) {\r\n        this.employee_Id = id;\r\n        this.firstName=firstName;\r\n        this.lastName = lastName;\r\n        this.phoneNumber = phoneNumber;\r\n        this.address = address;\r\n    }\r\n\r\n    public Employee( String firstName, String lastName,String phoneNumber,String address) {\r\n        this.firstName=firstName;\r\n        this.lastName = lastName;\r\n        this.phoneNumber = phoneNumber;\r\n        this.address = address;\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/employee/Employee.java b/src/employee/Employee.java
+--- a/src/employee/Employee.java	(revision c4d07314a12f49a154a16bfc846677ea8a33109d)
++++ b/src/employee/Employee.java	(date 1694639242102)
+@@ -20,7 +20,7 @@
+ import java.io.File;
+ import java.io.IOException;
+ import java.sql.*;
+-import java.util.Date;
++import java.sql.Date;
+ 
+ 
+ import database.Database;
+@@ -43,7 +43,8 @@
+ 
+ 
+     JScrollPane scroll;
+-    private String firstName,lastName, address,phoneNumber;
++    private String firstName,lastName, address,phoneNumber,gender;
++    Date dob,doh;
+ 
+     private int employee_Id;
+ 
+@@ -68,7 +69,19 @@
+     public String getPhoneNumber() {
+         return phoneNumber;
+     }
++    public String getGender()
++    {
++        return gender;
++    }
++    public Date getDob()
++    {
++        return  dob;
++    }
+ 
++    public Date getDoh()
++    {
++        return doh;
++    }
+     public void setEmployee_Id(int employee_Id) {
+         this.employee_Id = employee_Id;
+     }
+@@ -88,7 +101,19 @@
+     public void setPhoneNumber(String phoneNumber) {
+         this.phoneNumber = phoneNumber;
+     }
++    public void setGender(String gender)
++    {
++        this.gender=gender;
++    }
++    public void setDob(Date dob)
++    {
++        this.dob=dob;
++    }
+ 
++    public void setDoh(Date doh)
++    {
++        this.doh=doh;
++    }
+ 
+     public Employee()
+     {
+@@ -119,7 +144,7 @@
+         l1.setFont(new Font("Arial", Font.BOLD, 16));
+ 
+ 
+-        String[] cNames = new String[]{"ID", "First Name", "Last Name", "phone number", "address"};
++        String[] cNames = new String[]{"ID", "First Name", "Last Name", "Phone Number", "Address","Gender","DOB","DOH"};
+ 
+         String [][] Values = new String[count][cNames.length];
+         for(int i=0;i<count; i++){
+@@ -128,6 +153,9 @@
+             Values[i][2]= String.valueOf(employees[i].getLastName());
+             Values[i][3]= String.valueOf(employees[i].getPhoneNumber());
+             Values[i][4]= String.valueOf(employees[i].getAddress());
++            Values[i][5]=String.valueOf(employees[i].getGender());
++            Values[i][6]=String.valueOf(employees[i].getDob());
++            Values[i][7]=String.valueOf(employees[i].getDoh());
+ 
+         }
+ 
+@@ -241,6 +269,12 @@
+                     pn.setBounds(25,90,200,30);
+                     JLabel ad=new JLabel("Employee Adress ");
+                     ad.setBounds(25,130,200,30);
++                    JLabel gender=new JLabel("Employee Gender");
++                    gender.setBounds(25,170,200,20);
++                    JLabel dob=new JLabel("Employee DOB");
++                    dob.setBounds(25,210,200,20);
++                    JLabel doh=new JLabel("Employee DOH");
++                    doh.setBounds(25,250,200,20);
+                     JButton done=new JButton("Done");
+ 
+ 
+@@ -256,7 +290,12 @@
+                     jTextField_pn.setBounds(225,90,300,30);
+                     JTextField jTextField_ad=new JTextField(20);
+                     jTextField_ad.setBounds(225,130,300,30);
+-
++                    JTextField jTextField_gen=new JTextField(20);
++                    jTextField_gen.setBounds(225,170,300,30);
++                    JTextField jTextField_dob=new JTextField(20);
++                    jTextField_dob.setBounds(225,210,300,30);
++                    JTextField jTextField_doh=new JTextField(20);
++                    jTextField_doh.setBounds(225,250,300,30);
+ 
+                     jTextField_fn.getDocument().addDocumentListener(new DocumentListener() {
+                         @Override
+@@ -357,6 +396,82 @@
+                         }
+                     });
+ 
++
++                    jTextField_gen.getDocument().addDocumentListener(new DocumentListener() {
++                        @Override
++                        public void insertUpdate(DocumentEvent e) {
++                            highLight();
++                        }
++
++                        @Override
++                        public void removeUpdate(DocumentEvent e) {
++                            highLight();
++                        }
++
++                        @Override
++                        public void changedUpdate(DocumentEvent e) {
++                            highLight();
++                        }
++
++                        public void highLight(){
++                            if(jTextField_gen.getText().isEmpty()){
++                                jTextField_gen.setBackground(Color.lightGray);
++                            }else{
++                                jTextField_gen.setBackground(Color.white);
++                            }
++                        }
++                    });
++
++                    jTextField_dob.getDocument().addDocumentListener(new DocumentListener() {
++                        @Override
++                        public void insertUpdate(DocumentEvent e) {
++                            highLight();
++                        }
++
++                        @Override
++                        public void removeUpdate(DocumentEvent e) {
++                            highLight();
++                        }
++
++                        @Override
++                        public void changedUpdate(DocumentEvent e) {
++                            highLight();
++                        }
++
++                        public void highLight(){
++                            if(jTextField_dob.getText().isEmpty()){
++                                jTextField_dob.setBackground(Color.lightGray);
++                            }else{
++                                jTextField_dob.setBackground(Color.white);
++                            }
++                        }
++                    });
++
++                    jTextField_doh.getDocument().addDocumentListener(new DocumentListener() {
++                        @Override
++                        public void insertUpdate(DocumentEvent e) {
++                            highLight();
++                        }
++
++                        @Override
++                        public void removeUpdate(DocumentEvent e) {
++                            highLight();
++                        }
++
++                        @Override
++                        public void changedUpdate(DocumentEvent e) {
++                            highLight();
++                        }
++
++                        public void highLight(){
++                            if(jTextField_doh.getText().isEmpty()){
++                                jTextField_doh.setBackground(Color.lightGray);
++                            }else{
++                                jTextField_doh.setBackground(Color.white);
++                            }
++                        }
++                    });
++
+                     done.setBackground(new Color(40,40,40));
+                     done.setForeground(Color.WHITE);
+                     done.setFocusPainted(false);
+@@ -376,8 +491,8 @@
+                             if(e.getSource()==done)
+                             {
+                                 dispose();
+-                                if(jTextField_fn.getText().isEmpty()==false&&jTextField_ln.getText().isEmpty()==false&&jTextField_pn.getText().isEmpty()==false&&jTextField_ad.getText().isEmpty()==false){
+-                                    Employee addEmployee=new Employee(jTextField_fn.getText(),jTextField_ln.getText(),jTextField_pn.getText(),jTextField_ad.getText());
++                                if(jTextField_fn.getText().isEmpty()==false&&jTextField_ln.getText().isEmpty()==false&&jTextField_pn.getText().isEmpty()==false&&jTextField_ad.getText().isEmpty()==false&&jTextField_gen.getText().isEmpty()==false&&jTextField_dob.getText().isEmpty()==false&&jTextField_doh.getText().isEmpty()==false){
++                                    Employee addEmployee=new Employee(jTextField_fn.getText(),jTextField_ln.getText(),jTextField_pn.getText(),jTextField_ad.getText(),jTextField_gen.getText(), Date.valueOf(jTextField_dob.getText()),Date.valueOf(jTextField_doh.getText()));
+                                     employeeActions.Add(addEmployee);
+                                     newEmployee.dispose();
+                                 }
+@@ -387,7 +502,7 @@
+                             }
+                         }
+                     });
+-                    done.setBounds(300,260,100,30);
++                    done.setBounds(300,300,100,30);
+                     newEmployee.add(fn);
+                     newEmployee.add(jTextField_fn);
+                     newEmployee.add(ln);
+@@ -396,6 +511,13 @@
+                     newEmployee.add(jTextField_pn);
+                     newEmployee.add(ad);
+                     newEmployee.add(jTextField_ad);
++                    newEmployee.add(gender);
++                    newEmployee.add(jTextField_gen);
++                    newEmployee.add(dob);
++                    newEmployee.add(jTextField_dob);
++                    newEmployee.add(doh);
++                    newEmployee.add(jTextField_doh);
++
+                     newEmployee.add(done);
+                     newEmployee.setSize(600, 400);
+ 
+@@ -591,7 +713,7 @@
+             {
+                 try {
+ 
+-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
++                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+ 
+                 } catch (IOException e) {
+                     e.printStackTrace();
+@@ -613,7 +735,7 @@
+             {
+                 try {
+ 
+-                    backgroundImage = ImageIO.read(new File("C:/Users/Nahom Mekonnen/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
++                    backgroundImage = ImageIO.read(new File("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg"));
+ 
+                 } catch (IOException e) {
+                     e.printStackTrace();
+@@ -655,19 +777,25 @@
+         emp.add(p2);
+ 
+     }
+-    public Employee(int id, String firstName, String lastName,String phoneNumber,String address) {
++    public Employee(int id, String firstName, String lastName,String phoneNumber,String address,String gender,Date dob,Date doh) {
+         this.employee_Id = id;
+         this.firstName=firstName;
+         this.lastName = lastName;
+         this.phoneNumber = phoneNumber;
+         this.address = address;
++        this.gender=gender;
++        this.dob=dob;
++        this.doh=doh;
+     }
+ 
+-    public Employee( String firstName, String lastName,String phoneNumber,String address) {
++    public Employee( String firstName, String lastName,String phoneNumber,String address,String gender,Date dob,Date doh) {
+         this.firstName=firstName;
+         this.lastName = lastName;
+         this.phoneNumber = phoneNumber;
+         this.address = address;
++        this.gender=gender;
++        this.dob=dob;
++        this.doh=doh;
+     }
+ 
+ 
+Index: src/employee/EmployeeActions.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package employee;\r\n\r\nimport com.sun.jdi.IntegerType;\r\nimport database.Database;\r\n\r\nimport javax.swing.plaf.synth.SynthTextAreaUI;\r\nimport java.sql.*;\r\n\r\n\r\npublic class EmployeeActions {\r\n    int ID, amount, CategoryID;\r\n\r\n    String firstName,lastName,phoneNumber, address;\r\n    Date date;\r\n    Double money;\r\n\r\n\r\n    int Count() {\r\n        try {\r\n            Statement stmt = Database.connection.createStatement();\r\n            String query = \"SELECT COUNT(employee_id) FROM employees\";\r\n            ResultSet resultSet = stmt.executeQuery(query);\r\n            while (resultSet.next()){\r\n                return resultSet.getInt(1);\r\n            }\r\n            System.out.println(amount);\r\n            return amount;\r\n\r\n        } catch (Exception e) {\r\n            System.out.println(e);\r\n            return 0;\r\n        }\r\n    }\r\n    public void Remove(Employee employee)  {\r\n        try {\r\n            PreparedStatement statement=Database.connection.prepareStatement(\"DELETE FROM employees WHERE employee_id = \"+ employee.getEmployee_Id() +\" AND employee_firstName = '\" + employee.getFirstName() +\"'\");\r\n            System.out.println(\"Removed\");\r\n            statement.executeUpdate();\r\n\r\n        } catch (Exception e){\r\n            System.out.println(e);\r\n        }\r\n    }\r\n    public void Add(Employee employee){\r\n        try{\r\n            PreparedStatement statement= Database.connection.prepareStatement(\"INSERT INTO employees Values(?,?,?,?)\");\r\n            statement.setString(1,employee.getFirstName());\r\n            statement.setString(2,employee.getLastName());\r\n            statement.setString(3,employee.getPhoneNumber());\r\n            statement.setString(4,employee.getAddress());\r\n            System.out.println(\"Added\");\r\n            statement.executeUpdate();\r\n\r\n\r\n        } catch (Exception e){\r\n            System.out.println(e);\r\n        }\r\n\r\n    }\r\n\r\n    Employee[] Retrieve(int count) {\r\n        int x=0;\r\n        Employee[] employees=new Employee[count];\r\n        try {\r\n            Statement stmt = Database.connection.createStatement();\r\n            String query = \"Select * From employees\";\r\n            ResultSet resultSet = stmt.executeQuery(query);\r\n\r\n            System.out.println(\"Attempt\");\r\n\r\n            System.out.println(\"result \" + resultSet);\r\n\r\n\r\n            while (resultSet.next()) {\r\n\r\n\r\n                ID = resultSet.getInt(1);\r\n                firstName = resultSet.getString(2);\r\n                lastName=resultSet.getString(3);\r\n                phoneNumber = resultSet.getString(4);\r\n                address = resultSet.getString(5);\r\n\r\n                System.out.println(ID + \" \" + firstName + \" \" + lastName + \" \" + phoneNumber + \" \" + \" \" + address);\r\n                Employee newEmployee = new Employee(ID, firstName,lastName,phoneNumber, address);\r\n                employees[x]=newEmployee;\r\n                x++;\r\n            }\r\n\r\n\r\n            //pst.executeUpdate();\r\n        } catch (Exception e) {\r\n            e.printStackTrace();\r\n        }\r\n        return employees;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/employee/EmployeeActions.java b/src/employee/EmployeeActions.java
+--- a/src/employee/EmployeeActions.java	(revision c4d07314a12f49a154a16bfc846677ea8a33109d)
++++ b/src/employee/EmployeeActions.java	(date 1694638917321)
+@@ -10,7 +10,8 @@
+ public class EmployeeActions {
+     int ID, amount, CategoryID;
+ 
+-    String firstName,lastName,phoneNumber, address;
++    String firstName,lastName,phoneNumber, address,gender;
++    Date dob,doh;
+     Date date;
+     Double money;
+ 
+@@ -43,11 +44,14 @@
+     }
+     public void Add(Employee employee){
+         try{
+-            PreparedStatement statement= Database.connection.prepareStatement("INSERT INTO employees Values(?,?,?,?)");
++            PreparedStatement statement= Database.connection.prepareStatement("INSERT INTO employees Values(?,?,?,?,?,?,?)");
+             statement.setString(1,employee.getFirstName());
+             statement.setString(2,employee.getLastName());
+             statement.setString(3,employee.getPhoneNumber());
+             statement.setString(4,employee.getAddress());
++            statement.setString(5,employee.getGender());
++            statement.setDate(6,(Date)employee.getDob());
++            statement.setDate(7,(Date)employee.getDoh());
+             System.out.println("Added");
+             statement.executeUpdate();
+ 
+@@ -79,9 +83,12 @@
+                 lastName=resultSet.getString(3);
+                 phoneNumber = resultSet.getString(4);
+                 address = resultSet.getString(5);
++                gender=resultSet.getString(6);
++                dob=resultSet.getDate(7);
++                doh=resultSet.getDate(8);
+ 
+-                System.out.println(ID + " " + firstName + " " + lastName + " " + phoneNumber + " " + " " + address);
+-                Employee newEmployee = new Employee(ID, firstName,lastName,phoneNumber, address);
++                System.out.println(ID + " " + firstName + " " + lastName + " " + phoneNumber + " " + " " + address+" "+" "+gender+" "+" "+dob+" "+" "+doh);
++                Employee newEmployee = new Employee(ID, firstName,lastName,phoneNumber, address,gender,dob,doh);
+                 employees[x]=newEmployee;
+                 x++;
+             }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"d72dfc20-d9fd-433d-8297-8215fe9c5c62\" name=\"Changes\" comment=\"Nahom's Commit\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Profit/Profit.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/profit/Profit.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Profit/ProfitActions.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/profit/ProfitActions.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/employee/Employee.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/employee/Employee.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/inventory/Inventory.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/inventory/Inventory.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/inventory/InventoryActions.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/inventory/InventoryActions.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/sales/SalesActions.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/sales/SalesActions.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/supplier/SupplierActions.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/supplier/SupplierActions.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Kotlin Class\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"PUSH_TAGS\">\r\n      <GitPushTagMode>\r\n        <option name=\"argument\" value=\"--tags\" />\r\n        <option name=\"title\" value=\"All\" />\r\n      </GitPushTagMode>\r\n    </option>\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"back-up\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2VFRDXAfurToGERraEyCh7hpd24\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,\r\n    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/mekon/IdeaProjects/supermarket&quot;,\r\n    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Nahom Mekonnen/IdeaProjects/SuperMarketManagementSystem/src/Main.java&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Unnamed\" type=\"Application\" factoryName=\"Application\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Main\" />\r\n      <module name=\"SupermarketManagementSystem\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"d72dfc20-d9fd-433d-8297-8215fe9c5c62\" name=\"Changes\" comment=\"\" />\r\n      <created>1694429725009</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1694429725009</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"First Commit\">\r\n      <created>1694429925749</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694429925749</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Third Commit\">\r\n      <created>1694431359986</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694431359986</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Third Commit\">\r\n      <created>1694431632314</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694431632314</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Third Commit\">\r\n      <created>1694431708337</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694431708337</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Third Commit\">\r\n      <created>1694431859721</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694431859721</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Third Commit\">\r\n      <created>1694432185170</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694432185170</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Third Commit\">\r\n      <created>1694456574225</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694456574225</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Third Commit\">\r\n      <created>1694507543104</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694507543104</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"Third Commit\">\r\n      <created>1694530412611</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694530412611</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Third Commit\">\r\n      <created>1694533334126</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694533334126</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"Third Commit\">\r\n      <created>1694542750719</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694542750719</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"Third Commit\">\r\n      <created>1694543041212</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694543041212</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"Third Commit\">\r\n      <created>1694547627633</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694547627633</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00014\" summary=\"Third Commit\">\r\n      <created>1694553731088</created>\r\n      <option name=\"number\" value=\"00014\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694553731088</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00015\" summary=\"Nahom's Commit\">\r\n      <created>1694628188552</created>\r\n      <option name=\"number\" value=\"00015\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00015\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694628188552</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"16\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.History.Properties\">\r\n    <option name=\"COLUMN_ID_ORDER\">\r\n      <list>\r\n        <option value=\"Default.Root\" />\r\n        <option value=\"Default.Author\" />\r\n        <option value=\"Default.Date\" />\r\n        <option value=\"Default.Subject\" />\r\n        <option value=\"Space.CommitStatus\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <MESSAGE value=\"First Commit\" />\r\n    <MESSAGE value=\"Third Commit\" />\r\n    <MESSAGE value=\"Nahom's Commit\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Nahom's Commit\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <breakpoint enabled=\"true\" type=\"java-exception\">\r\n          <properties class=\"javax.imageio.IIOException\" package=\"javax.imageio\" />\r\n          <option name=\"timeStamp\" value=\"1\" />\r\n        </breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/SupermarketManagementSystem$Unnamed.ic\" NAME=\"Unnamed Coverage Results\" MODIFIED=\"1694504150044\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision c4d07314a12f49a154a16bfc846677ea8a33109d)
++++ b/.idea/workspace.xml	(date 1694636415746)
+@@ -4,14 +4,12 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="d72dfc20-d9fd-433d-8297-8215fe9c5c62" name="Changes" comment="Nahom's Commit">
++    <list default="true" id="d72dfc20-d9fd-433d-8297-8215fe9c5c62" name="Changes" comment="yetefa commit">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Profit/Profit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/profit/Profit.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Profit/ProfitActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/profit/ProfitActions.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/employee/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/employee/Employee.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/employee/EmployeeActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/employee/EmployeeActions.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/inventory/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/Inventory.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/inventory/InventoryActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/InventoryActions.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/sales/SalesActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sales/SalesActions.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/supplier/SupplierActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/supplier/SupplierActions.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -22,7 +20,6 @@
+   <component name="FileTemplateManagerImpl">
+     <option name="RECENT_TEMPLATES">
+       <list>
+-        <option value="Kotlin Class" />
+         <option value="Class" />
+       </list>
+     </option>
+@@ -34,11 +31,6 @@
+         <option name="title" value="All" />
+       </GitPushTagMode>
+     </option>
+-    <option name="RECENT_BRANCH_BY_REPOSITORY">
+-      <map>
+-        <entry key="$PROJECT_DIR$" value="back-up" />
+-      </map>
+-    </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+   <component name="MarkdownSettingsMigration">
+@@ -56,29 +48,17 @@
+   &quot;keyToString&quot;: {
+     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;C:/Users/mekon/IdeaProjects/supermarket&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/mekon/IdeaProjects/SupermarketManagementSystem&quot;,
+     &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Nahom Mekonnen/IdeaProjects/SuperMarketManagementSystem/src/Main.java&quot;,
+     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+   }
+ }</component>
+-  <component name="RunManager">
+-    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+-      <option name="MAIN_CLASS_NAME" value="Main" />
+-      <module name="SupermarketManagementSystem" />
+-      <method v="2">
+-        <option name="Make" enabled="true" />
+-      </method>
+-    </configuration>
+-  </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+@@ -138,74 +118,91 @@
+       <updated>1694456574225</updated>
+     </task>
+     <task id="LOCAL-00008" summary="Third Commit">
+-      <created>1694507543104</created>
++      <created>1694458071694</created>
+       <option name="number" value="00008" />
+       <option name="presentableId" value="LOCAL-00008" />
+       <option name="project" value="LOCAL" />
+-      <updated>1694507543104</updated>
++      <updated>1694458071694</updated>
+     </task>
+-    <task id="LOCAL-00009" summary="Third Commit">
+-      <created>1694530412611</created>
++    <task id="LOCAL-00009" summary="gui commit">
++      <created>1694502527439</created>
+       <option name="number" value="00009" />
+       <option name="presentableId" value="LOCAL-00009" />
+       <option name="project" value="LOCAL" />
+-      <updated>1694530412611</updated>
++      <updated>1694502527439</updated>
+     </task>
+-    <task id="LOCAL-00010" summary="Third Commit">
+-      <created>1694533334126</created>
++    <task id="LOCAL-00010" summary="gui2 commit">
++      <created>1694502632773</created>
+       <option name="number" value="00010" />
+       <option name="presentableId" value="LOCAL-00010" />
+       <option name="project" value="LOCAL" />
+-      <updated>1694533334126</updated>
++      <updated>1694502632773</updated>
+     </task>
+-    <task id="LOCAL-00011" summary="Third Commit">
+-      <created>1694542750719</created>
++    <task id="LOCAL-00011" summary="gui2 commit">
++      <created>1694506147571</created>
+       <option name="number" value="00011" />
+       <option name="presentableId" value="LOCAL-00011" />
+       <option name="project" value="LOCAL" />
+-      <updated>1694542750719</updated>
++      <updated>1694506147571</updated>
+     </task>
+-    <task id="LOCAL-00012" summary="Third Commit">
+-      <created>1694543041212</created>
++    <task id="LOCAL-00012" summary="gui2 commit">
++      <created>1694547383643</created>
+       <option name="number" value="00012" />
+       <option name="presentableId" value="LOCAL-00012" />
+       <option name="project" value="LOCAL" />
+-      <updated>1694543041212</updated>
++      <updated>1694547383643</updated>
+     </task>
+-    <task id="LOCAL-00013" summary="Third Commit">
+-      <created>1694547627633</created>
++    <task id="LOCAL-00013" summary="gui2 commit">
++      <created>1694547391394</created>
+       <option name="number" value="00013" />
+       <option name="presentableId" value="LOCAL-00013" />
+       <option name="project" value="LOCAL" />
+-      <updated>1694547627633</updated>
++      <updated>1694547391394</updated>
+     </task>
+-    <task id="LOCAL-00014" summary="Third Commit">
+-      <created>1694553731088</created>
++    <task id="LOCAL-00014" summary="gui2 commit">
++      <created>1694547491807</created>
+       <option name="number" value="00014" />
+       <option name="presentableId" value="LOCAL-00014" />
+       <option name="project" value="LOCAL" />
+-      <updated>1694553731088</updated>
++      <updated>1694547491807</updated>
+     </task>
+-    <task id="LOCAL-00015" summary="Nahom's Commit">
+-      <created>1694628188552</created>
++    <task id="LOCAL-00015" summary="gui2 commit">
++      <created>1694549839904</created>
+       <option name="number" value="00015" />
+       <option name="presentableId" value="LOCAL-00015" />
+       <option name="project" value="LOCAL" />
+-      <updated>1694628188552</updated>
++      <updated>1694549839904</updated>
+     </task>
+-    <option name="localTasksCounter" value="16" />
++    <task id="LOCAL-00016" summary="gui2 commit">
++      <created>1694553826302</created>
++      <option name="number" value="00016" />
++      <option name="presentableId" value="LOCAL-00016" />
++      <option name="project" value="LOCAL" />
++      <updated>1694553826302</updated>
++    </task>
++    <task id="LOCAL-00017" summary="gui2 commit">
++      <created>1694624293406</created>
++      <option name="number" value="00017" />
++      <option name="presentableId" value="LOCAL-00017" />
++      <option name="project" value="LOCAL" />
++      <updated>1694624293406</updated>
++    </task>
++    <task id="LOCAL-00018" summary="yetefa commit">
++      <created>1694624453508</created>
++      <option name="number" value="00018" />
++      <option name="presentableId" value="LOCAL-00018" />
++      <option name="project" value="LOCAL" />
++      <updated>1694624453508</updated>
++    </task>
++    <task id="LOCAL-00019" summary="yetefa commit">
++      <created>1694633644230</created>
++      <option name="number" value="00019" />
++      <option name="presentableId" value="LOCAL-00019" />
++      <option name="project" value="LOCAL" />
++      <updated>1694633644230</updated>
++    </task>
++    <option name="localTasksCounter" value="20" />
+     <servers />
+-  </component>
+-  <component name="Vcs.Log.History.Properties">
+-    <option name="COLUMN_ID_ORDER">
+-      <list>
+-        <option value="Default.Root" />
+-        <option value="Default.Author" />
+-        <option value="Default.Date" />
+-        <option value="Default.Subject" />
+-        <option value="Space.CommitStatus" />
+-      </list>
+-    </option>
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+     <option name="TAB_STATES">
+@@ -222,15 +219,21 @@
+     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+     <MESSAGE value="First Commit" />
+     <MESSAGE value="Third Commit" />
+-    <MESSAGE value="Nahom's Commit" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Nahom's Commit" />
++    <MESSAGE value="gui commit" />
++    <MESSAGE value="gui2 commit" />
++    <MESSAGE value="yetefa commit" />
++    <option name="LAST_COMMIT_MESSAGE" value="yetefa commit" />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>
+       <breakpoints>
+         <breakpoint enabled="true" type="java-exception">
+-          <properties class="javax.imageio.IIOException" package="javax.imageio" />
+-          <option name="timeStamp" value="1" />
++          <properties class="com.microsoft.sqlserver.jdbc.SQLServerException" package="com.microsoft.sqlserver.jdbc" />
++          <option name="timeStamp" value="2" />
++        </breakpoint>
++        <breakpoint enabled="true" type="java-exception">
++          <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
++          <option name="timeStamp" value="4" />
+         </breakpoint>
+       </breakpoints>
+     </breakpoint-manager>
+Index: src/inventory/Inventory.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package inventory;\r\nimport product.Product;\r\nimport admin.*;\r\n\r\nimport javax.imageio.ImageIO;\r\nimport javax.swing.*;\r\nimport javax.swing.event.DocumentEvent;\r\nimport javax.swing.event.DocumentListener;\r\nimport javax.swing.table.DefaultTableModel;\r\nimport javax.swing.table.TableModel;\r\nimport javax.swing.table.TableRowSorter;\r\nimport java.awt.*;\r\n\r\nimport java.awt.event.ActionEvent;\r\nimport java.awt.event.ActionListener;\r\nimport java.awt.image.BufferedImage;\r\nimport java.io.File;\r\nimport java.io.IOException;\r\nimport java.sql.*;\r\n\r\nimport database.Database;\r\npublic class Inventory extends JFrame{\r\n    Connection connection;\r\n    InventoryActions inventoryActions;\r\n\r\n    JLabel l1,l2;\r\n    JTextField textField;\r\n\r\n    JComboBox Cb;\r\n    JTable T;\r\n    JButton back,remove;\r\n    JScrollPane scroll;\r\n    JPanel p1,p2;\r\n    JDialog newItem,removeItem;\r\n\r\n\r\n\r\n    public Inventory(){\r\n        Container inv = getContentPane();\r\n        inventoryActions = new InventoryActions();\r\n        setDefaultCloseOperation(EXIT_ON_CLOSE);\r\n        setSize(800,600);\r\n        setLayout(null);\r\n        setLocationRelativeTo(null);\r\n        setResizable(false);\r\n        setTitle(\"Inventory\");\r\n        connection = Database.connection;\r\n        textField=new JTextField(100);\r\n        textField.setBounds(310,25,300,30);\r\n\r\n\r\n\r\n        int count =inventoryActions.Count();\r\n        System.out.println(count);\r\n        Product[] products= inventoryActions.Retrieve(count);\r\n\r\n        Cb= new JComboBox();\r\n        Cb.addItem(\"ID\");\r\n        Cb.addItem(\"Name\");\r\n        Cb.setBounds(200,25,100,30);\r\n        l1 = new JLabel(\"Search item using: \");\r\n        l1.setBounds(50,-10,50,800);\r\n        l1.setForeground(Color.WHITE);\r\n        l1.setFont(new Font(\"Arial\", Font.BOLD, 16));\r\n\r\n\r\n\r\n        String[] cNames = new String[]{\"ID\", \"Name\", \"Price\", \"Quantity\", \"Exp-Date\", \"Category-ID\"};\r\n\r\n        String [][] Values = new String[count][cNames.length];\r\n        for(int i=0;i<count; i++){\r\n            Values[i][0]= String.valueOf(products[i].getProduct_id());\r\n            Values[i][1]= products[i].getProduct_name();\r\n            Values[i][2]= String.valueOf(products[i].getPrice());\r\n            Values[i][3]= String.valueOf(products[i].getAmount());\r\n            Values[i][4]= String.valueOf(products[i].getDate());\r\n            Values[i][5]= String.valueOf(products[i].getCategory_id());\r\n        }\r\n\r\n        TableModel model= new DefaultTableModel(Values,cNames);\r\n        TableRowSorter sorter=new TableRowSorter(model);\r\n        T= new JTable(model);\r\n        T.setRowSorter(sorter);\r\n        scroll=new JScrollPane(T);\r\n\r\n\r\n        textField.getDocument().addDocumentListener(new DocumentListener() {\r\n            @Override\r\n            public void insertUpdate(DocumentEvent e) {\r\n                search(textField.getText());\r\n            }\r\n\r\n            @Override\r\n            public void removeUpdate(DocumentEvent e) {\r\n                search(textField.getText());\r\n            }\r\n\r\n            @Override\r\n            public void changedUpdate(DocumentEvent e) {\r\n                search(textField.getText());\r\n            }\r\n            private void search(String str){\r\n                String selected=(String)Cb.getSelectedItem();\r\n                if(selected.equals(\"ID\")){\r\n                    if (str.length() == 0) {\r\n                        sorter.setRowFilter(null);\r\n                    } else {\r\n                        RowFilter rowFilter= RowFilter.regexFilter(textField.getText(),0);\r\n                        sorter.setRowFilter(rowFilter);\r\n                    }\r\n                }else if(selected.equals(\"Name\")){\r\n                    if (str.length() == 0) {\r\n                        sorter.setRowFilter(null);\r\n                    } else {\r\n                        RowFilter rowFilter= RowFilter.regexFilter(textField.getText(),1);\r\n                        sorter.setRowFilter(rowFilter);\r\n                    }\r\n                }\r\n            }\r\n        });\r\n\r\n        back=new JButton(\"Back\");\r\n        back.setBackground(new Color(40,40,40));\r\n        back.setForeground(Color.WHITE);\r\n\r\n        back.setFocusPainted(false);\r\n        back.setFont(new Font(\"Arial\", Font.BOLD, 16));\r\n\r\n        back.addMouseListener(new java.awt.event.MouseAdapter() {\r\n            public void mouseEntered(java.awt.event.MouseEvent evt) {\r\n                back.setBackground(new Color(60,60,60));\r\n            }\r\n\r\n            public void mouseExited(java.awt.event.MouseEvent evt) {\r\n                back.setBackground(new Color(40,40,40));\r\n            }\r\n        });\r\n\r\n        back.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                if(e.getSource()==back)\r\n                {\r\n                    dispose();\r\n                    Admin n=new Admin();\r\n                    n.setVisible(true);\r\n                }\r\n\r\n            }\r\n        });\r\n        back.setBounds(10,10,80,20);\r\n\r\n\r\n\r\n        remove=new JButton(\"Remove\");\r\n        remove.setBackground(new Color(40,40,40));\r\n        remove.setForeground(Color.WHITE);\r\n\r\n        remove.setFocusPainted(false);\r\n        remove.setFont(new Font(\"Arial\", Font.BOLD, 16));\r\n\r\n        remove.addMouseListener(new java.awt.event.MouseAdapter() {\r\n            public void mouseEntered(java.awt.event.MouseEvent evt) {\r\n                remove.setBackground(new Color(60,60,60));\r\n            }\r\n\r\n            public void mouseExited(java.awt.event.MouseEvent evt) {\r\n                remove.setBackground(new Color(40,40,40));\r\n            }\r\n        });\r\n\r\n        remove.addActionListener(new ActionListener() {\r\n            @Override\r\n            public void actionPerformed(ActionEvent e) {\r\n                if(e.getSource()==remove)\r\n                {\r\n                    removeItem = new JDialog();\r\n\r\n                    removeItem.setTitle(\"Remove Item\");\r\n                    removeItem.setLayout(null);\r\n\r\n                    JLabel name=new JLabel(\"Item name\");\r\n                    name.setBounds(25,10,200,30);\r\n                    JLabel expiredate=new JLabel(\"Item Exp_Date\");\r\n                    expiredate.setBounds(25,50,200,30);\r\n                    JLabel category=new JLabel(\"Item Category Id\");\r\n                    category.setBounds(25,90,200,30);\r\n\r\n                    JButton done=new JButton(\"Done\");\r\n\r\n\r\n                    done.setBackground(new Color(40,40,40));\r\n                    done.setForeground(Color.WHITE);\r\n                    done.setFocusPainted(false);\r\n                    done.setFont(new Font(\"Arial\", Font.BOLD, 16));\r\n\r\n\r\n                    JTextField jTextField_name=new JTextField(20);\r\n                    jTextField_name.setBounds(225,10,300,30);\r\n                    JTextField jTextField_expireDate =new JTextField(20);\r\n                    jTextField_expireDate.setBounds(225,50,300,30);\r\n                    JTextField jTextField_categoryId=new JTextField(20);\r\n                    jTextField_categoryId.setBounds(225,90,300,30);\r\n\r\n                    jTextField_name.getDocument().addDocumentListener(new DocumentListener() {\r\n                        @Override\r\n                        public void insertUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void removeUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void changedUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        public void highLight(){\r\n                            if(jTextField_name.getText().isEmpty()){\r\n                                jTextField_name.setBackground(Color.lightGray);\r\n                            }else{\r\n                                jTextField_name.setBackground(Color.WHITE);\r\n                            }\r\n                        }\r\n                    });\r\n\r\n\r\n                    jTextField_categoryId.getDocument().addDocumentListener(new DocumentListener() {\r\n                        @Override\r\n                        public void insertUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void removeUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void changedUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        public void highLight(){\r\n                            if(jTextField_categoryId.getText().isEmpty()){\r\n                                jTextField_categoryId.setBackground(Color.lightGray);\r\n                            }else{\r\n                                jTextField_categoryId.setBackground(Color.WHITE);\r\n                            }\r\n                        }\r\n                    });\r\n                    jTextField_expireDate.getDocument().addDocumentListener(new DocumentListener() {\r\n                        @Override\r\n                        public void insertUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void removeUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        @Override\r\n                        public void changedUpdate(DocumentEvent e) {\r\n                            highLight();\r\n                        }\r\n\r\n                        public void highLight(){\r\n                            if(jTextField_expireDate.getText().isEmpty()){\r\n                                jTextField_expireDate.setBackground(Color.lightGray);\r\n                            }else{\r\n                                jTextField_expireDate.setBackground(Color.WHITE);\r\n                            }\r\n                        }\r\n                    });\r\n\r\n                    done.addMouseListener(new java.awt.event.MouseAdapter() {\r\n                        public void mouseEntered(java.awt.event.MouseEvent evt) {\r\n                            done.setBackground(new Color(60,60,60));\r\n                        }\r\n\r\n                        public void mouseExited(java.awt.event.MouseEvent evt) {\r\n                            done.setBackground(new Color(40,40,40));\r\n                        }\r\n                    });\r\n                    done.addActionListener(new ActionListener() {\r\n                        public void actionPerformed(ActionEvent e) {\r\n                            if(e.getSource()==done)\r\n                            {\r\n                                dispose();\r\n                                for (int i=0;i<count;i++){\r\n                                    if((jTextField_name.getText().equals(products[i].getProduct_name()) && Integer.parseInt(jTextField_categoryId.getText()) == products[i].getCategory_id())){\r\n                                        inventoryActions.Remove(products[i]);\r\n                                        dispose();\r\n                                    }\r\n                                }\r\n                                Admin n=new Admin();\r\n                                n.setVisible(true);\r\n                            }\r\n                        }\r\n                    });\r\n                    done.setBounds(300,260,100,30);\r\n\r\n\r\n                    removeItem.add(name);\r\n                    removeItem.add(jTextField_name);\r\n                    removeItem.add(expiredate);\r\n                    removeItem.add(jTextField_expireDate);\r\n                    removeItem.add(category);\r\n                    removeItem.add(jTextField_categoryId);\r\n                    removeItem.add(done);\r\n                    removeItem.setSize(600, 400);\r\n\r\n\r\n\r\n                    removeItem.setLocationRelativeTo(null);\r\n                    removeItem.setVisible(true);\r\n\r\n                }\r\n\r\n            }\r\n        });\r\n        remove.setBounds(350,390,100,50);\r\n\r\n\r\n\r\n        p1=new JPanel(null){\r\n            private BufferedImage backgroundImage;\r\n\r\n            {\r\n                try {\r\n\r\n                    backgroundImage = ImageIO.read(new File(\"C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg\"));\r\n\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n            }\r\n\r\n            protected void paintComponent(Graphics g) {\r\n                super.paintComponent(g);\r\n\r\n                if (backgroundImage != null) {\r\n                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);\r\n                }\r\n            }\r\n        };\r\n\r\n        p2=new JPanel(null){\r\n            private BufferedImage backgroundImage;\r\n\r\n            {\r\n                try {\r\n\r\n                    backgroundImage = ImageIO.read(new File(\"C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/greyImage.jpeg\"));\r\n\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n            }\r\n\r\n            protected void paintComponent(Graphics g) {\r\n                super.paintComponent(g);\r\n\r\n                if (backgroundImage != null) {\r\n                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);\r\n                }\r\n            }\r\n        };\r\n\r\n        p2.setPreferredSize(new Dimension(600,400));\r\n\r\n        p1.setPreferredSize(new Dimension(600,50));\r\n\r\n\r\n\r\n        scroll.setBounds(50,15,700,350);\r\n        scroll.setBackground(Color.WHITE);\r\n        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));\r\n\r\n\r\n        p1.add(back);\r\n        p1.add(Cb);\r\n        p1.add(textField);\r\n        p2.add(scroll);\r\n        p2.add(remove);\r\n        inv.add(p1);\r\n        inv.add(p2);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/inventory/Inventory.java b/src/inventory/Inventory.java
+--- a/src/inventory/Inventory.java	(revision c4d07314a12f49a154a16bfc846677ea8a33109d)
++++ b/src/inventory/Inventory.java	(date 1694634413204)
+@@ -294,7 +294,7 @@
+                                 for (int i=0;i<count;i++){
+                                     if((jTextField_name.getText().equals(products[i].getProduct_name()) && Integer.parseInt(jTextField_categoryId.getText()) == products[i].getCategory_id())){
+                                         inventoryActions.Remove(products[i]);
+-                                        dispose();
++                                        removeItem.dispose();
+                                     }
+                                 }
+                                 Admin n=new Admin();
+Index: src/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import cashier.Cashier;\r\nimport login.Login;\r\nimport profit.Profit;\r\nimport sales.Sales;\r\nimport database.Database;\r\nimport employee.Employee;\r\nimport inventory.Inventory;\r\nimport supplier.Supplier;\r\n\r\nimport javax.swing.*;\r\n\r\npublic class Main {\r\n\r\n\r\n    public static void main(String[] args) {\r\n     Login l=new Login();\r\n     l.setVisible(true);\r\n\r\n        Database database =new  Database(\"localhost\",\"SuperMarket\",\"sa\",\"Nani2239\");\r\n        database.instantiate();\r\n//        Inventory inventory=new Inventory();\r\n//        inventory.setVisible(true);\r\n//        Supplier supplier=new Supplier();\r\n//        supplier.setVisible(true);\r\n\r\n//        Admin ad=new Admin();\r\n//        ad.setVisible(true);\r\n///        Admin n=new Admin();\r\n//        n.setVisible(true);\r\n//        Employee e=new Employee();\r\n//        e.setVisible(true);\r\n\r\n//        Cashier c=new Cashier();\r\n//        c.setVisible(true);\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Main.java b/src/Main.java
+--- a/src/Main.java	(revision c4d07314a12f49a154a16bfc846677ea8a33109d)
++++ b/src/Main.java	(date 1694640444303)
+@@ -13,25 +13,12 @@
+ 
+ 
+     public static void main(String[] args) {
+-     Login l=new Login();
+-     l.setVisible(true);
+-
+-        Database database =new  Database("localhost","SuperMarket","sa","Nani2239");
+-        database.instantiate();
+-//        Inventory inventory=new Inventory();
+-//        inventory.setVisible(true);
+-//        Supplier supplier=new Supplier();
+-//        supplier.setVisible(true);
+-
+-//        Admin ad=new Admin();
+-//        ad.setVisible(true);
+-///        Admin n=new Admin();
+-//        n.setVisible(true);
+-//        Employee e=new Employee();
+-//        e.setVisible(true);
+-
+-//        Cashier c=new Cashier();
+-//        c.setVisible(true);
+-
++
++
++        Database database =new  Database("localhost","SuperMarket1","sa","Nani2239");
++        database.instantiate();
++
++        Login l=new Login();
++        l.setVisible(true);
+     }
+ }
+\ No newline at end of file
+Index: src/supplier/SupplierActions.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package supplier;\r\n\r\nimport database.Database;\r\nimport product.Product;\r\n\r\n\r\nimport java.sql.*;\r\n\r\npublic class SupplierActions {\r\n    int id;\r\n    String firstName,lastName,phoneNumber,itemSupplied,address;\r\n\r\n public   void Add(Supplier supplier)  {\r\n        try {\r\n\r\n            PreparedStatement statement= Database.connection.prepareStatement(\"Insert into suppliers C(?,?,?,?,?)\");\r\n            statement.setString(1,supplier.getFirstName());\r\n            statement.setString(2,supplier.getLastName());\r\n            statement.setString(3,supplier.getPhoneNumber());\r\n            statement.setString(4,supplier.getItemSupplied());\r\n            statement.setString(5,supplier.getAddress());\r\n            System.out.println(\"Added\");\r\n            statement.executeUpdate();\r\n\r\n        }catch (Exception e){\r\n            System.out.println(e);\r\n        }\r\n\r\n    }\r\n    public void Remove(Supplier supplier)\r\n    {\r\n        try{\r\n            PreparedStatement statement=Database.connection.prepareStatement(\"DELETE FROM suppliers WHERE supplier_id= \"+ supplier.getSupplier_id()+\"AND supplier_firstName= '\"+ supplier.getFirstName()+\"'\");\r\n            System.out.println(\"Removed\");\r\n            statement.executeUpdate();\r\n        }\r\n        catch (Exception e)\r\n        {\r\n            System.out.println(e);\r\n        }\r\n    }\r\n\r\n    public void Supply(Product product){\r\n        try {\r\n\r\n            PreparedStatement statement= Database.connection.prepareStatement(\"INSERT INTO products VALUES(?,?,?,?,?,?)\");\r\n            statement.setInt(1,product.getProduct_id());\r\n            statement.setString(2,product.getProduct_name());\r\n            statement.setDouble(3,product.getPrice());\r\n            statement.setInt(4,product.getAmount());\r\n            statement.setDate(5, (Date) product.getDate());\r\n            statement.setInt(6,product.getCategory_id());\r\n            System.out.println(\"Added\");\r\n            statement.executeUpdate();\r\n\r\n        }catch (Exception e){\r\n            System.out.println(e);\r\n        }\r\n\r\n    }\r\n\r\n    int Count() {\r\n        int num = 0;\r\n        try {\r\n            Statement stmt = Database.connection.createStatement();\r\n            String query = \"SELECT COUNT(supplier_id) FROM Suppliers\";\r\n            ResultSet resultSet = stmt.executeQuery(query);\r\n            while (resultSet.next()){\r\n                return resultSet.getInt(1);\r\n            }\r\n            System.out.println(num);\r\n            return num;\r\n\r\n        } catch (Exception e) {\r\n            System.out.println(e);\r\n            return 0;\r\n        }\r\n    }\r\n\r\n\r\n    Supplier[] Retrieve(int count) {\r\n        int x=0;\r\n        Supplier[] suppliers=new Supplier[count];\r\n        try {\r\n            Statement statement = Database.connection.createStatement();\r\n            String query = \"Select * From Suppliers\";\r\n            ResultSet resultSet = statement.executeQuery(query);\r\n\r\n            System.out.println(\"Attempt\");\r\n\r\n            System.out.println(\"result \" + resultSet);\r\n\r\n\r\n            while (resultSet.next()) {\r\n\r\n\r\n                id = resultSet.getInt(1);\r\n                firstName = resultSet.getString(2);\r\n                lastName = resultSet.getString(3);\r\n                phoneNumber = resultSet.getString(4);\r\n                itemSupplied = resultSet.getString(5);\r\n                address = resultSet.getString(6);\r\n                System.out.println(id + \" \" + firstName + \" \" + lastName + \" \" + phoneNumber + \" \" +  address + \" \" + itemSupplied);\r\n\r\n                Supplier newSupply = new Supplier(id,firstName,lastName,phoneNumber,itemSupplied,address);\r\n                suppliers[x]=newSupply;\r\n                x++;\r\n            }\r\n\r\n\r\n        } catch (Exception e) {\r\n            e.printStackTrace();\r\n        }\r\n        return suppliers;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/supplier/SupplierActions.java b/src/supplier/SupplierActions.java
+--- a/src/supplier/SupplierActions.java	(revision c4d07314a12f49a154a16bfc846677ea8a33109d)
++++ b/src/supplier/SupplierActions.java	(date 1694634413212)
+@@ -13,7 +13,7 @@
+  public   void Add(Supplier supplier)  {
+         try {
+ 
+-            PreparedStatement statement= Database.connection.prepareStatement("Insert into suppliers C(?,?,?,?,?)");
++            PreparedStatement statement= Database.connection.prepareStatement("Insert into suppliers (?,?,?,?,?)");
+             statement.setString(1,supplier.getFirstName());
+             statement.setString(2,supplier.getLastName());
+             statement.setString(3,supplier.getPhoneNumber());

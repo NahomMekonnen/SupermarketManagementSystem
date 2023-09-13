@@ -294,9 +294,10 @@ public class Inventory extends JFrame{
                                 for (int i=0;i<count;i++){
                                     if((jTextField_name.getText().equals(products[i].getProduct_name()) && Integer.parseInt(jTextField_categoryId.getText()) == products[i].getCategory_id())){
                                         inventoryActions.Remove(products[i]);
-                                        removeItem.dispose();
+
                                     }
                                 }
+                                removeItem.dispose();
                                 Admin n=new Admin();
                                 n.setVisible(true);
                             }
