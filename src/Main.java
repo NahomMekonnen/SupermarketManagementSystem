@@ -1,3 +1,4 @@
+import sales.Sales;
 import database.Database;
 import employee.Employee;
 import inventory.Inventory;

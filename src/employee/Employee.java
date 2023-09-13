@@ -1,5 +1,7 @@
 package employee;
 import admin.Admin;
+import inventory.InventoryActions;
+import product.Product;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
+import java.util.Date;
 
 
 import database.Database;
@@ -50,8 +53,8 @@ public class Employee extends JFrame{
         return employee_Id;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAdress() {
+        return adress;
     }
 
     public String getFirstName() {
@@ -235,7 +238,7 @@ public class Employee extends JFrame{
                     ln.setBounds(25,50,200,30);
                     JLabel pn=new JLabel("Employee Phone Number");
                     pn.setBounds(25,90,200,30);
-                    JLabel ad=new JLabel("Employee Address ");
+                    JLabel ad=new JLabel("Employee Adress ");
                     ad.setBounds(25,130,200,30);
                     JButton done=new JButton("Done");
 
@@ -402,7 +405,7 @@ public class Employee extends JFrame{
             }
         });
         add.setBounds(250,390,100,50);
-        //scroll.setBounds(50,15,700,350);
+
 
         remove=new JButton("Remove");
         remove.setBackground(new Color(40,40,40));
