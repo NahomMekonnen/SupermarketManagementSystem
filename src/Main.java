@@ -26,6 +26,8 @@ public class Main {
 //        Employee e=new Employee();
 //        e.setVisible(true);
 
+        Cashier c=new Cashier();
+        c.setVisible(true);
 
     }
 }
