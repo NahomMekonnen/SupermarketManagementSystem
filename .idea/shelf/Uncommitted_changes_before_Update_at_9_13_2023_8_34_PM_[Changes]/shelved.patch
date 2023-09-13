@@ -1,0 +1,32 @@
+Index: src/Profit/ProfitActions.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Profit/ProfitActions.java b/src/profit/ProfitActions.java
+rename from src/Profit/ProfitActions.java
+rename to src/profit/ProfitActions.java
+--- a/src/Profit/ProfitActions.java	
++++ b/src/profit/ProfitActions.java	
+@@ -1,4 +1,4 @@
+-package Profit;
++package profit;
+ 
+ import database.Database;
+ import java.sql.ResultSet;
+Index: src/Profit/Profit.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Profit/Profit.java b/src/profit/Profit.java
+rename from src/Profit/Profit.java
+rename to src/profit/Profit.java
+--- a/src/Profit/Profit.java	
++++ b/src/profit/Profit.java	
+@@ -1,4 +1,4 @@
+-package Profit;
++package profit;
+ 
+ import javax.swing.*;
+ import java.awt.*;

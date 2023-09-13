@@ -10,7 +10,8 @@ import java.sql.*;
 public class EmployeeActions {
     int ID, amount, CategoryID;
 
-    String firstName,lastName,phoneNumber, address;
+    String firstName,lastName,phoneNumber, address,gender;
+    Date dob,doh;
     Date date;
     Double money;
 
@@ -43,11 +44,14 @@ public class EmployeeActions {
     }
     public void Add(Employee employee){
         try{
-            PreparedStatement statement= Database.connection.prepareStatement("INSERT INTO employees Values(?,?,?,?)");
+            PreparedStatement statement= Database.connection.prepareStatement("INSERT INTO employees Values(?,?,?,?,?,?,?)");
             statement.setString(1,employee.getFirstName());
             statement.setString(2,employee.getLastName());
             statement.setString(3,employee.getPhoneNumber());
             statement.setString(4,employee.getAddress());
+            statement.setString(5,employee.getGender());
+            statement.setDate(6,(Date)employee.getDob());
+            statement.setDate(7,(Date)employee.getDoh());
             System.out.println("Added");
             statement.executeUpdate();
 
@@ -79,9 +83,12 @@ public class EmployeeActions {
                 lastName=resultSet.getString(3);
                 phoneNumber = resultSet.getString(4);
                 address = resultSet.getString(5);
+                gender=resultSet.getString(6);
+                dob=resultSet.getDate(7);
+                doh=resultSet.getDate(8);
 
-                System.out.println(ID + " " + firstName + " " + lastName + " " + phoneNumber + " " + " " + address);
-                Employee newEmployee = new Employee(ID, firstName,lastName,phoneNumber, address);
+                System.out.println(ID + " " + firstName + " " + lastName + " " + phoneNumber + " " + " " + address+" "+" "+gender+" "+" "+dob+" "+" "+doh);
+                Employee newEmployee = new Employee(ID, firstName,lastName,phoneNumber, address,gender,dob,doh);
                 employees[x]=newEmployee;
                 x++;
             }
