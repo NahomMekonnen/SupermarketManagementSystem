@@ -3,7 +3,7 @@ package admin;
 import employee.Employee;
 import inventory.Inventory;
 import login.*;
-
+import supplier.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -194,6 +194,17 @@ public class Admin extends JFrame {
                 b5.setBackground(new Color(40,40,40));
             }
         });
+       b5.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               if(e.getSource()==b5)
+               {
+                   dispose();
+                   Supplier supplier=new Supplier();
+                   supplier.setVisible(true);
+               }
+           }
+       });
 
         b4=new JButton("Profits");
         b4.setBackground(new Color(40,40,40));

@@ -1,6 +1,7 @@
 import database.Database;
 import employee.Employee;
 import inventory.Inventory;
+import supplier.Supplier;
 
 import javax.swing.*;
 
@@ -13,16 +14,17 @@ public class Main {
 
         Database database =new  Database("localhost","SuperMarket","sa","Nohom420");
         database.instantiate();
-        Inventory inventory=new Inventory();
-        inventory.setVisible(true);
-        Supplier supplier = new Supplier("Supplier Name", "123-456-7890", "Beverage Type");
-        GUI gui = new GUI(supplier);
+//        Inventory inventory=new Inventory();
+//        inventory.setVisible(true);
+        Supplier supplier=new Supplier();
+        supplier.setVisible(true);
+
 //        Admin ad=new Admin();
 //        ad.setVisible(true);
 ///        Admin n=new Admin();
 //        n.setVisible(true);
-        Employee e=new Employee();
-        e.setVisible(true);
+//        Employee e=new Employee();
+//        e.setVisible(true);
 
 
     }
