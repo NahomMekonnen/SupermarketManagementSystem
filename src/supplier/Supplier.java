@@ -639,8 +639,8 @@ public class Supplier extends JFrame{
                             {
                                 dispose();
                                 if(jTextField_name.getText().isEmpty()==false&&jTextField_id.getText().isEmpty()==false &&jTextField_price.getText().isEmpty()==false && jTextField_quantity.getText().isEmpty()==false && jTextField_expiredate.getText().isEmpty()==false&&jTextField_categoryId.getText().isEmpty()==false){
-                                    for (int i=0;i<count;i++){
-                                        if(Integer.parseInt(jTextField_id.getText())==suppliers[i].getSupplier_id()&&Integer.valueOf(jTextField_categoryId.getText())==suppliers[i].getCategory_id()){
+
+
                                             Product supplyProduct=new Product(jTextField_name.getText(),Double.parseDouble(jTextField_price.getText()),Integer.parseInt(jTextField_quantity.getText()),Integer.parseInt(jTextField_categoryId.getText()), Date.valueOf(jTextField_expiredate.getText()));
 
                                             InventoryActions inventoryActions=new InventoryActions();
@@ -648,7 +648,9 @@ public class Supplier extends JFrame{
                                             Product[] products=inventoryActions.Retrieve(num);
 
                                             for (int j=0;j<num; j++){
-                                                if(supplyProduct.getProduct_name()==products[j].getProduct_name()&&supplyProduct.getCategory_id()==products[j].getCategory_id()){
+                                                if(supplyProduct.getProduct_name().equals(products[j].getProduct_name())){
+                                                    products[j].setAmount(products[j].getAmount()+supplyProduct.getAmount());
+                                                    System.out.println("I was called");
                                                     supplierActions.Update(products[j]);
                                                 }else if(j==num-1){
                                                     supplierActions.Supply(supplyProduct);
@@ -656,8 +658,8 @@ public class Supplier extends JFrame{
                                             }
 
 
-                                        }
-                                    }
+
+
                                 }
                                 newItem.dispose();
                                 Admin n=new Admin();

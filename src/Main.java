@@ -1,6 +1,6 @@
 import cashier.Cashier;
 import login.Login;
-import profit.Profit;
+
 import sales.Sales;
 import database.Database;
 import employee.Employee;

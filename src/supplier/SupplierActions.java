@@ -30,7 +30,9 @@ public class SupplierActions {
     }
     public void Update(Product product){
         try {
-            PreparedStatement statement=Database.connection.prepareStatement("UPDATE Products SET product_quantity = "+ product.getAmount()  +" WHERE product_id = " + product.getProduct_id() );
+            PreparedStatement statement=Database.connection.prepareStatement("UPDATE Products SET product_quantity = ?  WHERE product_id =  ?" );
+            statement.setInt(1,product.getAmount());
+            statement.setInt(2,product.getProduct_id());
             System.out.println("Updated");
             statement.executeUpdate();
 

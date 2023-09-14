@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import sales.*;
-import profit.*;
+
 
 
 public class Admin extends JFrame {
@@ -243,10 +243,10 @@ public class Admin extends JFrame {
         });
 
 
-        b1.setBounds(20,50,150,60);
-        b2.setBounds(20,170,150,60);
-        b3.setBounds(240,50,150,60);
-        b4.setBounds(240,170,150,60);
+        b1.setBounds(10,50,170,60);
+        b2.setBounds(10,170,170,60);
+        b3.setBounds(235,50,170,60);
+        b4.setBounds(235,170,170,60);
         back.setBounds(10,10,80,20);
 
 
