@@ -1,7 +1,10 @@
 package sales;
 
 import database.Database;
+import employee.Employee;
+
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -10,29 +13,8 @@ public class SalesActions {
     private Date salesDate;
     private Double totalMoney;
 
-    public SalesActions(int salesID, Date salesDate, int salesQuantity, Double totalMoney) {
-    }
 
 
-    public SalesActions() {
-
-    }
-
-    public int getSalesID() {
-        return salesID;
-    }
-
-    public int getSalesQuantity() {
-        return salesQuantity;
-    }
-
-    public Date getSalesDate() {
-        return salesDate;
-    }
-
-    public Double getTotalMoney() {
-        return totalMoney;
-    }
 
     int Count() {
         try {
@@ -50,6 +32,22 @@ public class SalesActions {
         }
     }
 
+    public void Add(Sales sales){
+        try{
+            PreparedStatement statement= Database.connection.prepareStatement("INSERT INTO Sales Values(?,?,?)");
+            statement.setDate(1,(Date)sales.getSalesDate());
+            statement.setInt(2,sales.getSalesQuantity());
+            statement.setDouble(3,sales.getTotalMoney());
+
+            System.out.println("Added");
+            statement.executeUpdate();
+
+
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+    }
     Sales[] Retrieve(int count) {
         int x=0;
         Sales[] salesArray = new Sales[count];
@@ -80,13 +78,4 @@ public class SalesActions {
         return salesArray;
     }
 
-    double calculateTotalSales() {
-        double totalSales = 0;
-        int count = Count();
-        Sales[] salesArray = Retrieve(count);
-        for (Sales sale : salesArray) {
-            totalSales += sale.getTotalMoney();
-        }
-        return totalSales;
-    }
 }

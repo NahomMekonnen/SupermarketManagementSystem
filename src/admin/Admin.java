@@ -20,7 +20,7 @@ public class Admin extends JFrame {
 
 
     JPanel p1,p2;
-    JButton b1,b2,b3,b4,b5,back;
+    JButton b1,b2,b3,b4,back;
 
 
 
@@ -92,6 +92,8 @@ public class Admin extends JFrame {
         b1=new JButton("Inventory");
         b1.setBackground(new Color(40,40,40));
         b1.setForeground(Color.WHITE);
+        ImageIcon icon=new ImageIcon("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/inventory.png");
+        b1.setIcon(icon);
 
         b1.setFocusPainted(false);
         b1.setFont(new Font("Arial", Font.BOLD, 16));
@@ -122,6 +124,8 @@ public class Admin extends JFrame {
         b2.setBackground(new Color(40,40,40));
         b2.setForeground(Color.WHITE);
 
+        ImageIcon icons=new ImageIcon("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/employee.png");
+        b2.setIcon(icons);
         b2.setFocusPainted(false);
         b2.setFont(new Font("Arial", Font.BOLD, 16));
 
@@ -150,6 +154,8 @@ public class Admin extends JFrame {
         b3.setBackground(new Color(40,40,40));
         b3.setForeground(Color.WHITE);
 
+        ImageIcon iconss=new ImageIcon("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/sales.png");
+        b3.setIcon(iconss);
         b3.setFocusPainted(false);
         b3.setFont(new Font("Arial", Font.BOLD, 16));
 
@@ -176,10 +182,12 @@ public class Admin extends JFrame {
             }
         });
 
-        b4=new JButton("Profit");
+
+        b4=new JButton("Suppliers");
         b4.setBackground(new Color(40,40,40));
         b4.setForeground(Color.WHITE);
-
+        ImageIcon iconsss=new ImageIcon("C:/Users/mekon/IdeaProjects/SupermarketManagementSystem/supplier.png");
+        b4.setIcon(iconsss);
         b4.setFocusPainted(false);
         b4.setFont(new Font("Arial", Font.BOLD, 16));
 
@@ -192,42 +200,10 @@ public class Admin extends JFrame {
                 b4.setBackground(new Color(40,40,40));
             }
         });
-
         b4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource()==b4)
-                {
-                    Profit p=new Profit();
-
-                    p.setVisible(true);
-
-
-                }
-            }
-        });
-
-
-        b5=new JButton("Suppliers");
-        b5.setBackground(new Color(40,40,40));
-        b5.setForeground(Color.WHITE);
-
-        b5.setFocusPainted(false);
-        b5.setFont(new Font("Arial", Font.BOLD, 16));
-
-        b5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                b5.setBackground(new Color(60,60,60));
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                b5.setBackground(new Color(40,40,40));
-            }
-        });
-        b5.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getSource()==b5)
                 {
                     dispose();
                     Supplier supplier=new Supplier();
@@ -271,7 +247,6 @@ public class Admin extends JFrame {
         b2.setBounds(20,170,150,60);
         b3.setBounds(240,50,150,60);
         b4.setBounds(240,170,150,60);
-        b5.setBounds(130,270,150,60);
         back.setBounds(10,10,80,20);
 
 
@@ -281,7 +256,6 @@ public class Admin extends JFrame {
         p2.add(b2);
         p2.add(b3);
         p2.add(b4);
-        p2.add(b5);
 
 
         setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));

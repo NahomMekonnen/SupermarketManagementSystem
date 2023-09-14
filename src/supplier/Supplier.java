@@ -3,6 +3,7 @@ package supplier;
 import admin.Admin;
 import database.Database;
 
+import inventory.InventoryActions;
 import product.Product;
 
 import javax.imageio.ImageIO;
@@ -442,7 +443,7 @@ public class Supplier extends JFrame{
                     price.setBounds(25,50,200,30);
                     JLabel quantity=new JLabel("Item quantity");
                     quantity.setBounds(25,90,200,30);
-                    JLabel expiredate=new JLabel("Item Expiredate");
+                    JLabel expiredate=new JLabel("Item Expire Date");
                     expiredate.setBounds(25,130,200,30);
                     JLabel category=new JLabel("Item Category Id");
                     category.setBounds(25,170,200,30);
@@ -641,7 +642,19 @@ public class Supplier extends JFrame{
                                     for (int i=0;i<count;i++){
                                         if(Integer.parseInt(jTextField_id.getText())==suppliers[i].getSupplier_id()&&Integer.valueOf(jTextField_categoryId.getText())==suppliers[i].getCategory_id()){
                                             Product supplyProduct=new Product(jTextField_name.getText(),Double.parseDouble(jTextField_price.getText()),Integer.parseInt(jTextField_quantity.getText()),Integer.parseInt(jTextField_categoryId.getText()), Date.valueOf(jTextField_expiredate.getText()));
-                                            supplierActions.Supply(supplyProduct);
+
+                                            InventoryActions inventoryActions=new InventoryActions();
+                                            int num = inventoryActions.Count();
+                                            Product[] products=inventoryActions.Retrieve(num);
+
+                                            for (int j=0;j<num; j++){
+                                                if(supplyProduct.getProduct_name()==products[j].getProduct_name()&&supplyProduct.getCategory_id()==products[j].getCategory_id()){
+                                                    supplierActions.Update(products[j]);
+                                                }else if(j==num-1){
+                                                    supplierActions.Supply(supplyProduct);
+                                                }
+                                            }
+
 
                                         }
                                     }

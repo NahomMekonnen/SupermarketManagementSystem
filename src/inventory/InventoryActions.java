@@ -35,6 +35,16 @@ public class InventoryActions {
             return 0;
         }
     }
+    public void Update(Product product){
+        try {
+            PreparedStatement statement=Database.connection.prepareStatement("UPDATE Products SET product_quantity = "+ product.getAmount()  +" WHERE product_id = " + product.getProduct_id() );
+            System.out.println("Updated");
+            statement.executeUpdate();
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
 
     public void Remove(Product product)  {
         try {
@@ -48,7 +58,7 @@ public class InventoryActions {
     }
 
 
-    Product[] Retrieve(int count) {
+    public Product[] Retrieve(int count) {
         int x=0;
         Product[] products=new Product[count];
         try {

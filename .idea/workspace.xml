@@ -6,9 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="d72dfc20-d9fd-433d-8297-8215fe9c5c62" name="Changes" comment="yetefa commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/inventory/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/login/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/login/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cashier/Cashier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cashier/Cashier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/inventory/InventoryActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/InventoryActions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sales/Sales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sales/Sales.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sales/SalesActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sales/SalesActions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/supplier/Supplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/supplier/Supplier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/supplier/SupplierActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/supplier/SupplierActions.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +61,15 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="SupermarketManagementSystem" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -206,7 +219,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694641580958</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="yetefa commit">
+      <created>1694644572851</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1694644572851</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

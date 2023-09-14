@@ -53,8 +53,14 @@ public class Sales extends JFrame {
         this.salesID=salesID;
         this.salesQuantity=salesQuantity;
         this.totalMoney=totalMoney;
-
     }
+    public Sales( Date salesDate, int salesQuantity, double totalMoney){
+        this.salesDate=salesDate;
+        this.salesQuantity=salesQuantity;
+        this.totalMoney=totalMoney;
+    }
+
+
 
     public Sales() {
         Container salesContainer = getContentPane();
