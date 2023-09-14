@@ -1,3 +1,4 @@
+import admin.Admin;
 import cashier.Cashier;
 import login.Login;
 
@@ -17,9 +18,11 @@ public class Main {
 
 
         Database database =new  Database("localhost","SuperMarket1","sa","Nani2239");
-        database.instantiate();
+        database.connect();
 
         Login l=new Login();
         l.setVisible(true);
+
+
     }
 }

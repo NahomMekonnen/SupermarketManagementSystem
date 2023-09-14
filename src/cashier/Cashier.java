@@ -29,7 +29,7 @@ public class Cashier extends JFrame{
 
     int amountBought,totalAmount;
     JSpinner amountOfItems;
-    JTextField itemIdTextField,itemNameTextField,price,singlePriceTextField,totalPriceTextField;
+    JTextField itemIdTextField,itemNameTextField,price,singlePriceTextField;
 
     JButton add,print,clear,back;
     JTextArea textArea;
@@ -76,44 +76,14 @@ public class Cashier extends JFrame{
         itemName.setFont(new Font("Arial", Font.BOLD, 16));
 
 
-        singlePrice=new JLabel("Single Price: ");
-        singlePrice.setBounds(10,120 ,140,20);
-        singlePrice.setForeground(Color.WHITE);
-        singlePrice.setFont(new Font("Arial", Font.BOLD, 16));
 
-        singlePriceTextField=new JTextField();
-        singlePriceTextField.setBounds(160,120,100,20);
 
-        singlePriceTextField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                highLight();
-            }
 
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                highLight();
-            }
 
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                highLight();
-            }
-
-            public void highLight(){
-                if(singlePriceTextField.getText().isEmpty()){
-                    singlePriceTextField.setBackground(Color.lightGray);
-                }else{
-                    singlePriceTextField.setBackground(Color.white);
-
-                }
-            }
-
-        });
 
         quantity=new JLabel("Quantity: ");
 
-        quantity.setBounds(10,150 ,100,20);
+        quantity.setBounds(10,120 ,100,20);
         quantity.setForeground(Color.WHITE);
         quantity.setFont(new Font("Arial", Font.BOLD, 16));
 
@@ -183,7 +153,7 @@ public class Cashier extends JFrame{
         SpinnerNumberModel model=new SpinnerNumberModel(1,1,500,1);
 
         amountOfItems =new JSpinner(model);
-        amountOfItems.setBounds(160,150,50,20);
+        amountOfItems.setBounds(160,120,50,20);
 
 
         amountOfItems.addChangeListener(new ChangeListener() {
@@ -192,8 +162,13 @@ public class Cashier extends JFrame{
                    amountBought=(int) amountOfItems.getValue();
                     System.out.println(amountBought);
 
-                    if(!singlePrice.getText().isEmpty()&&!itemIdTextField.getText().isEmpty()&&!itemNameTextField.getText().isEmpty()){
-                        price.setText(String.valueOf(amountBought*Double.valueOf(singlePriceTextField.getText())));
+                    if(!itemIdTextField.getText().isEmpty()&&!itemNameTextField.getText().isEmpty()){
+                        for(int i=0;i<size;i++){
+                            if(Integer.valueOf(itemIdTextField.getText())==totalProducts[i].getProduct_id()&&itemNameTextField.getText().equals(totalProducts[i].getProduct_name())){
+                                price.setText(String.valueOf(amountBought*Double.valueOf(totalProducts[i].getPrice())));
+                            }
+                        }
+
                     }
 
             }
@@ -204,12 +179,12 @@ public class Cashier extends JFrame{
 
 
 
-        totalPrice.setBounds(10,180 ,100,20);
+        totalPrice.setBounds(10,150 ,100,20);
         totalPrice.setForeground(Color.WHITE);
         totalPrice.setFont(new Font("Arial", Font.BOLD, 16));
 
         price=new JTextField();
-        price.setBounds(160,180,100,20);
+        price.setBounds(160,150,100,20);
 
 
         add=new JButton("Add");
@@ -231,8 +206,6 @@ public class Cashier extends JFrame{
 
                         if(totalProducts[i].getProduct_name().equals(itemNameTextField.getText())&&totalProducts[i].getProduct_id()==Integer.valueOf(itemIdTextField.getText())){
 
-
-                            if(Integer.valueOf(singlePriceTextField.getText())!=totalProducts[i].getPrice()){
                                 if(amountBought>=totalProducts[i].getAmount()){
                                     amountBought=totalProducts[i].getAmount();
                                 }
@@ -244,15 +217,6 @@ public class Cashier extends JFrame{
                                 priceTotal+=amountBought*individualPrice;
                                 totalAmount+=amountBought;
 
-                            }else {
-                                String toTheReceipt=totalProducts[i].getProduct_name()+"\tPrice : " + singlePriceTextField.getText() + "\tAmount: " +amountBought +  "\tTotal = " + String.valueOf(amountBought*Integer.valueOf(singlePriceTextField.getText()))+ "\n";
-                                System.out.println(toTheReceipt);
-                                textArea.append(toTheReceipt);
-                                totalVat+=amountBought*Integer.valueOf(singlePriceTextField.getText())*taxRate;
-                                priceTotal+=amountBought*Integer.valueOf(singlePriceTextField.getText());
-                                totalAmount+=amountBought;
-                            }
-
 
                             if(amountBought>=totalProducts[i].getAmount()){
                                 inventoryActions.Remove(totalProducts[i]);
@@ -260,6 +224,11 @@ public class Cashier extends JFrame{
                                 totalProducts[i].setAmount(totalProducts[i].getAmount()-amountBought);
                                 inventoryActions.Update(totalProducts[i]);
                             }
+
+                            itemIdTextField.setText("");
+                            itemNameTextField.setText("");
+                            price.setText("");
+                            amountOfItems.setValue(1);
                         }
                     }
 
@@ -360,11 +329,6 @@ public class Cashier extends JFrame{
                     dispose();
                     Cashier c=new Cashier();
                     c.setVisible(true);
-//                    singlePriceTextField.setText("");
-//                    itemIdTextField.setText("");
-//                    itemNameTextField.setText("");
-//                    totalPriceTextField.setText("");
-//                    amountOfItems.setValue(model);
                 }
 
             }
@@ -465,8 +429,6 @@ public class Cashier extends JFrame{
         p1.add(itemIdTextField);
         p1.add(itemName);
         p1.add(itemNameTextField);
-        p1.add(singlePrice);
-        p1.add(singlePriceTextField);
         p1.add(quantity);
         p1.add(amountOfItems);
         p1.add(totalPrice);

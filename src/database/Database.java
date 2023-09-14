@@ -17,7 +17,7 @@ public class Database {
         Database.password = password;
         Database.databaseName = databaseName;
     }
-    public  void instantiate(){
+    public  void connect(){
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String dbhm = "jdbc:sqlserver://"+hostname+";databaseName="+databaseName+";encrypt=true;trustServerCertificate=true;User="+username+";Password="+password;

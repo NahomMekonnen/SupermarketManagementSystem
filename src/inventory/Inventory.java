@@ -31,7 +31,7 @@ public class Inventory extends JFrame{
     JButton back,remove;
     JScrollPane scroll;
     JPanel p1,p2;
-    JDialog newItem,removeItem;
+    JDialog removeItem;
 
 
 
@@ -39,6 +39,7 @@ public class Inventory extends JFrame{
         Container inv = getContentPane();
         inventoryActions = new InventoryActions();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         setSize(800,600);
         setLayout(null);
         setLocationRelativeTo(null);

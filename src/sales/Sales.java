@@ -69,7 +69,7 @@ public class Sales extends JFrame {
         setSize(800,600);
         setLayout(null);
         setLocationRelativeTo(null);
-        setTitle("LENNY SUPERMARKET");
+        setTitle("Sales");
         setResizable(false);
 
 
@@ -131,14 +131,14 @@ public class Sales extends JFrame {
                     if (str.length() == 0) {
                         sorter.setRowFilter(null);
                     } else {
-                        RowFilter rowFilter= RowFilter.regexFilter(textField.getText(),0);
+                        RowFilter rowFilter= RowFilter.regexFilter(str,0);
                         sorter.setRowFilter(rowFilter);
                     }
                 }else if(selected.equals("Date")){
                     if (str.length() == 0) {
                         sorter.setRowFilter(null);
                     } else {
-                        RowFilter rowFilter= RowFilter.regexFilter(textField.getText(),1);
+                        RowFilter rowFilter= RowFilter.regexFilter(str,1);
                         sorter.setRowFilter(rowFilter);
                     }
                 }

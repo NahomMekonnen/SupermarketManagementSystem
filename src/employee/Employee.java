@@ -117,7 +117,7 @@ public class Employee extends JFrame{
     public Employee()
     {
         Container emp = getContentPane();
-         employeeActions= new EmployeeActions();
+        employeeActions= new EmployeeActions();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(800,600);
         setLayout(null);
@@ -787,7 +787,7 @@ public class Employee extends JFrame{
         this.doh=doh;
     }
 
-    public Employee( String firstName, String lastName,String phoneNumber,String address,String gender,Date dob,Date doh) {
+    public Employee(String firstName, String lastName,String phoneNumber,String address,String gender,Date dob,Date doh) {
         this.firstName=firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;

@@ -18,7 +18,6 @@ import database.Database;
 import  sales.*;
 
 public class Login extends JFrame{
-    Connection connection;
     JLabel choose;
     JLabel userID;
     JLabel password;
@@ -43,7 +42,6 @@ public class Login extends JFrame{
         setResizable(false);
 
 
-        connection= Database.connection;
 
 
         p1=new JPanel(){
@@ -133,15 +131,15 @@ public class Login extends JFrame{
                     dispose();
                     if(idTextField.getText().isEmpty()==false&&passwordField.getText().isEmpty()==false){
                         String username = null, password = null;
-                        try {
-                            Statement statement = Database.connection.createStatement();
-                            String query = "SELECT username,password FROM loginInfo WHERE id=1 ";
-                            ResultSet resultSet = statement.executeQuery(query);
+                            try {
+                                Statement statement = Database.connection.createStatement();
+                                String query = "SELECT username,password FROM loginInfo WHERE id=1 ";
+                                ResultSet resultSet = statement.executeQuery(query);
                             while (resultSet.next()){
                                 username=resultSet.getString(1);
                                 password=resultSet.getString(2);
                             }
-                            
+
                             if(username.equals(idTextField.getText())&&password.equals(passwordField.getText())){
                                 Admin n = new Admin();
                                 n.setVisible(true);
